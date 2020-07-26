@@ -1,0 +1,29 @@
+import Axios from 'axios';
+
+//Thunks go here...
+
+
+
+//Action TYPES go here
+
+const TYPES = {
+    SET_PRODUCTS : 'SET_PRODUCTS',
+    ADD_PRODUCT : 'ADD_PRODUCT',
+    REMOVE_PRODUCT : 'REMOVE_PRODUCT',
+    NEW_ORDER : 'NEW_ORDER',
+    ADD_TO_ORDER : 'ADD_TO_ORDER',
+    RM_FROM_ORDER : 'RM_FROM_ORDER',
+    SET_CATEGORIES : 'SET_CATEGORIES',
+    ADD_CATEGORY : 'ADD_CATEGORY',
+    REMOVE_CATEGORY : 'REMOVE_CATEGORY',
+    NEW_CART : 'NEW_CART',
+    ADD_TO_CART : 'ADD_TO_CART',
+    RM_FROM_CART : 'RM_FROM_CART',
+    NEW_USER : 'NEW_USER',
+    UPDATE_USER : 'UPDATE_USER',
+    REMOVE_USER : 'REMOVE_USER'
+}
+
+export {
+    TYPES,
+}
