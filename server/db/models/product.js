@@ -1,5 +1,5 @@
 const db = require ('../db')
-const {STRING, UUID, UUIDV4} = require('sequelize')
+const {STRING, UUID, UUIDV4, INTEGER} = require('sequelize')
 
 const Product = db.define('product', {
     id:{
@@ -10,6 +10,27 @@ const Product = db.define('product', {
     name:{
         type:STRING,
         unique:true,
+        allowNull:false,
+        validate:{
+            notEmpty:true
+        }
+    },
+    image:{
+        type:STRING,
+        allowNull:false,
+        validate:{
+            isUrl:true
+        }
+    },
+    description:{
+        type:STRING,
+        allowNull:false,
+        validate:{
+            notEmpty:true
+        }
+    },
+    price:{
+        type:INTEGER,
         allowNull:false,
         validate:{
             notEmpty:true

@@ -1,11 +1,11 @@
 const db = require ('../db')
-const {STRING, UUID, UUIDV4, Model} = require('sequelize')
+const {STRING, INTEGER} = require('sequelize')
 
 const Category = db.define('category', {
     id:{
         primaryKey:true,
-        type:UUID,
-        defaultValue:UUIDV4
+        type:INTEGER,
+        autoIncrement:true
     },
     name:{
         type:STRING,
@@ -14,7 +14,7 @@ const Category = db.define('category', {
         validate:{
             notEmpty:true
         }
-    }
+    },
 })
 
 module.exports = Category
