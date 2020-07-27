@@ -1,10 +1,18 @@
 import React from 'react'
-import ReactDom from 'react-dom'
+import {render} from 'react-dom'
+import {Provider} from 'react-redux'
+import {BrowserRouter as Router} from 'react-router-dom'
+import store from './store'
+import App from './Components/App'
 
-const App = document.getElementById('app')
+const Root = document.getElementById('root')
 
-ReactDom.render(
-    <h1>GraceShoppers</h1>,
-    App,
+render(
+    <Provider store = {store}>
+        <Router>
+    <App/>
+        </Router>
+    </Provider>,
+    Root,
     () => console.log('rendered')
 )
