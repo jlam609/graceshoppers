@@ -1,4 +1,4 @@
-const userRouter = require('express').Router();
+const orderRouter = require('express').Router();
 const { Order } = require('../models/index.js');
 
 orderRouter.get('/', async (req, res, next) => {

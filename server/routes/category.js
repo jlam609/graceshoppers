@@ -1,4 +1,4 @@
-const productRouter = require('express').Router();
+const categoryRouter = require('express').Router();
 const { Category } = require('../models/index.js');
 
 categoryRouter.get('/', async (req, res, next) => {
@@ -32,7 +32,6 @@ categoryRouter.put('/:id', async (req, newData, res, next) => {
     }
     }) 
 categoryRouter.delete('/:id', async (req, res, next) => {
-        console.log('Hitting endpoint!')
         try {
             Category.destroy({where: {id: req.params.id}});
             res.sendStatus(204);
