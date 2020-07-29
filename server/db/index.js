@@ -65,6 +65,13 @@ const sync = async() => {
             image:'https://vignette.wikia.nocookie.net/cookie-pantheon/images/8/8c/2235023_l.jpg/revision/latest/top-crop/width/720/height/900?cb=20190521203140',
             categoryId:1,
             price:1000
+        }, 
+        {
+            name: 'Kingdom Key',
+            description: 'Default Keyblade. Not very powerful, but reliable and easy to handle',
+            image: 'https://i.etsystatic.com/15773976/r/il/3b74b6/1804379035/il_570xN.1804379035_6x95.jpg',
+            categoryId: 1,
+            price: 1000
         }
     ]
     const armorList = [
@@ -95,6 +102,13 @@ const sync = async() => {
             image:'https://i.chzbgr.com/full/6210288128/hA81ADDCF/none-can-penetrate-my-bag-armor',
             categoryId:2,
             price: 5
+        },
+        {
+            name: 'N7 Armor',
+            description: 'Iconic armor of Commander Shepard of the Normandy',
+            image: 'https://cdnb.artstation.com/p/assets/images/images/011/382/517/large/maria-kondratieva-n7-views.jpg?1529322965',
+            categoryId: 2,
+            price: 1000
         }
     ]
     const spellList = [
@@ -132,6 +146,20 @@ const sync = async() => {
             image:'https://i.ytimg.com/vi/WS_xLSYNMHM/maxresdefault.jpg',
             price:500,
             categoryId:3
+        },
+        {
+            name: 'Holy',
+            description: 'Strongest White Magic spell, can cleanse the Planet of all threats',
+            image: 'https://vignette.wikia.nocookie.net/finalfantasy/images/c/cd/Aerith_Holy.jpeg/revision/latest/scale-to-width-down/340?cb=20110327055555',
+            price: 1000,
+            categoryId:3
+        },
+        {
+            name: 'Meteor',
+            description: 'Powerful Black Magic spell, can summon a celestial body to harm the Planet ',
+            image: 'https://vignette.wikia.nocookie.net/finalfantasy/images/6/6c/Meteor_FFVII.jpg/revision/latest/scale-to-width-down/340?cb=20190616214521',
+            price: 1000,
+            categoryId:3
         }
     ]
     const itemList = [
@@ -162,6 +190,13 @@ const sync = async() => {
             image: 'https://www.antidote.info/accueil/_hero/fiole.png',
             price:10,
             categoryId:4
+        },
+        {
+            name: 'Phoenix Down',
+            description: 'Tufts of phoenix feather that can (sometimes) bring the dead back to life',
+            image: 'https://i1.sndcdn.com/artworks-000476941884-6ee3l2-t500x500.jpg',
+            price: 100,
+            categoryId: 4
         }
     ]
     await categoryList.map(category => Category.create(category))
