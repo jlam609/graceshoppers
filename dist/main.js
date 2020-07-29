@@ -199,10 +199,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Root = document.getElementById('root');
+const Root = document.getElementById("root");
 Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
   store: _store__WEBPACK_IMPORTED_MODULE_4__["default"]
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_App__WEBPACK_IMPORTED_MODULE_5__["default"], null))), Root, () => console.log('rendered'));
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_App__WEBPACK_IMPORTED_MODULE_5__["default"], null))), Root, () => console.log("rendered"));
 
 /***/ }),
 
@@ -302,6 +302,98 @@ const updateForm = (name, value) => ({
 const clearForm = () => ({
   type: TYPES.CLEAR_FORM
 });
+
+const getUser = user => ({
+  type: TYPES.GET_USER,
+  user
+});
+
+const clearUser = () => ({
+  type: TYPES.CLEAR_USER
+});
+
+const fetchUser = () => {
+  return async dispatch => {
+    const {
+      user
+    } = (await axios.get(`/api/auth/login`)).data;
+
+    if (user) {
+      await dispatch(getUser(user));
+      await dispatch(fetchCart(user.id));
+      await dispatch(fetchOrders(user.id));
+    } else {
+      return;
+    }
+  };
+};
+
+const login = userObj => {
+  return async dispatch => {
+    const {
+      user,
+      message
+    } = (await axios.post(`/api/auth/login`)).data;
+
+    if (user) {
+      alert(`${message}`);
+      await dispatch(getUser(user));
+      await dispatch(fetchOrders(user.id));
+    } else {
+      return alert(`${message}`);
+    }
+  };
+};
+
+const setOrder = order => ({
+  type: SET_ORDER,
+  order
+});
+
+const createOrder = (userId = null) => {
+  return async dispatch => {
+    if (userId) {
+      const {
+        order
+      } = (await axios.post(`/api/order`, {
+        userId: userId
+      })).data;
+      return dispatch(setOrder(order));
+    } else {
+      const {
+        order
+      } = (await axios.post(`/api/order`)).data;
+      return dispatch(setOrder(order));
+    }
+  };
+};
+
+const updateOrder = (orderId, userId) => {
+  return async dispatch => {
+    await axios.put(`/api/order/${orderId}`, {
+      userId: userId
+    });
+    return dispatch(fetchCart(user.id));
+  };
+};
+
+const updateCart = (mode = add, orderId, product) => {
+  return async dispatch => {
+    if (mode === `add`) {
+      await axios.put(`/api/order/${orderId}`, {
+        productId: productId
+      });
+      return dispatch(addToCart(product));
+    }
+
+    if (mode === `remove`) {
+      await axios.delete(`/api/order/${orderId}`, {
+        productId
+      });
+      return dispatch(removeFromCart(product));
+    }
+  };
+};
 
 module.exports = {
   getProducts,
@@ -435,12 +527,26 @@ const formReducer = (state = {
   }
 };
 
+const userReducer = (state = [], action) => {
+  switch (action.type) {
+    case _types__WEBPACK_IMPORTED_MODULE_2___default.a.GET_USER:
+      return [action.user];
+
+    case _types__WEBPACK_IMPORTED_MODULE_2___default.a.CLEAR_USER:
+      return [];
+
+    default:
+      return state;
+  }
+};
+
 const masterReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   cart: cartReducer,
   orders: orderReducer,
   products: productReducer,
   categories: categoryReducer,
-  user: formReducer
+  form: formReducer,
+  user: userReducer
 });
 const store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(masterReducer, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]));
 /* harmony default export */ __webpack_exports__["default"] = (store);
@@ -466,7 +572,10 @@ const TYPES = {
   ADD_TO_CART: 'ADD_TO_CART',
   RM_FROM_CART: 'RM_FROM_CART',
   UPDATE_FORM: 'UPDATE_FORM',
-  CLEAR_FORM: 'CLEAR_FORM'
+  CLEAR_FORM: 'CLEAR_FORM',
+  GET_USER: 'GET_USER',
+  SET_ORDER: 'SET_ORDER',
+  CLEAR_USER: 'CLEAR_USER'
 };
 module.exports = TYPES;
 

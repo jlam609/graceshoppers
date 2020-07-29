@@ -35,6 +35,13 @@ const Product = db.define('product', {
         validate:{
             notEmpty:true
         }
+    },
+    quantity:{
+        type:INTEGER,
+        allowNull:false,
+        validate:{
+            notEmpty:true
+        }
     }
 })
 

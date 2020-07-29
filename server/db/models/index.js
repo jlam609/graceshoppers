@@ -14,6 +14,9 @@ Product.belongsTo(Category)
 Category.hasMany(Product)
 Order.belongsTo(User)
 User.hasMany(Order)
+Order.belongsTo(Session)
+Session.hasMany(Order)
+
 
 module.exports = {
     db,
