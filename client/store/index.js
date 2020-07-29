@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunks from "redux-thunk";
 import TYPES from "./types";
 
-const productReducer = (state = [], action) => {
+const productReducer = (state = {}, action) => {
   switch (action.type) {
     case TYPES.GET_PRODUCTS:
       return [...action.products];

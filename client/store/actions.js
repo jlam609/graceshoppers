@@ -44,6 +44,7 @@ const removeFromCart = (product) => ({
 const fetchProducts = () => {
   return async (dispatch) => {
     const { products } = (await axios.get("/api/products")).data;
+    console.log(products)
     return dispatch(getProducts(products));
   };
 };
