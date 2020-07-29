@@ -120,7 +120,8 @@ const sync = async() => {
             description: 'Iconic armor of Commander Shepard of the Normandy',
             image: 'https://cdnb.artstation.com/p/assets/images/images/011/382/517/large/maria-kondratieva-n7-views.jpg?1529322965',
             categoryId: 2,
-            price: 1000
+            price: 1000,
+            quantity:20
         }
     ]
     const spellList = [
