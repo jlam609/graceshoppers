@@ -3,6 +3,7 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux'
 import {fetchCategories, fetchProducts} from '../store/actions.js'
 import Nav from './Nav'
+import HomePage from './Homepage'
 
 const App = ({dispatch}) => {
     useEffect(() => {
@@ -14,12 +15,11 @@ const App = ({dispatch}) => {
     },[])
     return(
         <div>
-        <h1>Welcome To StoreName</h1>
+        <h1>Tack's RNGeneral Store</h1>
         <Nav/>
         <Switch>
-            <Route>
-            </Route>
-            <Redirect to='/'/>
+            <Route path='/home' component={ HomePage }></Route>
+            <Redirect to='/home'/>
         </Switch>
         </div>
     )
