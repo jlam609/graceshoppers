@@ -1,3 +1,4 @@
+require("./config/passport");
 const express = require("express");
 const { seed, models } = require("./db");
 const path = require("path");
@@ -6,13 +7,49 @@ const app = express();
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const {userRouter, orderRouter, productRouter, categoryRouter} = require('./routes')
+const {userRouter, orderRouter, productRouter, categoryRouter, cartRouter, authRouter} = require('./routes')
+const passport = require("passport");
+
 
 dotenv.config();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+
+const findUserBySession = (sessionId) =>
+  User.findOne({
+    include: [
+      {
+        model: Session,
+        where: {
+          id: sessionId,
+        },
+      },
+    ],
+  });
+app.use(async (req, res, next) => {
+  if (!req.cookies.session_id) {
+    const session = await Session.create();
+    const oneWeek = 1000 * 60 * 60 * 24 * 7;
+    res.cookie("session_id", session.id, {
+      path: "/",
+      expires: new Date(Date.now() + oneWeek),
+    });
+    req.session_id = session.id;
+    next();
+  } else {
+    req.session_id = req.cookies.session_id;
+    const user = await findUserBySession(req.session_id);
+
+    if (user) {
+      req.user = user;
+    }
+    next();
+  }
+});
 
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.static(path.join(__dirname, "../dist")));
@@ -21,6 +58,9 @@ app.use('/api/products', productRouter)
 app.use('/api/users', userRouter)
 app.use('/api/orders', orderRouter)
 app.use('/api/categories', categoryRouter)
+app.use('/api/cart', cartRouter)
+app.use('/api/auth', authRouter)
+
 
 app.get('/*', (req,res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'), (err) => {
