@@ -29,9 +29,10 @@ class App extends Component {
     }
     render() {
     return(
-        <div>
+        <div
+            className = 'div'>
         <h1>Tack's RNGeneral Store</h1>
-        <Nav/>
+        {Nav()}
         <Switch>
              <Route path='/weapons' component = {WeaponsList}/> 
              <Route path='/armor' component = {ArmorList}/>
