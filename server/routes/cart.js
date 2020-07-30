@@ -1,6 +1,6 @@
 const cartRouter = require("express").Router();
 const {
-  models: { Cart },
+  models: {Cart},
 } = require("../db/models");
 
 cartRouter.get("/:id", async (req, res) => {
@@ -11,7 +11,7 @@ cartRouter.get("/:id", async (req, res) => {
         orderId: id,
       },
     });
-    res.status(200).send({ products });
+    res.status(200).send({products});
   } catch (e) {
     res.status(500).send(e);
   }
@@ -19,7 +19,7 @@ cartRouter.get("/:id", async (req, res) => {
 
 cartRouter.put("/:id", async (req, res) => {
   try {
-    const { productId, orderId, quantity } = req.body;
+    const {productId, orderId, quantity} = req.body;
     const product = await Cart.findOne({
       where: {
         productId,
@@ -45,7 +45,7 @@ cartRouter.put("/:id", async (req, res) => {
 
 cartRouter.delete("/:id", async (req, res) => {
   try {
-    const { productId, orderId } = req.body;
+    const {productId, orderId} = req.body;
     await Cart.destroy({
       where: {
         productId,
@@ -62,4 +62,4 @@ cartRouter.delete("/:id", async (req, res) => {
   }
 });
 
-module.exports  = cartRouter
+module.exports = cartRouter;

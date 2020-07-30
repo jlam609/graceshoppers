@@ -1,17 +1,17 @@
-const db = require ('../db')
-const {UUID, UUIDV4, ENUM} = require('sequelize')
+const {UUID, UUIDV4, ENUM} = require("sequelize");
+const db = require("../db");
 
-const Order = db.define('order', {
-    id:{
-        primaryKey:true,
-        type:UUID,
-        defaultValue:UUIDV4
-    },
-    status:{
-        type:ENUM,
-        values:['active', 'pending', 'done'],
-        defaultValue: 'active'
-    }
-})
+const Order = db.define("order", {
+  id: {
+    primaryKey: true,
+    type: UUID,
+    defaultValue: UUIDV4,
+  },
+  status: {
+    type: ENUM,
+    values: ["active", "pending", "done"],
+    defaultValue: "active",
+  },
+});
 
-module.exports = Order
+module.exports = Order;

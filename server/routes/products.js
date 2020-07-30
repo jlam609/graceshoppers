@@ -1,5 +1,7 @@
 const productRouter = require("express").Router();
-const { models:{Product} } = require("../db/models/index.js");
+const {
+  models: {Product},
+} = require("../db/models/index.js");
 
 productRouter.get("/", async (req, res, next) => {
   const products = await Product.findAll();
@@ -24,7 +26,7 @@ productRouter.get("/:id", async (req, res, next) => {
 productRouter.put("/:id", async (req, newData, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
-    const updatedProduct = { ...product, ...newData };
+    const updatedProduct = {...product, ...newData};
     await product.upddate(updatedProduct, {
       fields: ["name", "image", "descripton", "price"],
     });
@@ -35,7 +37,7 @@ productRouter.put("/:id", async (req, newData, res, next) => {
 });
 productRouter.delete("/:id", async (req, res, next) => {
   try {
-    Product.destroy({ where: { id: req.params.id } });
+    Product.destroy({where: {id: req.params.id}});
     res.sendStatus(204);
   } catch (err) {
     next(err);
