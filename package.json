@@ -7,7 +7,7 @@
     "build": "webpack --mode=\"production\"",
     "build:watch": "webpack --watch",
     "start": "node server/index.js",
-    "start:dev": "node-dev --spawn server/index.js"
+    "start:dev": "node-dev --respawn server/index.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "node-dev": "^5.1.0",
     "pg": "^8.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
