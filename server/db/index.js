@@ -27,7 +27,7 @@ const sync = async() => {
         },
         {
             name:'Excalibur', 
-            description:'The sword King Arthur got from the lady of the lake.',
+            description:'King Arthur\'s sword, courtesy of some moistened bint with a scimitar.',
             image:'https://cdna.artstation.com/p/assets/images/images/006/541/116/large/angelo-gongora-excaliburwireframe.jpg?1499370386',
             categoryId:1,
             price: 1000,
@@ -59,7 +59,7 @@ const sync = async() => {
         },
         {
             name:'Masamune',
-            description: 'Sephiroth Sword is the most incredible, magnificent and most potent swords from the final fantasy series.',
+            description: 'Sephiroth\'s Sword is the most incredible, magnificent and most potent swords from the final fantasy series.',
             image:'https://swordskingdom.com/media/catalog/product/m/a/masamune-sephiroth-sword-from-final-fantasy.jpg',
             categoryId:1,
             price:1000,
