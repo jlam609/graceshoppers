@@ -6,9 +6,9 @@ const HomePage = () => {
             className='home'
         >
             <img
-                    className='shopKeep'
-                    src='./Shopkeep.png'>
-                </img>
+                className='shopKeep'
+                src='./Shopkeep.png'>
+            </img>
             <div
                 className='bookContainer'>
                 <img
@@ -29,9 +29,9 @@ const HomePage = () => {
                 </img>
             </div>
             <img
-                    className='table'
-                    src='./Table.png'>
-                </img>
+                className='table'
+                src='./Table.png'>
+            </img>
         </div>
     )
 }

@@ -1,7 +1,7 @@
-import React, {Component, useEffect} from 'react';
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
-import {connect} from 'react-redux'
-import {fetchCategories, fetchProducts} from '../store/actions.js'
+import React, { Component, useEffect } from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { fetchCategories, fetchProducts } from '../store/actions.js'
 import WeaponsList from './WeaponsList.js'
 import ArmorList from './ArmorList.js'
 import SpellList from './SpellList.js'
@@ -28,21 +28,21 @@ class App extends Component {
         await this.props.fetchCategories();
     }
     render() {
-    return(
-        <div
-            className = 'div'>
-        {Nav()}
-        <Switch>
-             <Route path='/weapons' component = {WeaponsList}/> 
-             <Route path='/armor' component = {ArmorList}/>
-             <Route path='/magic' component = {SpellList} />
-             <Route path='/items' component = {ItemList} />
-            <Route path='/home' component={ HomePage }></Route>
-            <Redirect to='/home'/>
-        </Switch>
-        </div>
-    )
-}
+        return (
+            <div
+                className='maindiv'>
+                {Nav()}
+                <Switch>
+                    <Route path='/weapons' component={WeaponsList} />
+                    <Route path='/armor' component={ArmorList} />
+                    <Route path='/magic' component={SpellList} />
+                    <Route path='/items' component={ItemList} />
+                    <Route path='/home' component={HomePage}></Route>
+                    <Redirect to='/home' />
+                </Switch>
+            </div>
+        )
+    }
 }
 // const mapState = (state) => {
 //     console.log(state)
@@ -53,21 +53,21 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-      products: state.products,
-      categories: state.categories,
+        products: state.products,
+        categories: state.categories,
     }
-  }
+}
 
-const mapDispatchToProps = (dispatch)=> {
+const mapDispatchToProps = (dispatch) => {
     return {
-      fetchProducts: ()=> {
-        dispatch(fetchProducts())
-      },
-      fetchCategories: () => {
-        dispatch(fetchCategories())
-      }
+        fetchProducts: () => {
+            dispatch(fetchProducts())
+        },
+        fetchCategories: () => {
+            dispatch(fetchCategories())
+        }
     };
-  };
+};
 // const mapDispatch = (dispatch) => {
 //     return{
 //         dispatch
