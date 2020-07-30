@@ -7,6 +7,7 @@ import ArmorList from './ArmorList.js'
 import SpellList from './SpellList.js'
 import ItemList from './ItemList.js'
 import Nav from './Nav'
+import HomePage from './Homepage'
 
 // const App = ({dispatch}) => {
 //     useEffect(() => {
@@ -29,7 +30,7 @@ class App extends Component {
     render() {
     return(
         <div>
-        <h1>Welcome To StoreName</h1>
+        <h1>Tack's RNGeneral Store</h1>
         <Nav/>
         <Switch>
             <Route>
@@ -38,7 +39,8 @@ class App extends Component {
              <Route path='/magic' component = {SpellList} />
              <Route path='/items' component = {ItemList} />
             </Route>
-            <Redirect to='/'/>
+            <Route path='/home' component={ HomePage }></Route>
+            <Redirect to='/home'/>
         </Switch>
         </div>
     )
