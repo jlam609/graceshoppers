@@ -838,7 +838,7 @@ const updateOrder = (orderId, userId) => {
 
 const updateCart = (mode = add, orderId, product, quantity) => {
   return async dispatch => {
-    if (mode === 'add') {
+    if (mode === "add") {
       await axios.put(`/api/cart/${orderId}`, {
         productId,
         orderId,
@@ -847,7 +847,7 @@ const updateCart = (mode = add, orderId, product, quantity) => {
       return dispatch(addToCart(product));
     }
 
-    if (mode === 'remove') {
+    if (mode === "remove") {
       if (quantity === 0) {
         await axios.delete(`/api/cart/${orderId}`, {
           productId,
