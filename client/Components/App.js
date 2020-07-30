@@ -33,12 +33,10 @@ class App extends Component {
         <h1>Tack's RNGeneral Store</h1>
         <Nav/>
         <Switch>
-            <Route>
              <Route path='/weapons' component = {WeaponsList}/> 
              <Route path='/armor' component = {ArmorList}/>
              <Route path='/magic' component = {SpellList} />
              <Route path='/items' component = {ItemList} />
-            </Route>
             <Route path='/home' component={ HomePage }></Route>
             <Redirect to='/home'/>
         </Switch>

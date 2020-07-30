@@ -2,9 +2,15 @@
     display : flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
     background-image: url('./Mossy_Brick.jpg');
-    background-size: 100% 100%;
-    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom:0
 }
 
 #root {
@@ -14,6 +20,7 @@
 .shopKeep {
     height : 100px;
     width : 100px;
+    margin-top: 40px
 }
 
 .bookContainer {
@@ -28,5 +35,6 @@
 }
 
 .table {
-    size : 300px 200px;
+    height : 500px;
+    width : 1200px;
 }
