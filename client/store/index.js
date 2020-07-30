@@ -106,12 +106,25 @@ const formReducer = (
   }
 };
 
+const userReducer = (state = [], action) => {
+	switch (action.type){
+	case TYPES.GET_USER: 
+		return [action.user];
+	case TYPES.CLEAR_USER:
+		return []
+	default:
+	return state
+}
+}
+
+
 const masterReducer = combineReducers({
   cart: cartReducer,
   orders: orderReducer,
   products: productReducer,
   categories: categoryReducer,
-  user: formReducer,
+  form : formReducer,
+  user : userReducer
 });
 
 const store = createStore(masterReducer, applyMiddleware(thunks));
