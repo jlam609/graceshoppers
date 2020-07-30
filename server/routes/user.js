@@ -1,5 +1,7 @@
 const userRouter = require("express").Router();
-const { models:{User} } = require("../db/models/index.js");
+const {
+  models: {User},
+} = require("../db/models/index.js");
 
 userRouter.get("/", async (req, res, next) => {
   const users = await User.findAll();
@@ -24,7 +26,7 @@ userRouter.get("/:id", async (req, res, next) => {
 
 userRouter.delete("/:id", async (req, res, next) => {
   try {
-    User.destroy({ where: { id: req.params.id } });
+    User.destroy({where: {id: req.params.id}});
     res.sendStatus(204);
   } catch (err) {
     next(err);

@@ -1,7 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
+import {removeFromCart} from "../store/actions";
 
-const Cart = ({ products, total, removeItem }) => {
+const Cart = ({products, total, removeItem}) => {
   return (
     <div>
       <h2> My Shopping Cart </h2>
@@ -13,7 +14,9 @@ const Cart = ({ products, total, removeItem }) => {
               <div>
                 <li>product.name</li>
                 <li>product.price</li>
-                <button onClick={(e) => removeItem(e, product)}>Remove</button>
+                <button type="submit" onClick={(e) => removeItem(e, product)}>
+                  Remove
+                </button>
               </div>
             );
           })}
@@ -26,8 +29,8 @@ const Cart = ({ products, total, removeItem }) => {
   );
 };
 
-const mapState = ({ cart }) => {
-  const { products, total } = cart;
+const mapState = ({cart}) => {
+  const {products, total} = cart;
   return {
     products,
     total,

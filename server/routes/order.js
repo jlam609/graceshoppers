@@ -1,5 +1,7 @@
 const orderRouter = require("express").Router();
-const { models:{Order} } = require("../db/models/index.js");
+const {
+  models: {Order},
+} = require("../db/models/index.js");
 
 orderRouter.get("/", async (req, res, next) => {
   const orders = await Order.findAll();
@@ -24,7 +26,7 @@ orderRouter.get("/:id", async (req, res, next) => {
 
 orderRouter.delete("/:id", async (req, res, next) => {
   try {
-    Order.destroy({ where: { id: req.params.id } });
+    Order.destroy({where: {id: req.params.id}});
     res.sendStatus(204);
   } catch (err) {
     next(err);
