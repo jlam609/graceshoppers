@@ -1,18 +1,20 @@
-const path = require('path')
-const dotenv = require('dotenv')
+const path = require("path");
+const dotenv = require("dotenv");
 
-dotenv.config
+dotenv.config;
 
 module.exports = {
-    entry: path.join(__dirname, '/client/index.js'),
-    devtool: 'source-map',
-    mode: 'development',
-    module: {
-        rules:[{
-        use:{
-            loader:'babel-loader',
+  entry: path.join(__dirname, "/client/index.js"),
+  devtool: "source-map",
+  mode: "development",
+  module: {
+    rules: [
+      {
+        use: {
+          loader: "babel-loader",
         },
-        exclude:/node_modules/
-        }]
-    }
-}
+        exclude: /node_modules/,
+      },
+    ],
+  },
+};
