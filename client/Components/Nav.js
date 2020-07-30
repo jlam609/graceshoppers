@@ -5,6 +5,8 @@ const Nav = () => {
     return (
         <div 
             className='nav' >
+            <img src = './Tacks_Sign.png'
+                className = 'logo'></img>
             <Link to = '/home'>Home</Link>
             <Link to = '/weapons'>Weapons</Link>
             <Link to ='/armor'>Armor</Link>

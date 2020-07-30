@@ -31,7 +31,6 @@ class App extends Component {
     return(
         <div
             className = 'div'>
-        <h1>Tack's RNGeneral Store</h1>
         {Nav()}
         <Switch>
              <Route path='/weapons' component = {WeaponsList}/> 

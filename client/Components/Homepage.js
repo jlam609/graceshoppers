@@ -7,7 +7,7 @@ const HomePage = () => {
         >
             <img
                     className='shopKeep'
-                    src='./Shopkeep_Outline.png'>
+                    src='./Shopkeep.png'>
                 </img>
             <div
                 className='bookContainer'>
