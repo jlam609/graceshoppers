@@ -163,6 +163,16 @@ const updateCart = (mode = "add", orderId, product, quantity) => {
   };
 };
 
+const updateInput = (name, value) => ({
+  type: TYPES.UPDATE_INPUT,
+  name,
+  value,
+});
+
+const clearInput = () => ({
+  type: TYPES.CLEAR_INPUT,
+});
+
 module.exports = {
   getProducts,
   getOrders,
@@ -184,4 +194,6 @@ module.exports = {
   createOrder,
   updateOrder,
   updateCart,
+  updateInput,
+  clearInput,
 };

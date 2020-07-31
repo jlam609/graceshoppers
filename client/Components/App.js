@@ -9,6 +9,9 @@ import SpellList from "./SpellList";
 import ItemList from "./ItemList";
 import Nav from "./Nav";
 import HomePage from "./Homepage";
+import Register from "./Register";
+import Login from "./Login";
+import Cart from "./Cart";
 
 class App extends Component {
   async componentDidMount() {
@@ -26,6 +29,9 @@ class App extends Component {
           <Route path="/magic" component={SpellList} />
           <Route path="/items" component={ItemList} />
           <Route path="/home" component={HomePage} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           <Redirect to="/home" />
         </Switch>
       </div>
