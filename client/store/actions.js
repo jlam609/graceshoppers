@@ -43,7 +43,7 @@ const removeFromCart = (product) => ({
 
 const fetchProducts = () => {
   return async (dispatch) => {
-    const { products } = (await axios.get("/api/products")).data;
+    const {products} = (await axios.get("/api/products")).data;
     console.log(products);
     return dispatch(getProducts(products));
   };
@@ -51,21 +51,21 @@ const fetchProducts = () => {
 
 const fetchCategories = () => {
   return async (dispatch) => {
-    const { categories } = (await axios.get("/api/categories")).data;
+    const {categories} = (await axios.get("/api/categories")).data;
     return dispatch(getCategories(categories));
   };
 };
 
 const fetchOrders = () => {
   return async (dispatch) => {
-    const { orders } = (await axios.get("/api/orders")).data;
+    const {orders} = (await axios.get("/api/orders")).data;
     return dispatch(getOrders(orders));
   };
 };
 
 const fetchCart = (user) => {
   return async (dispatch) => {
-    const { products } = (await axios.get(`/api/cart/${user.id}`)).data;
+    const {products} = (await axios.get(`/api/cart/${user.id}`)).data;
     return dispatch(getCart(products));
   };
 };
@@ -89,61 +89,56 @@ const clearUser = () => ({
 });
 const fetchUser = () => {
   return async (dispatch) => {
-    const { user } = (await axios.get(`/api/auth/login`)).data;
+    const {user} = (await axios.get(`/api/auth/login`)).data;
     if (user) {
       await dispatch(getUser(user));
       await dispatch(fetchCart(user.id));
       await dispatch(fetchOrders(user.id));
-    } else {
-      return;
     }
   };
 };
 
 const login = (userObj) => {
   return async (dispatch) => {
-    const { user, message } = (await axios.post(`/api/auth/login`)).data;
+    const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
     if (user) {
-      alert(`${message}`);
       await dispatch(getUser(user));
       await dispatch(fetchOrders(user.id));
-    } else {
+      await dispatch(fetchCart(user.id));
       return alert(`${message}`);
     }
+    return alert(`${message}`);
   };
 };
 
 const setOrder = (order) => ({
-  type: SET_ORDER,
+  type: TYPES.SET_ORDER,
   order,
 });
 
 const createOrder = (userId = null) => {
   return async (dispatch) => {
     if (userId) {
-      const { order } = (
-        await axios.post(`/api/order`, { userId: userId })
-      ).data;
-      return dispatch(setOrder(order));
-    } else {
-      const { order } = (await axios.post(`/api/order`)).data;
+      const {order} = (await axios.post(`/api/order`, {userId})).data;
       return dispatch(setOrder(order));
     }
+    const {order} = (await axios.post(`/api/order`)).data;
+    return dispatch(setOrder(order));
   };
 };
 
 const updateOrder = (orderId, userId) => {
   return async (dispatch) => {
-    await axios.put(`/api/order/${orderId}`, { userId: userId });
-    return dispatch(fetchCart(user.id));
+    await axios.put(`/api/order/${orderId}`, {userId});
+    return dispatch(fetchCart(userId));
   };
 };
 
-const updateCart = (mode = add, orderId, product, quantity) => {
+const updateCart = (mode = "add", orderId, product, quantity) => {
   return async (dispatch) => {
     if (mode === "add") {
       await axios.put(`/api/cart/${orderId}`, {
-        productId,
+        productId: product.id,
         orderId,
         quantity,
       });
@@ -152,19 +147,18 @@ const updateCart = (mode = add, orderId, product, quantity) => {
     if (mode === "remove") {
       if (quantity === 0) {
         await axios.delete(`/api/cart/${orderId}`, {
-          productId,
-          orderId,
-          quantity,
-        });
-        return dispatch(removeFromCart(product));
-      } else {
-        await axios.put(`/api/cart/${orderId}`, {
-          productId,
+          productId: product.id,
           orderId,
           quantity,
         });
         return dispatch(removeFromCart(product));
       }
+      await axios.put(`/api/cart/${orderId}`, {
+        productId: product.id,
+        orderId,
+        quantity,
+      });
+      return dispatch(removeFromCart(product));
     }
   };
 };
@@ -184,4 +178,10 @@ module.exports = {
   fetchCart,
   updateForm,
   clearForm,
+  clearUser,
+  fetchUser,
+  login,
+  createOrder,
+  updateOrder,
+  updateCart,
 };

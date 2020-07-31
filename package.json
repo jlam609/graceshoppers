@@ -7,7 +7,19 @@
     "build": "webpack --mode=\"production\"",
     "build:watch": "webpack --watch",
     "start": "node server/index.js",
-    "start:dev": "node-dev --respawn server/index.js"
+    "start:dev": "node-dev --respawn server/index.js",
+    "lint": "eslint --ext .js,.jsx server client",
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
+  },
+  "prettier": {
+    "printWidth": 90,
+    "bracketSpacing": false,
+    "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run format"
+    }
   },
   "repository": {
     "type": "git",
@@ -25,7 +37,17 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "nodemon": "^2.0.4",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
     "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12"
   },
