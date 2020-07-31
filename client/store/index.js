@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
+import {createStore, applyMiddleware, combineReducers} from "redux";
 import thunks from "redux-thunk";
 import TYPES from "./types";
 
@@ -22,15 +22,9 @@ const orderReducer = (
   switch (action.type) {
     case TYPES.GET_ORDERS:
       return {
-        pendingOrders: [
-          ...action.orders.filter((order) => order.status === "pending"),
-        ],
-        activeOrders: [
-          ...action.orders.filter((order) => order.status === "active"),
-        ],
-        doneOrders: [
-          ...action.orders.filter((order) => order.status === "done"),
-        ],
+        pendingOrders: [...action.orders.filter((order) => order.status === "pending")],
+        activeOrders: [...action.orders.filter((order) => order.status === "active")],
+        doneOrders: [...action.orders.filter((order) => order.status === "done")],
       };
     default:
       return state;
@@ -43,8 +37,8 @@ const categoryReducer = (state = [], action) => {
       return [...action.categories];
     case TYPES.ADD_CATEGORY:
       return [...state.categories, action.category];
-    case TYPES.REMOVE_CATEGORY:
-      return [...state.categories.filter(category !== action.category)];
+    case TYPES.RM_CATEGORY:
+      return [...state.categories.filter((category) => category !== action.category)];
     default:
       return state;
   }
@@ -58,12 +52,13 @@ const cartReducer = (
   action
 ) => {
   switch (action.type) {
-    case TYPES.GET_CART:
+    case TYPES.GET_CART: {
       const total = action.cart.reduce((a, b) => a.price + b.price);
       return {
         products: [...action.cart],
-        total: total,
+        total,
       };
+    }
     case TYPES.ADD_TO_CART:
       return {
         products: [...state.products, action.product],
@@ -71,9 +66,7 @@ const cartReducer = (
       };
     case TYPES.RM_FROM_CART:
       return {
-        products: [
-          ...state.products.filter((product) => product !== action.product),
-        ],
+        products: [...state.products.filter((product) => product !== action.product)],
         total: state.total - action.product.price,
       };
     default:
@@ -107,24 +100,23 @@ const formReducer = (
 };
 
 const userReducer = (state = [], action) => {
-	switch (action.type){
-	case TYPES.GET_USER: 
-		return [action.user];
-	case TYPES.CLEAR_USER:
-		return []
-	default:
-	return state
-}
-}
-
+  switch (action.type) {
+    case TYPES.GET_USER:
+      return [action.user];
+    case TYPES.CLEAR_USER:
+      return [];
+    default:
+      return state;
+  }
+};
 
 const masterReducer = combineReducers({
   cart: cartReducer,
   orders: orderReducer,
   products: productReducer,
   categories: categoryReducer,
-  form : formReducer,
-  user : userReducer
+  form: formReducer,
+  user: userReducer,
 });
 
 const store = createStore(masterReducer, applyMiddleware(thunks));
