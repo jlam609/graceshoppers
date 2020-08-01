@@ -276,7 +276,7 @@ const seed = async (force = true) => {
     if (force) {
       await sync();
     }
-    console.log("seed was successful");
+    // console.log("seed was successful");
   } catch (e) {
     throw new Error("seed unsuccessful", e);
   }

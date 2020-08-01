@@ -148,6 +148,27 @@
         /* harmony import */ var _Homepage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
           /*! ./Homepage */ "./client/Components/Homepage.js"
         );
+        /* harmony import */ var _Register__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+          /*! ./Register */ "./client/Components/Register.js"
+        );
+        /* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+          /*! ./Login */ "./client/Components/Login.js"
+        );
+        /* harmony import */ var _Cart__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+          /*! ./Cart */ "./client/Components/Cart.js"
+        );
+        /* harmony import */ var _WeaponPage__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+          /*! ./WeaponPage */ "./client/Components/WeaponPage.js"
+        );
+        /* harmony import */ var _SpellPage__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+          /*! ./SpellPage */ "./client/Components/SpellPage.js"
+        );
+        /* harmony import */ var _ArmorPage__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+          /*! ./ArmorPage */ "./client/Components/ArmorPage.js"
+        );
+        /* harmony import */ var _ItemPage__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+          /*! ./ItemPage */ "./client/Components/ItemPage.js"
+        );
         /* eslint-disable react/no-unescaped-entities */
 
         class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
@@ -170,8 +191,34 @@
                 /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                   react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
                   {
+                    path: "/weapons/:id",
+                    exact: true,
+                    component: _WeaponPage__WEBPACK_IMPORTED_MODULE_13__["default"],
+                    render: ({match}) => {
+                      return {
+                        match,
+                      };
+                    },
+                  }
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
+                  {
                     path: "/weapons",
                     component: _WeaponsList__WEBPACK_IMPORTED_MODULE_4__["default"],
+                  }
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
+                  {
+                    exact: true,
+                    path: "/armor/:id",
+                    component: _ArmorPage__WEBPACK_IMPORTED_MODULE_15__["default"],
+                    render: ({match}) => {
+                      return {
+                        match,
+                      };
+                    },
                   }
                 ),
                 /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -184,8 +231,32 @@
                 /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                   react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
                   {
+                    path: "/magic/:id",
+                    component: _SpellPage__WEBPACK_IMPORTED_MODULE_14__["default"],
+                    render: ({match}) => {
+                      return {
+                        match,
+                      };
+                    },
+                  }
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
+                  {
                     path: "/magic",
                     component: _SpellList__WEBPACK_IMPORTED_MODULE_6__["default"],
+                  }
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
+                  {
+                    path: "/items/:id",
+                    component: _ItemPage__WEBPACK_IMPORTED_MODULE_16__["default"],
+                    render: ({match}) => {
+                      return {
+                        match,
+                      };
+                    },
                   }
                 ),
                 /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -200,6 +271,27 @@
                   {
                     path: "/home",
                     component: _Homepage__WEBPACK_IMPORTED_MODULE_9__["default"],
+                  }
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
+                  {
+                    path: "/cart",
+                    component: _Cart__WEBPACK_IMPORTED_MODULE_12__["default"],
+                  }
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
+                  {
+                    path: "/login",
+                    component: _Login__WEBPACK_IMPORTED_MODULE_11__["default"],
+                  }
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],
+                  {
+                    path: "/register",
+                    component: _Register__WEBPACK_IMPORTED_MODULE_10__["default"],
                   }
                 ),
                 /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -269,17 +361,19 @@
           /*! ./ArmorPage */ "./client/Components/ArmorPage.js"
         );
 
-        class ArmorList extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
-          render() {
-            const {products} = this.props;
-            console.log(products);
+        const ArmorList = ({products}) => {
+          if (products.length) {
             const armors = products.filter((armor) => armor.categoryId === 2);
             return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
               "div",
-              null,
+              {
+                className: "productList",
+              },
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "h1",
-                null,
+                {
+                  className: "header",
+                },
                 "Armor"
               ),
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -302,31 +396,25 @@
                       )
                     );
                   })
-                ),
-                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-                  react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"],
-                  {
-                    path: "/armor/:id",
-                    component: _ArmorPage__WEBPACK_IMPORTED_MODULE_3__["default"],
-                    render: ({match}) => {
-                      return {
-                        match,
-                      };
-                    },
-                  }
                 )
               )
             );
           }
-        }
 
-        const mapStateToProps = ({products}) => ({
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "h1",
+            null,
+            "Armor Loading..."
+          );
+        };
+
+        const mapState = ({products}) => ({
           products,
         });
 
         /* harmony default export */ __webpack_exports__["default"] = Object(
           react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
-        )(mapStateToProps)(ArmorList);
+        )(mapState)(ArmorList);
 
         /***/
       },
@@ -352,11 +440,24 @@
         const ArmorPage = ({match, products}) => {
           const armor = products.filter((product) => product.id === match.params.id);
           const myArmor = armor[0];
+          const quantity = myArmor.quantity;
+
+          const mapQuant = (num) => {
+            for (let i = 0; i <= num.length; i += 1) {
+              return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "option",
+                null,
+                "i"
+              );
+            }
+          };
 
           if (armor.length) {
             return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
               "div",
-              null,
+              {
+                className: "productCard",
+              },
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "h2",
                 null,
@@ -373,8 +474,36 @@
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "img",
                 {
+                  className: "productImg",
                   src: myArmor.image,
                 }
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "br",
+                null
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "select",
+                {
+                  id: "quantity",
+                  name: "quantity",
+                  value: myArmor.id,
+                },
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "option",
+                  {
+                    value: "",
+                  },
+                  "0"
+                ),
+                mapQuant(quantity)
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "button",
+                {
+                  type: "button",
+                },
+                "Add to Cart"
               )
             );
           }
@@ -386,13 +515,135 @@
           );
         };
 
-        const mapStateToProps = (state) => ({
-          products: state.products,
-        });
+        const mapState = ({products}) => {
+          return {
+            products,
+          };
+        };
 
         /* harmony default export */ __webpack_exports__["default"] = Object(
           react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
-        )(mapStateToProps)(ArmorPage);
+        )(mapState)(ArmorPage);
+
+        /***/
+      },
+
+    /***/ "./client/Components/Cart.js":
+      /*!***********************************!*\
+  !*** ./client/Components/Cart.js ***!
+  \***********************************/
+      /*! exports provided: default */
+      /***/ function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+          /*! react */ "./node_modules/react/index.js"
+        );
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(
+          react__WEBPACK_IMPORTED_MODULE_0__
+        );
+        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+          /*! react-redux */ "./node_modules/react-redux/es/index.js"
+        );
+        /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+          /*! ../store/actions */ "./client/store/actions.js"
+        );
+        /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/ __webpack_require__.n(
+          _store_actions__WEBPACK_IMPORTED_MODULE_2__
+        );
+
+        const Cart = ({products, total, removeItem}) => {
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "div",
+            null,
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              "h2",
+              null,
+              " My Shopping Cart "
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              "h4",
+              null,
+              " ",
+              products.length,
+              " Items! "
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              "ul",
+              null,
+              products &&
+                products.map((product) => {
+                  return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    "div",
+                    null,
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      "li",
+                      null,
+                      "product.name"
+                    ),
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      "li",
+                      null,
+                      "product.price"
+                    ),
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      "button",
+                      {
+                        type: "submit",
+                        onClick: (e) => removeItem(e, product),
+                      },
+                      "Remove"
+                    )
+                  );
+                })
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              "div",
+              null,
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "h3",
+                null,
+                "Total"
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "span",
+                null,
+                "$",
+                total
+              )
+            )
+          );
+        };
+
+        const mapState = ({cart}) => {
+          const {products, total} = cart;
+          return {
+            products,
+            total,
+          };
+        };
+
+        const mapDispatch = (dispatch) => {
+          const removeItem = (e, product) => {
+            e.preventDefault();
+            dispatch(
+              Object(_store_actions__WEBPACK_IMPORTED_MODULE_2__["removeFromCart"])(
+                product
+              )
+            );
+          };
+
+          return {
+            removeItem,
+          };
+        };
+
+        /* harmony default export */ __webpack_exports__["default"] = Object(
+          react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
+        )(
+          mapState,
+          mapDispatch
+        )(Cart);
 
         /***/
       },
@@ -561,17 +812,19 @@
           /*! ./ItemPage */ "./client/Components/ItemPage.js"
         );
 
-        class ItemList extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
-          render() {
-            const {products} = this.props;
-            console.log(products);
+        const ItemList = ({products}) => {
+          if (products.length) {
             const items = products.filter((item) => item.categoryId === 4);
             return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
               "div",
-              null,
+              {
+                className: "productList",
+              },
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "h1",
-                null,
+                {
+                  className: "header",
+                },
                 "Items"
               ),
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -594,31 +847,25 @@
                       )
                     );
                   })
-                ),
-                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-                  react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"],
-                  {
-                    path: "/items/:id",
-                    component: _ItemPage__WEBPACK_IMPORTED_MODULE_3__["default"],
-                    render: ({match}) => {
-                      return {
-                        match,
-                      };
-                    },
-                  }
                 )
               )
             );
           }
-        }
 
-        const mapStateToProps = ({products}) => ({
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "h1",
+            null,
+            "Items Loading..."
+          );
+        };
+
+        const mapState = ({products}) => ({
           products,
         });
 
         /* harmony default export */ __webpack_exports__["default"] = Object(
           react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
-        )(mapStateToProps)(ItemList);
+        )(mapState)(ItemList);
 
         /***/
       },
@@ -644,11 +891,24 @@
         const ItemPage = ({match, products}) => {
           const item = products.filter((product) => product.id === match.params.id);
           const myItem = item[0];
+          const quantity = myItem.quantity;
+
+          const mapQuant = (num) => {
+            for (let i = 0; i <= num.length; i += 1) {
+              return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "option",
+                null,
+                "i"
+              );
+            }
+          };
 
           if (item.length) {
             return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
               "div",
-              null,
+              {
+                className: "productCard",
+              },
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "h2",
                 null,
@@ -665,9 +925,37 @@
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "img",
                 {
+                  className: "productImg",
                   src: myItem.image,
                   alt: "",
                 }
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "br",
+                null
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "select",
+                {
+                  id: "quantity",
+                  name: "quantity",
+                  value: myItem.id,
+                },
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "option",
+                  {
+                    value: "",
+                  },
+                  "0"
+                ),
+                mapQuant(quantity)
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "button",
+                {
+                  type: "button",
+                },
+                "Add to Cart"
               )
             );
           }
@@ -679,13 +967,219 @@
           );
         };
 
-        const mapStateToProps = (state) => ({
-          products: state.products,
-        });
+        const mapState = ({products}) => {
+          return {
+            products,
+          };
+        };
 
         /* harmony default export */ __webpack_exports__["default"] = Object(
           react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
-        )(mapStateToProps)(ItemPage);
+        )(mapState)(ItemPage);
+
+        /***/
+      },
+
+    /***/ "./client/Components/Login.js":
+      /*!************************************!*\
+  !*** ./client/Components/Login.js ***!
+  \************************************/
+      /*! exports provided: default */
+      /***/ function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+          /*! react */ "./node_modules/react/index.js"
+        );
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(
+          react__WEBPACK_IMPORTED_MODULE_0__
+        );
+        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+          /*! react-redux */ "./node_modules/react-redux/es/index.js"
+        );
+        /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+          /*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js"
+        );
+        !(function webpackMissingModule() {
+          var e = new Error("Cannot find module '@material-ui/core'");
+          e.code = "MODULE_NOT_FOUND";
+          throw e;
+        })();
+        /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+          /*! axios */ "./node_modules/axios/index.js"
+        );
+        /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/ __webpack_require__.n(
+          axios__WEBPACK_IMPORTED_MODULE_4__
+        );
+        /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+          /*! ../store/actions */ "./client/store/actions.js"
+        );
+        /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/ __webpack_require__.n(
+          _store_actions__WEBPACK_IMPORTED_MODULE_5__
+        );
+
+        const Login = ({
+          username,
+          password,
+          loggedIn,
+          setUsername,
+          setPassword,
+          logInUser,
+          dispatch,
+        }) => {
+          Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+            dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["clearForm"])());
+          }, []);
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "div",
+            null,
+            loggedIn
+              ? /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"],
+                  {
+                    to: "/",
+                  }
+                )
+              : /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "div",
+                  {
+                    className: "form",
+                  },
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    null,
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      !(function webpackMissingModule() {
+                        var e = new Error("Cannot find module '@material-ui/core'");
+                        e.code = "MODULE_NOT_FOUND";
+                        throw e;
+                      })(),
+                      {
+                        value: username,
+                        label: "Username",
+                        onChange: setUsername,
+                        inputProps: {
+                          style: {
+                            textAlign: "center",
+                          },
+                        },
+                      }
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    "br",
+                    null
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    null,
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      !(function webpackMissingModule() {
+                        var e = new Error("Cannot find module '@material-ui/core'");
+                        e.code = "MODULE_NOT_FOUND";
+                        throw e;
+                      })(),
+                      {
+                        value: password,
+                        label: "Password",
+                        onChange: setPassword,
+                        inputProps: {
+                          style: {
+                            textAlign: "center",
+                          },
+                        },
+                      }
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    "br",
+                    null
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    {
+                      variant: "outlined",
+                      onClick: (e) => logInUser(e, username, password),
+                    },
+                    "Login"
+                  )
+                )
+          );
+        };
+
+        const mapState = ({form}) => {
+          const {username, password, loggedIn} = form;
+          return {
+            username,
+            password,
+            loggedIn,
+          };
+        };
+
+        const mapDispatch = (dispatch) => {
+          const setUsername = (e) => {
+            dispatch(
+              Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["updateForm"])(
+                "username",
+                e.target.value
+              )
+            );
+          };
+
+          const setPassword = (e) => {
+            dispatch(
+              Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["updateForm"])(
+                "password",
+                e.target.value
+              )
+            );
+          };
+
+          const logInUser = (e, username, password) => {
+            e.preventDefault();
+
+            if (username.length && password.length) {
+              axios__WEBPACK_IMPORTED_MODULE_4___default.a
+                .post("/login", {
+                  username,
+                  password,
+                })
+                .then((res) => {
+                  console.log(res.data.message);
+                  dispatch(
+                    Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["login"])()
+                  );
+                })
+                .catch((err) => console.error(err));
+            } else alert("All Fields Must Be Completed");
+          };
+
+          return {
+            setUsername,
+            setPassword,
+            logInUser,
+            dispatch,
+          };
+        };
+
+        /* harmony default export */ __webpack_exports__["default"] = Object(
+          react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
+        )(
+          mapState,
+          mapDispatch
+        )(Login);
 
         /***/
       },
@@ -707,8 +1201,33 @@
         /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
           /*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js"
         );
+        !(function webpackMissingModule() {
+          var e = new Error("Cannot find module '@material-ui/core'");
+          e.code = "MODULE_NOT_FOUND";
+          throw e;
+        })();
+        !(function webpackMissingModule() {
+          var e = new Error("Cannot find module '@material-ui/icons/Stars'");
+          e.code = "MODULE_NOT_FOUND";
+          throw e;
+        })();
+        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+          /*! react-redux */ "./node_modules/react-redux/es/index.js"
+        );
+        /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+          /*! axios */ "./node_modules/axios/index.js"
+        );
+        /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/ __webpack_require__.n(
+          axios__WEBPACK_IMPORTED_MODULE_4__
+        );
+        /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+          /*! ../store/actions */ "./client/store/actions.js"
+        );
+        /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/ __webpack_require__.n(
+          _store_actions__WEBPACK_IMPORTED_MODULE_5__
+        );
 
-        const Nav = () => {
+        const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose}) => {
           return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
             "div",
             {
@@ -722,51 +1241,473 @@
               }
             ),
             /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+              !(function webpackMissingModule() {
+                var e = new Error("Cannot find module '@material-ui/core'");
+                e.code = "MODULE_NOT_FOUND";
+                throw e;
+              })(),
               {
-                to: "/home",
+                edge: "start",
+                "aria-label": "menu",
+                color: "inherit",
+                onClick: (e) => toggleMenu(e, toggle),
               },
-              "Home"
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                !(function webpackMissingModule() {
+                  var e = new Error("Cannot find module '@material-ui/icons/Stars'");
+                  e.code = "MODULE_NOT_FOUND";
+                  throw e;
+                })(),
+                null
+              )
             ),
-            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-              {
-                to: "/weapons",
-              },
-              "Weapons"
-            ),
-            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-              {
-                to: "/armor",
-              },
-              "Armor"
-            ),
-            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-              {
-                to: "/magic",
-              },
-              "Magic"
-            ),
-            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-              {
-                to: "/items",
-              },
-              "Items"
-            ),
-            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-              {
-                to: "/cart",
-              },
-              "Cart"
-            )
+            toggle
+              ? /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  !(function webpackMissingModule() {
+                    var e = new Error("Cannot find module '@material-ui/core'");
+                    e.code = "MODULE_NOT_FOUND";
+                    throw e;
+                  })(),
+                  {
+                    className: "list",
+                  },
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    {
+                      onClick: handleClose,
+                    },
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+                      {
+                        to: "/home",
+                      },
+                      "Home"
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    {
+                      onClick: handleClose,
+                    },
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+                      {
+                        to: "/weapons",
+                      },
+                      "Weapons"
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    {
+                      onClick: handleClose,
+                    },
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+                      {
+                        to: "/armor",
+                      },
+                      "Armor"
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    {
+                      onClick: handleClose,
+                    },
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+                      {
+                        to: "/magic",
+                      },
+                      "Magic"
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    {
+                      onClick: handleClose,
+                    },
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+                      {
+                        to: "/items",
+                      },
+                      "Items"
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    {
+                      onClick: handleClose,
+                    },
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+                      {
+                        to: "/cart",
+                      },
+                      "Cart"
+                    )
+                  ),
+                  loggedIn
+                    ? /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                        "div",
+                        null,
+                        " ",
+                        /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                          !(function webpackMissingModule() {
+                            var e = new Error("Cannot find module '@material-ui/core'");
+                            e.code = "MODULE_NOT_FOUND";
+                            throw e;
+                          })(),
+                          null,
+                          /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                            !(function webpackMissingModule() {
+                              var e = new Error("Cannot find module '@material-ui/core'");
+                              e.code = "MODULE_NOT_FOUND";
+                              throw e;
+                            })(),
+                            {
+                              onClick: (e) => logout(e),
+                              className: "menuItem",
+                              variant: "outlined",
+                            },
+                            "Logout"
+                          ),
+                          " "
+                        )
+                      )
+                    : /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                        "div",
+                        null,
+                        /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                          !(function webpackMissingModule() {
+                            var e = new Error("Cannot find module '@material-ui/core'");
+                            e.code = "MODULE_NOT_FOUND";
+                            throw e;
+                          })(),
+                          {
+                            className: "list",
+                          },
+                          /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                            !(function webpackMissingModule() {
+                              var e = new Error("Cannot find module '@material-ui/core'");
+                              e.code = "MODULE_NOT_FOUND";
+                              throw e;
+                            })(),
+                            null,
+                            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+                              {
+                                to: "/login",
+                                className: "menuItem",
+                              },
+                              "Log In"
+                            )
+                          ),
+                          /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                            !(function webpackMissingModule() {
+                              var e = new Error("Cannot find module '@material-ui/core'");
+                              e.code = "MODULE_NOT_FOUND";
+                              throw e;
+                            })(),
+                            null,
+                            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+                              {
+                                to: "/register",
+                                className: "menuItem",
+                              },
+                              "Register"
+                            )
+                          )
+                        )
+                      )
+                )
+              : null
           );
         };
 
-        /* harmony default export */ __webpack_exports__["default"] = Nav;
+        const mapState = ({input, form}) => {
+          const {toggle} = input;
+          const {loggedIn} = form;
+          return {
+            toggle,
+            loggedIn,
+          };
+        };
+
+        const mapDispatch = (dispatch) => {
+          const toggleMenu = (e, toggle) => {
+            e.preventDefault();
+            const newToggle = !toggle;
+            dispatch(
+              Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["updateInput"])(
+                "toggle",
+                newToggle
+              )
+            );
+          };
+
+          const logout = (e) => {
+            e.preventDefault();
+            axios__WEBPACK_IMPORTED_MODULE_4___default.a.delete("/api/logout");
+            dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["clearForm"])());
+            return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"],
+              {
+                to: "/login",
+              }
+            );
+          };
+
+          const handleClose = (e) => {
+            e.preventDefault();
+            dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["clearInput"])());
+          };
+
+          return {
+            toggleMenu,
+            logout,
+            handleClose,
+          };
+        };
+
+        /* harmony default export */ __webpack_exports__["default"] = Object(
+          react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"]
+        )(
+          mapState,
+          mapDispatch
+        )(Nav);
+
+        /***/
+      },
+
+    /***/ "./client/Components/Register.js":
+      /*!***************************************!*\
+  !*** ./client/Components/Register.js ***!
+  \***************************************/
+      /*! exports provided: default */
+      /***/ function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+          /*! react */ "./node_modules/react/index.js"
+        );
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(
+          react__WEBPACK_IMPORTED_MODULE_0__
+        );
+        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+          /*! react-redux */ "./node_modules/react-redux/es/index.js"
+        );
+        /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+          /*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js"
+        );
+        !(function webpackMissingModule() {
+          var e = new Error("Cannot find module '@material-ui/core'");
+          e.code = "MODULE_NOT_FOUND";
+          throw e;
+        })();
+        /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+          /*! axios */ "./node_modules/axios/index.js"
+        );
+        /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/ __webpack_require__.n(
+          axios__WEBPACK_IMPORTED_MODULE_4__
+        );
+        /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+          /*! ../store/actions */ "./client/store/actions.js"
+        );
+        /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/ __webpack_require__.n(
+          _store_actions__WEBPACK_IMPORTED_MODULE_5__
+        );
+
+        const Register = ({
+          username,
+          password,
+          loggedIn,
+          setUsername,
+          setPassword,
+          createUser,
+          dispatch,
+        }) => {
+          Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+            dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["clearForm"])());
+          }, []);
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "div",
+            null,
+            loggedIn
+              ? /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "div",
+                  null,
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"],
+                    {
+                      to: "/",
+                    }
+                  )
+                )
+              : /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "div",
+                  {
+                    className: "form",
+                  },
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    null,
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      !(function webpackMissingModule() {
+                        var e = new Error("Cannot find module '@material-ui/core'");
+                        e.code = "MODULE_NOT_FOUND";
+                        throw e;
+                      })(),
+                      {
+                        value: username,
+                        label: "Username",
+                        onChange: setUsername,
+                        inputProps: {
+                          style: {
+                            textAlign: "center",
+                          },
+                        },
+                      }
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    "br",
+                    null
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    null,
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                      !(function webpackMissingModule() {
+                        var e = new Error("Cannot find module '@material-ui/core'");
+                        e.code = "MODULE_NOT_FOUND";
+                        throw e;
+                      })(),
+                      {
+                        value: password,
+                        label: "Password",
+                        onChange: setPassword,
+                        inputProps: {
+                          style: {
+                            textAlign: "center",
+                          },
+                        },
+                      }
+                    )
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    "br",
+                    null
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    !(function webpackMissingModule() {
+                      var e = new Error("Cannot find module '@material-ui/core'");
+                      e.code = "MODULE_NOT_FOUND";
+                      throw e;
+                    })(),
+                    {
+                      onClick: (e) => createUser(e, username, password),
+                    },
+                    "Create New User"
+                  )
+                )
+          );
+        };
+
+        const mapState = ({form}) => {
+          const {username, password, loggedIn} = form;
+          return {
+            username,
+            password,
+            loggedIn,
+          };
+        };
+
+        const mapDispatch = (dispatch) => {
+          const setUsername = (e) => {
+            dispatch(
+              Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["updateForm"])(
+                "username",
+                e.target.value
+              )
+            );
+          };
+
+          const setPassword = (e) => {
+            dispatch(
+              Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["updateForm"])(
+                "password",
+                e.target.value
+              )
+            );
+          };
+
+          const createUser = (e, username, password) => {
+            if (username.length && password.length) {
+              axios__WEBPACK_IMPORTED_MODULE_4___default.a
+                .post("/api/register", {
+                  username,
+                  password,
+                })
+                .then((res) => {
+                  console.log(res.data.message);
+                  dispatch(
+                    Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["clearForm"])()
+                  );
+                })
+                .catch((err) => console.error(err));
+            }
+          };
+
+          return {
+            setUsername,
+            setPassword,
+            createUser,
+            dispatch,
+          };
+        };
+
+        /* harmony default export */ __webpack_exports__["default"] = Object(
+          react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
+        )(
+          mapState,
+          mapDispatch
+        )(Register);
 
         /***/
       },
@@ -795,17 +1736,19 @@
           /*! ./SpellPage */ "./client/Components/SpellPage.js"
         );
 
-        class SpellList extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
-          render() {
-            const {products} = this.props;
-            console.log(products);
+        const SpellList = ({products}) => {
+          if (products.length) {
             const spells = products.filter((spell) => spell.categoryId === 3);
             return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
               "div",
-              null,
+              {
+                className: "productList",
+              },
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "h1",
-                null,
+                {
+                  className: "header",
+                },
                 "Magic"
               ),
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -828,31 +1771,25 @@
                       )
                     );
                   })
-                ),
-                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-                  react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"],
-                  {
-                    path: "/magic/:id",
-                    component: _SpellPage__WEBPACK_IMPORTED_MODULE_3__["default"],
-                    render: ({match}) => {
-                      return {
-                        match,
-                      };
-                    },
-                  }
                 )
               )
             );
           }
-        }
 
-        const mapStateToProps = ({products}) => ({
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "h1",
+            null,
+            "Spells Loading..."
+          );
+        };
+
+        const mapState = ({products}) => ({
           products,
         });
 
         /* harmony default export */ __webpack_exports__["default"] = Object(
           react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
-        )(mapStateToProps)(SpellList);
+        )(mapState)(SpellList);
 
         /***/
       },
@@ -878,11 +1815,24 @@
         const SpellPage = ({match, products}) => {
           const spell = products.filter((product) => product.id === match.params.id);
           const mySpell = spell[0];
+          const quantity = mySpell.quantity;
+
+          const mapQuant = (num) => {
+            for (let i = 0; i <= num.length; i += 1) {
+              return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "option",
+                null,
+                "i"
+              );
+            }
+          };
 
           if (spell.length) {
             return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
               "div",
-              null,
+              {
+                className: "productCard",
+              },
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "h2",
                 null,
@@ -899,9 +1849,37 @@
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "img",
                 {
+                  className: "productImg",
                   src: mySpell.image,
                   alt: "",
                 }
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "br",
+                null
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "select",
+                {
+                  id: "quantity",
+                  name: "quantity",
+                  value: mySpell.id,
+                },
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "option",
+                  {
+                    value: "",
+                  },
+                  "0"
+                ),
+                mapQuant(quantity)
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "button",
+                {
+                  type: "button",
+                },
+                "Add to Cart"
               )
             );
           }
@@ -909,17 +1887,19 @@
           return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
             "h2",
             null,
-            "Spell Loading"
+            "Spell Loading..."
           );
         };
 
-        const mapStateToProps = (state) => ({
-          products: state.products,
-        });
+        const mapState = ({products}) => {
+          return {
+            products,
+          };
+        };
 
         /* harmony default export */ __webpack_exports__["default"] = Object(
           react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
-        )(mapStateToProps)(SpellPage);
+        )(mapState)(SpellPage);
 
         /***/
       },
@@ -943,33 +1923,82 @@
         );
 
         const WeaponPage = ({match, products}) => {
-          const weapon = products.filter((product) => product.id === match.params.id);
-          const myWeapon = weapon[0];
+          if (products.length) {
+            const weapon = products.filter((product) => product.id === match.params.id);
+            const myWeapon = weapon[0];
+            const quantity = myWeapon.quantity;
 
-          if (weapon.length) {
-            return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-              "div",
-              null,
-              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-                "h2",
-                null,
-                myWeapon.name,
-                "(",
-                myWeapon.price,
-                ")"
-              ),
-              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-                "p",
-                null,
-                myWeapon.description
-              ),
-              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-                "img",
+            const mapQuant = (num) => {
+              for (let i = 0; i <= num.length; i += 1) {
+                return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "option",
+                  null,
+                  "i"
+                );
+              }
+            };
+
+            if (weapon.length) {
+              return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "div",
                 {
-                  src: myWeapon.image,
-                  alt: "",
-                }
-              )
+                  className: "productCard",
+                },
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "h2",
+                  null,
+                  myWeapon.name,
+                  "(",
+                  myWeapon.price,
+                  ")"
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "p",
+                  null,
+                  myWeapon.description
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "img",
+                  {
+                    className: "productImg",
+                    src: myWeapon.image,
+                    alt: "",
+                  }
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "br",
+                  null
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "select",
+                  {
+                    id: "quantity",
+                    name: "quantity",
+                    value: myWeapon.id,
+                  },
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                    "option",
+                    {
+                      value: "",
+                    },
+                    "0"
+                  ),
+                  mapQuant(quantity)
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "button",
+                  {
+                    type: "button",
+                  },
+                  "Add to Cart"
+                )
+              );
+            }
+
+            return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              "h2",
+              null,
+              "WeaponLoading"
             );
           }
 
@@ -980,13 +2009,15 @@
           );
         };
 
-        const mapStateToProps = (state) => ({
-          products: state.products,
-        });
+        const mapState = ({products}) => {
+          return {
+            products,
+          };
+        };
 
         /* harmony default export */ __webpack_exports__["default"] = Object(
           react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
-        )(mapStateToProps)(WeaponPage);
+        )(mapState)(WeaponPage);
 
         /***/
       },
@@ -1011,24 +2042,28 @@
         /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
           /*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js"
         );
-        /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-          /*! ../store/index */ "./client/store/index.js"
-        );
-        /* harmony import */ var _WeaponPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+        /* harmony import */ var _WeaponPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
           /*! ./WeaponPage */ "./client/Components/WeaponPage.js"
         );
 
-        class WeaponsList extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
-          render() {
-            const {products} = this.props;
+        const WeaponsList = ({products, match}) => {
+          if (products.length) {
             const weapons = products.filter((weapon) => weapon.categoryId === 1);
             return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
               "div",
-              null,
+              {
+                className: "productList",
+              },
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-                "h1",
-                null,
-                "Weapons"
+                "div",
+                {
+                  className: "header",
+                },
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                  "h1",
+                  null,
+                  "Weapons"
+                )
               ),
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "div",
@@ -1046,35 +2081,32 @@
                           to: `/weapons/${weapon.id}`,
                           key: weapon.id,
                         },
-                        weapon.name
+                        weapon.name,
+                        " (",
+                        weapon.price,
+                        ")"
                       )
                     );
                   })
-                ),
-                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-                  react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"],
-                  {
-                    path: "/weapons/:id",
-                    component: _WeaponPage__WEBPACK_IMPORTED_MODULE_4__["default"],
-                    render: ({match}) => {
-                      return {
-                        match,
-                      };
-                    },
-                  }
                 )
               )
             );
           }
-        }
 
-        const mapStateToProps = ({products}) => ({
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "h1",
+            null,
+            "Weapons Loading..."
+          );
+        };
+
+        const mapState = ({products}) => ({
           products,
         });
 
         /* harmony default export */ __webpack_exports__["default"] = Object(
           react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"]
-        )(mapStateToProps)(WeaponsList);
+        )(mapState)(WeaponsList);
 
         /***/
       },
@@ -1188,7 +2220,6 @@
         const fetchProducts = () => {
           return async (dispatch) => {
             const {products} = (await axios.get("/api/products")).data;
-            console.log(products);
             return dispatch(getProducts(products));
           };
         };
@@ -1252,11 +2283,8 @@
             if (user) {
               await dispatch(getUser(user));
               await dispatch(fetchOrders(user.id));
-              await dispatch(fetchCart(user.id));
-              return alert(`${message}`);
-            }
-
-            return alert(`${message}`);
+              await dispatch(fetchCart(user.id)); // return alert(`${message}`);
+            } // return alert(`${message}`);
           };
         };
 
@@ -1321,6 +2349,16 @@
           };
         };
 
+        const updateInput = (name, value) => ({
+          type: TYPES.UPDATE_INPUT,
+          name,
+          value,
+        });
+
+        const clearInput = () => ({
+          type: TYPES.CLEAR_INPUT,
+        });
+
         module.exports = {
           getProducts,
           getOrders,
@@ -1342,6 +2380,8 @@
           createOrder,
           updateOrder,
           updateCart,
+          updateInput,
+          clearInput,
         };
 
         /***/
@@ -1366,6 +2406,12 @@
         );
         /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/ __webpack_require__.n(
           _types__WEBPACK_IMPORTED_MODULE_2__
+        );
+        /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+          /*! ./actions */ "./client/store/actions.js"
+        );
+        /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/ __webpack_require__.n(
+          _actions__WEBPACK_IMPORTED_MODULE_3__
         );
 
         const productReducer = (state = {}, action) => {
@@ -1493,6 +2539,28 @@
           }
         };
 
+        const inputReducer = (
+          state = {
+            toggle: false,
+            filter: "",
+          },
+          action
+        ) => {
+          switch (action.type) {
+            case _types__WEBPACK_IMPORTED_MODULE_2___default.a.UPDATE_INPUT:
+              return {...state, [action.name]: action.value};
+
+            case _types__WEBPACK_IMPORTED_MODULE_2___default.a.CLEAR_INPUT:
+              return {
+                toggle: false,
+                filter: "",
+              };
+
+            default:
+              return state;
+          }
+        };
+
         const masterReducer = Object(
           redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
         )({
@@ -1502,6 +2570,7 @@
           categories: categoryReducer,
           form: formReducer,
           user: userReducer,
+          input: inputReducer,
         });
         const store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(
           masterReducer,
@@ -1536,6 +2605,8 @@
           GET_USER: "GET_USER",
           SET_ORDER: "SET_ORDER",
           CLEAR_USER: "CLEAR_USER",
+          UPDATE_INPUT: "UPDATE_INPUT",
+          CLEAR_INPUT: "CLEAR_INPUT",
         };
         module.exports = TYPES;
 

@@ -1,6 +1,7 @@
 import {createStore, applyMiddleware, combineReducers} from "redux";
 import thunks from "redux-thunk";
 import TYPES from "./types";
+import {updateInput} from "./actions";
 
 const productReducer = (state = {}, action) => {
   switch (action.type) {
@@ -110,6 +111,29 @@ const userReducer = (state = [], action) => {
   }
 };
 
+const inputReducer = (
+  state = {
+    toggle: false,
+    filter: "",
+  },
+  action
+) => {
+  switch (action.type) {
+    case TYPES.UPDATE_INPUT:
+      return {
+        ...state,
+        [action.name]: action.value,
+      };
+    case TYPES.CLEAR_INPUT:
+      return {
+        toggle: false,
+        filter: "",
+      };
+    default:
+      return state;
+  }
+};
+
 const masterReducer = combineReducers({
   cart: cartReducer,
   orders: orderReducer,
@@ -117,6 +141,7 @@ const masterReducer = combineReducers({
   categories: categoryReducer,
   form: formReducer,
   user: userReducer,
+  input: inputReducer,
 });
 
 const store = createStore(masterReducer, applyMiddleware(thunks));

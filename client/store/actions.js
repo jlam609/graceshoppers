@@ -44,7 +44,6 @@ const removeFromCart = (product) => ({
 const fetchProducts = () => {
   return async (dispatch) => {
     const {products} = (await axios.get("/api/products")).data;
-    console.log(products);
     return dispatch(getProducts(products));
   };
 };
@@ -105,9 +104,9 @@ const login = (userObj) => {
       await dispatch(getUser(user));
       await dispatch(fetchOrders(user.id));
       await dispatch(fetchCart(user.id));
-      return alert(`${message}`);
+      // return alert(`${message}`);
     }
-    return alert(`${message}`);
+    // return alert(`${message}`);
   };
 };
 
@@ -163,6 +162,16 @@ const updateCart = (mode = "add", orderId, product, quantity) => {
   };
 };
 
+const updateInput = (name, value) => ({
+  type: TYPES.UPDATE_INPUT,
+  name,
+  value,
+});
+
+const clearInput = () => ({
+  type: TYPES.CLEAR_INPUT,
+});
+
 module.exports = {
   getProducts,
   getOrders,
@@ -184,4 +193,6 @@ module.exports = {
   createOrder,
   updateOrder,
   updateCart,
+  updateInput,
+  clearInput,
 };

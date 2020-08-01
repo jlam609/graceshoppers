@@ -1,41 +1,35 @@
-import React, {Component} from "react";
+import React from "react";
 import {connect} from "react-redux";
-import {Link, Route} from "react-router-dom";
-import store from "../store/index";
+import {Link, Route, Switch, Redirect} from "react-router-dom";
 import WeaponPage from "./WeaponPage";
 
-class WeaponsList extends Component {
-  render() {
-    const {products} = this.props;
+const WeaponsList = ({products, match}) => {
+  if (products.length) {
     const weapons = products.filter((weapon) => weapon.categoryId === 1);
     return (
-      <div>
-        <h1>Weapons</h1>
+      <div className="productList">
+        <div className="header">
+          <h1>Weapons</h1>
+        </div>
         <div>
           <ul>
             {weapons.map((weapon) => {
               return (
                 <div>
                   <Link to={`/weapons/${weapon.id}`} key={weapon.id}>
-                    {weapon.name}
+                    {weapon.name} ({weapon.price})
                   </Link>
                 </div>
               );
             })}
           </ul>
-          <Route
-            path="/weapons/:id"
-            component={WeaponPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
         </div>
       </div>
     );
   }
-}
+  return <h1>Weapons Loading...</h1>;
+};
 
-const mapStateToProps = ({products}) => ({products});
+const mapState = ({products}) => ({products});
 
-export default connect(mapStateToProps)(WeaponsList);
+export default connect(mapState)(WeaponsList);
