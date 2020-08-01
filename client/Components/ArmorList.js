@@ -1,16 +1,14 @@
-import React, {Component} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import {Link, Route} from "react-router-dom";
 import ArmorPage from "./ArmorPage";
 
-class ArmorList extends Component {
-  render() {
-    const {products} = this.props;
-    console.log(products);
+const ArmorList = ({products}) => {
+  if (products.length) {
     const armors = products.filter((armor) => armor.categoryId === 2);
     return (
-      <div>
-        <h1>Armor</h1>
+      <div className="productList">
+        <h1 className="header">Armor</h1>
         <div>
           <ul>
             {armors.map((armor) => {
@@ -23,19 +21,13 @@ class ArmorList extends Component {
               );
             })}
           </ul>
-          <Route
-            path="/armor/:id"
-            component={ArmorPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
         </div>
       </div>
     );
   }
-}
+  return <h1>Armor Loading...</h1>;
+};
 
-const mapStateToProps = ({products}) => ({products});
+const mapState = ({products}) => ({products});
 
-export default connect(mapStateToProps)(ArmorList);
+export default connect(mapState)(ArmorList);

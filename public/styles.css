@@ -75,3 +75,52 @@
   justify-content: space-evenly;
   text-align: center;
 }
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  column-count: 2;
+  padding: 30px; 
+  justify-content: space-evenly;
+  text-align: left;
+  width: 70%;
+  height: auto;
+  position: absolute;
+  color: darkslateblue;
+  background-image: url("./openbook.jpg");
+  background-size: cover;
+  border-radius: 8px;
+}
+
+.productCard {
+  margin-top: 100px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 200px;
+  background-color: antiquewhite;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding: 50px;
+  color: darkslateblue;
+  border: 3px solid blueviolet;
+}
+
+.pCardImage {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 75%;
+  justify-content: center;
+} 
+
+.productImg {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 80%;
+  justify-content: center;
+}
