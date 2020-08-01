@@ -425,7 +425,7 @@
               "img",
               {
                 className: "shopKeep",
-                src: "./Shopkeep_Outline.png",
+                src: "./Shopkeep.png",
                 alt: "",
               }
             ),
@@ -710,8 +710,17 @@
 
         const Nav = () => {
           return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-            "nav",
-            null,
+            "div",
+            {
+              className: "nav",
+            },
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              "img",
+              {
+                src: "./Tacks_Sign.png",
+                className: "logo",
+              }
+            ),
             /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
               react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
               {

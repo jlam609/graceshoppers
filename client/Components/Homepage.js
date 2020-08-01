@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="home">
-      <img className="shopKeep" src="./Shopkeep_Outline.png" alt="" />
+      <img className="shopKeep" src="./Shopkeep.png" alt="" />
       <div className="bookContainer">
         <div>
           <img className="book" src="./Blue_Book.png" alt="" />
