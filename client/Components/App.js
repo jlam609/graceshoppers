@@ -19,24 +19,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Tack's RNGeneral Store</h1>
         <Nav />
         <Switch>
-<<<<<<< HEAD
-             <Route path='/weapons' component = {WeaponsList}/> 
-             <Route path='/armor' component = {ArmorList}/>
-             <Route path='/magic' component = {SpellList} />
-             <Route path='/items' component = {ItemList} />
-            <Route path='/home' component={ HomePage }></Route>
-            <Redirect to='/home'/>
-=======
           <Route path="/weapons" component={WeaponsList} />
           <Route path="/armor" component={ArmorList} />
           <Route path="/magic" component={SpellList} />
           <Route path="/items" component={ItemList} />
           <Route path="/home" component={HomePage} />
           <Redirect to="/home" />
->>>>>>> dd167a5c3bfa814ff622d08a2e3a2f198a11fa23
         </Switch>
       </div>
     );
