@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link, Route, Switch, Redirect} from "react-router-dom";
-import WeaponPage from "./WeaponPage";
 
 const WeaponsList = ({products, match}) => {
   if (products.length) {
@@ -15,7 +14,7 @@ const WeaponsList = ({products, match}) => {
           <ul>
             {weapons.map((weapon) => {
               return (
-                <div>
+                <div key={weapon.id}>
                   <Link to={`/weapons/${weapon.id}`} key={weapon.id}>
                     {weapon.name} ({weapon.price})
                   </Link>

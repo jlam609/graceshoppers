@@ -133,101 +133,93 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
-  async componentDidMount() {
-    await this.props.fetchProducts();
-    await this.props.fetchCategories();
-  }
+const App = ({
+  products,
+  categories,
+  loggedIn,
+  dispatch,
+  user
+}) => {
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    const getData = async () => {
+      await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchCategories"])());
+      await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchProducts"])());
 
-  render() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_8__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/weapons/:id",
-      exact: true,
-      component: _WeaponPage__WEBPACK_IMPORTED_MODULE_13__["default"],
-      render: ({
-        match
-      }) => {
-        return {
-          match
-        };
-      }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/weapons",
-      component: _WeaponsList__WEBPACK_IMPORTED_MODULE_4__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      exact: true,
-      path: "/armor/:id",
-      component: _ArmorPage__WEBPACK_IMPORTED_MODULE_15__["default"],
-      render: ({
-        match
-      }) => {
-        return {
-          match
-        };
-      }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/armor",
-      component: _ArmorList__WEBPACK_IMPORTED_MODULE_5__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/magic/:id",
-      component: _SpellPage__WEBPACK_IMPORTED_MODULE_14__["default"],
-      render: ({
-        match
-      }) => {
-        return {
-          match
-        };
-      }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/magic",
-      component: _SpellList__WEBPACK_IMPORTED_MODULE_6__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/items/:id",
-      component: _ItemPage__WEBPACK_IMPORTED_MODULE_16__["default"],
-      render: ({
-        match
-      }) => {
-        return {
-          match
-        };
-      }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/items",
-      component: _ItemList__WEBPACK_IMPORTED_MODULE_7__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/home",
-      component: _Homepage__WEBPACK_IMPORTED_MODULE_9__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/cart",
-      component: _Cart__WEBPACK_IMPORTED_MODULE_12__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/login",
-      component: _Login__WEBPACK_IMPORTED_MODULE_11__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-      path: "/register",
-      component: _Register__WEBPACK_IMPORTED_MODULE_10__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
-      to: "/home"
-    })));
-  }
+      if (!loggedIn) {
+        try {
+          await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUser"])());
 
-}
+          if (user) {
+            dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["updateForm"])("loggedIn", true));
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
 
-const mapStateToProps = state => {
+    getData();
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_8__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/home",
+    component: _Homepage__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/magic/:id",
+    component: _SpellPage__WEBPACK_IMPORTED_MODULE_14__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/items/:id",
+    component: _ItemPage__WEBPACK_IMPORTED_MODULE_16__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/weapons/:id",
+    component: _WeaponPage__WEBPACK_IMPORTED_MODULE_13__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/armor/:id",
+    component: _ArmorPage__WEBPACK_IMPORTED_MODULE_15__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/weapons",
+    component: _WeaponsList__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/armor",
+    component: _ArmorList__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/magic",
+    component: _SpellList__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/items",
+    component: _ItemList__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/cart",
+    component: _Cart__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/login",
+    component: _Login__WEBPACK_IMPORTED_MODULE_11__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/register",
+    component: _Register__WEBPACK_IMPORTED_MODULE_10__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+    to: "/home"
+  })));
+};
+
+const mapStateToProps = ({
+  products,
+  categories,
+  form,
+  user
+}) => {
+  const {
+    loggedIn
+  } = form;
   return {
-    products: state.products,
-    categories: state.categories
+    products,
+    categories,
+    user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: () => {
-      dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchProducts"])());
-    },
-    fetchCategories: () => {
-      dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchCategories"])());
-    }
+    dispatch
   };
 };
 
@@ -264,7 +256,9 @@ const ArmorList = ({
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
       className: "header"
     }, "Armor"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, armors.map(armor => {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        key: armor.id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: `/armor/${armor.id}`,
         key: armor.id
       }, armor.name));
@@ -477,8 +471,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _ItemPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ItemPage */ "./client/Components/ItemPage.js");
-
 
 
 
@@ -493,7 +485,9 @@ const ItemList = ({
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
       className: "header"
     }, "Items"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, items.map(item => {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        key: item.id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: `/items/${item.id}`,
         key: item.id
       }, item.name));
@@ -668,13 +662,12 @@ const mapDispatch = dispatch => {
     e.preventDefault();
 
     if (username.length && password.length) {
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.post("/login", {
+      console.log(username, password);
+      dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["login"])({
         username,
         password
-      }).then(res => {
-        console.log(res.data.message);
-        dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["login"])());
-      }).catch(err => console.error(err));
+      }));
+      dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_5__["updateForm"])("loggedIn", true));
     } else alert("All Fields Must Be Completed");
   };
 
@@ -801,7 +794,7 @@ const mapDispatch = dispatch => {
 
   const logout = e => {
     e.preventDefault();
-    axios__WEBPACK_IMPORTED_MODULE_5___default.a.delete("/api/logout");
+    axios__WEBPACK_IMPORTED_MODULE_5___default.a.delete("/api/auth/logout");
     dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_6__["clearForm"])());
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
       to: "/login"
@@ -914,7 +907,7 @@ const mapDispatch = dispatch => {
 
   const createUser = (e, username, password) => {
     if (username.length && password.length) {
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.post("/api/register", {
+      axios__WEBPACK_IMPORTED_MODULE_4___default.a.post("/api/auth/register", {
         username,
         password
       }).then(res => {
@@ -965,7 +958,9 @@ const SpellList = ({
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
       className: "header"
     }, "Magic"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, spells.map(spell => {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        key: spell.id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: `/magic/${spell.id}`,
         key: spell.id
       }, spell.name));
@@ -1059,39 +1054,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/actions */ "./client/store/actions.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_store_actions__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
 const WeaponPage = ({
   match,
-  products
+  products,
+  quantity,
+  order,
+  updateQuantity,
+  addToCart
 }) => {
   if (products.length) {
-    const weapon = products.filter(product => product.id === match.params.id);
-    const myWeapon = weapon[0];
-    const quantity = myWeapon.quantity;
+    const weapon = products.find(product => product.id === match.params.id);
 
     const mapQuant = num => {
-      for (let i = 0; i <= num.length; i += 1) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "i");
+      const map = [];
+
+      for (let i = 0; i <= num; i += 1) {
+        map.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: i
+        }, i));
       }
+
+      return map;
     };
 
-    if (weapon.length) {
+    if (weapon) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "productCard"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, myWeapon.name, "(", myWeapon.price, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, myWeapon.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, weapon.name, "(", weapon.price, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, weapon.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "productImg",
-        src: myWeapon.image,
+        src: weapon.image,
         alt: ""
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         id: "quantity",
         name: "quantity",
-        value: myWeapon.id
+        value: quantity,
+        onChange: e => updateQuantity(e)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: ""
-      }, "0"), mapQuant(quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "button"
+      }, "0"), mapQuant(weapon.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: e => addToCart(e, order, weapon, quantity)
       }, "Add to Cart"));
     }
 
@@ -1102,14 +1110,38 @@ const WeaponPage = ({
 };
 
 const mapState = ({
-  products
+  products,
+  input,
+  order
 }) => {
+  const {
+    quantity
+  } = input;
   return {
-    products
+    products,
+    quantity,
+    order
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState)(WeaponPage));
+const mapDispatch = dispatch => {
+  const updateQuantity = e => {
+    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_2__["updateInput"])("quantity", e.target.value));
+  };
+
+  const addToCart = (e, order, weapon, quantity) => {
+    e.preventDefault();
+    console.log(order, weapon, quantity);
+  };
+
+  return {
+    dispatch,
+    updateQuantity,
+    addToCart
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(WeaponPage));
 
 /***/ }),
 
@@ -1126,8 +1158,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _WeaponPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./WeaponPage */ "./client/Components/WeaponPage.js");
-
 
 
 
@@ -1143,7 +1173,9 @@ const WeaponsList = ({
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "header"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Weapons")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, weapons.map(weapon => {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        key: weapon.id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: `/weapons/${weapon.id}`,
         key: weapon.id
       }, weapon.name, " (", weapon.price, ")"));
@@ -1306,9 +1338,9 @@ const fetchUser = () => {
     } = (await axios.get(`/api/auth/login`)).data;
 
     if (user) {
-      await dispatch(getUser(user));
-      await dispatch(fetchCart(user.id));
-      await dispatch(fetchOrders(user.id));
+      console.log(user);
+      await dispatch(getUser(user)); // await dispatch(fetchCart(user.id));
+      // await dispatch(fetchOrders(user.id));
     }
   };
 };
@@ -1323,9 +1355,11 @@ const login = userObj => {
     if (user) {
       await dispatch(getUser(user));
       await dispatch(fetchOrders(user.id));
-      await dispatch(fetchCart(user.id)); // return alert(`${message}`);
-    } // return alert(`${message}`);
+      await dispatch(fetchCart(user.id));
+      return alert(`${message}`);
+    }
 
+    return alert(`${message}`);
   };
 };
 
@@ -1562,7 +1596,8 @@ const userReducer = (state = [], action) => {
 
 const inputReducer = (state = {
   toggle: false,
-  filter: ""
+  filter: "",
+  quantity: 0
 }, action) => {
   switch (action.type) {
     case _types__WEBPACK_IMPORTED_MODULE_2___default.a.UPDATE_INPUT:

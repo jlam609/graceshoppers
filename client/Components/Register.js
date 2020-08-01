@@ -72,7 +72,7 @@ const mapDispatch = (dispatch) => {
   const createUser = (e, username, password) => {
     if (username.length && password.length) {
       axios
-        .post("/api/register", {username, password})
+        .post("/api/auth/register", {username, password})
         .then((res) => {
           console.log(res.data.message);
           dispatch(clearForm());

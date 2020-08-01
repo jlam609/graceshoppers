@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, {Component} from "react";
+import React, {useEffect} from "react";
 import {Route, Switch, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {fetchCategories, fetchProducts} from "../store/actions";
+import {fetchCategories, fetchProducts, fetchUser, updateForm} from "../store/actions";
 import WeaponsList from "./WeaponsList";
 import ArmorList from "./ArmorList";
 import SpellList from "./SpellList";
@@ -17,77 +17,59 @@ import SpellPage from "./SpellPage";
 import ArmorPage from "./ArmorPage";
 import ItemPage from "./ItemPage";
 
-class App extends Component {
-  async componentDidMount() {
-    await this.props.fetchProducts();
-    await this.props.fetchCategories();
-  }
+const App = ({products, categories, loggedIn, dispatch, user}) => {
+  useEffect(() => {
+    const getData = async () => {
+      await dispatch(fetchCategories());
+      await dispatch(fetchProducts());
+      if (!loggedIn) {
+        try {
+          await dispatch(fetchUser());
+          if (user) {
+            dispatch(updateForm("loggedIn", true));
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    getData();
+  }, []);
 
-  render() {
-    return (
-      <div>
-        <Nav />
-        <Switch>
-          <Route
-            path="/weapons/:id"
-            exact
-            component={WeaponPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
-          <Route path="/weapons" component={WeaponsList} />
-          <Route
-            exact
-            path="/armor/:id"
-            component={ArmorPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
-          <Route path="/armor" component={ArmorList} />
-          <Route
-            path="/magic/:id"
-            component={SpellPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
-          <Route path="/magic" component={SpellList} />
-          <Route
-            path="/items/:id"
-            component={ItemPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
-          <Route path="/items" component={ItemList} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Redirect to="/home" />
-        </Switch>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Nav />
+      <Switch>
+        <Route path="/home" component={HomePage} />
+        <Route path="/magic/:id" component={SpellPage} />
+        <Route path="/items/:id" component={ItemPage} />
+        <Route path="/weapons/:id" component={WeaponPage} />
+        <Route path="/armor/:id" component={ArmorPage} />
+        <Route path="/weapons" component={WeaponsList} />
+        <Route path="/armor" component={ArmorList} />
+        <Route path="/magic" component={SpellList} />
+        <Route path="/items" component={ItemList} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Redirect to="/home" />
+      </Switch>
+    </div>
+  );
+};
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({products, categories, form, user}) => {
+  const {loggedIn} = form;
   return {
-    products: state.products,
-    categories: state.categories,
+    products,
+    categories,
+    user,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchProducts: () => {
-      dispatch(fetchProducts());
-    },
-    fetchCategories: () => {
-      dispatch(fetchCategories());
-    },
+    dispatch,
   };
 };
 

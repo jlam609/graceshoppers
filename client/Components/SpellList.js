@@ -13,7 +13,7 @@ const SpellList = ({products}) => {
           <ul>
             {spells.map((spell) => {
               return (
-                <div>
+                <div key={spell.id}>
                   <Link to={`/magic/${spell.id}`} key={spell.id}>
                     {spell.name}
                   </Link>
