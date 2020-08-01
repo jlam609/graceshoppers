@@ -1,16 +1,14 @@
-import React, {Component} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import {Link, Route} from "react-router-dom";
 import SpellPage from "./SpellPage";
 
-class SpellList extends Component {
-  render() {
-    const {products} = this.props;
-    console.log(products);
+const SpellList = ({products}) => {
+  if (products.length) {
     const spells = products.filter((spell) => spell.categoryId === 3);
     return (
-      <div>
-        <h1>Magic</h1>
+      <div className="productList">
+        <h1 className="header">Magic</h1>
         <div>
           <ul>
             {spells.map((spell) => {
@@ -23,19 +21,13 @@ class SpellList extends Component {
               );
             })}
           </ul>
-          <Route
-            path="/magic/:id"
-            component={SpellPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
         </div>
       </div>
     );
   }
-}
+  return <h1>Spells Loading...</h1>;
+};
 
-const mapStateToProps = ({products}) => ({products});
+const mapState = ({products}) => ({products});
 
-export default connect(mapStateToProps)(SpellList);
+export default connect(mapState)(SpellList);
