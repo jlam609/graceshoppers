@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Link, Route} from "react-router-dom";
-import ItemPage from "./ItemPage";
+import {Link} from "react-router-dom";
 
 const ItemList = ({products}) => {
   if (products.length) {
@@ -13,7 +12,7 @@ const ItemList = ({products}) => {
           <ul>
             {items.map((item) => {
               return (
-                <div>
+                <div key={item.id}>
                   <Link to={`/items/${item.id}`} key={item.id}>
                     {item.name}
                   </Link>

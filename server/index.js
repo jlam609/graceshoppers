@@ -59,10 +59,9 @@ app.use(async (req, res, next) => {
     next();
   }
 });
-
+app.use(express.static(path.join(__dirname, "../assets")));
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.static(path.join(__dirname, "../dist")));
-app.use(express.static(path.join(__dirname, "../assets")));
 
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
@@ -85,4 +84,4 @@ const startServer = () =>
     });
   });
 
-seed(true).then(startServer);
+seed(false).then(startServer);

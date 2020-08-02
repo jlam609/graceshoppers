@@ -90,9 +90,10 @@ const fetchUser = () => {
   return async (dispatch) => {
     const {user} = (await axios.get(`/api/auth/login`)).data;
     if (user) {
+      console.log(user);
       await dispatch(getUser(user));
-      await dispatch(fetchCart(user.id));
-      await dispatch(fetchOrders(user.id));
+      // await dispatch(fetchCart(user.id));
+      // await dispatch(fetchOrders(user.id));
     }
   };
 };
@@ -104,9 +105,9 @@ const login = (userObj) => {
       await dispatch(getUser(user));
       await dispatch(fetchOrders(user.id));
       await dispatch(fetchCart(user.id));
-      // return alert(`${message}`);
+      return alert(`${message}`);
     }
-    // return alert(`${message}`);
+    return alert(`${message}`);
   };
 };
 

@@ -29,6 +29,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  min-width: 30%;
+  width: 500px;
 }
 
 .shopKeep {
@@ -82,19 +84,16 @@
   flex-direction: column;
   font-family: sans-serif;
   margin-top: 100px;
-  margin-left: auto;
-  margin-right: auto;
   column-count: 2;
-  padding: 30px;
-  justify-content: space-evenly;
-  text-align: left;
-  width: 70%;
-  height: auto;
+  padding: 50px;
+  align-items: flex-start;
+  width: 600px;
   position: absolute;
   color: darkslateblue;
   background-image: url("./openbook.jpg");
   background-size: cover;
   border-radius: 8px;
+  background-position: left;
 }
 
 .productCard {

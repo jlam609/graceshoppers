@@ -115,6 +115,7 @@ const inputReducer = (
   state = {
     toggle: false,
     filter: "",
+    quantity: 0,
   },
   action
 ) => {
