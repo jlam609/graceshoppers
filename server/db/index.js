@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const {db, models} = require("./models");
 
 const {Cart, Category, Order, Product, Session, User} = models;
@@ -262,10 +263,12 @@ const sync = async () => {
   await armorList.map((armor) => Product.create(armor));
   await spellList.map((spell) => Product.create(spell));
   await itemList.map((item) => Product.create(item));
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync("password", salt);
   await User.create({
     username: "admin@fullstack.com",
-    password: "password",
-    salt: "salt",
+    password: hash,
+    salt,
     clearance: 5,
   });
 };

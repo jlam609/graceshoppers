@@ -13,7 +13,7 @@ const ArmorList = ({products}) => {
           <ul>
             {armors.map((armor) => {
               return (
-                <div>
+                <div key={armor.id}>
                   <Link to={`/armor/${armor.id}`} key={armor.id}>
                     {armor.name}
                   </Link>

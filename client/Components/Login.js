@@ -70,13 +70,9 @@ const mapDispatch = (dispatch) => {
   const logInUser = (e, username, password) => {
     e.preventDefault();
     if (username.length && password.length) {
-      axios
-        .post("/login", {username, password})
-        .then((res) => {
-          console.log(res.data.message);
-          dispatch(login());
-        })
-        .catch((err) => console.error(err));
+      console.log(username, password);
+      dispatch(login({username, password}));
+      dispatch(updateForm("loggedIn", true));
     } else alert("All Fields Must Be Completed");
   };
   return {

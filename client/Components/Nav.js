@@ -91,7 +91,7 @@ const mapDispatch = (dispatch) => {
   };
   const logout = (e) => {
     e.preventDefault();
-    Axios.delete("/api/logout");
+    Axios.delete("/api/auth/logout");
     dispatch(clearForm());
     return <Redirect to="/login" />;
   };
