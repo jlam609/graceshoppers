@@ -27,7 +27,7 @@ const WeaponPage = ({match, products, quantity, order, updateQuantity, addToCart
             value={quantity}
             onChange={(e) => updateQuantity(e)}
           >
-            <option value="">0</option>
+            <option value="">—</option>
             {mapQuant(weapon.quantity)}
           </select>
           <button type="button" onClick={(e) => addToCart(e, order, weapon, quantity)}>
