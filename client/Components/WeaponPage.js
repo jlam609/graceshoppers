@@ -1,13 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
-import {updateInput, clearInput} from "../store/actions";
+import {updateInput, clearInput, updateCart, fetchCart} from "../store/actions";
 
-const WeaponPage = ({match, products, quantity, order, updateQuantity, addToCart}) => {
+const WeaponPage = ({
+  match,
+  products,
+  quantity,
+  activeOrders,
+  updateQuantity,
+  addToCart,
+}) => {
   if (products.length) {
     const weapon = products.find((product) => product.id === match.params.id);
     const mapQuant = (num) => {
       const map = [];
-      for (let i = 0; i <= num; i += 1) {
+      for (let i = 1; i <= num; i++) {
         map.push(<option key={i}>{i}</option>);
       }
       return map;
@@ -30,7 +37,10 @@ const WeaponPage = ({match, products, quantity, order, updateQuantity, addToCart
             <option value="">0</option>
             {mapQuant(weapon.quantity)}
           </select>
-          <button type="button" onClick={(e) => addToCart(e, order, weapon, quantity)}>
+          <button
+            type="button"
+            onClick={(e) => addToCart(e, activeOrders, weapon, quantity)}
+          >
             Add to Cart
           </button>
         </div>
@@ -40,12 +50,13 @@ const WeaponPage = ({match, products, quantity, order, updateQuantity, addToCart
   }
   return <h2>WeaponLoading</h2>;
 };
-const mapState = ({products, input, order}) => {
+const mapState = ({products, input, orders}) => {
   const {quantity} = input;
+  const {activeOrders} = orders;
   return {
     products,
     quantity,
-    order,
+    activeOrders,
   };
 };
 
@@ -55,7 +66,7 @@ const mapDispatch = (dispatch) => {
   };
   const addToCart = (e, order, weapon, quantity) => {
     e.preventDefault();
-    console.log(order, weapon, quantity);
+    dispatch(updateCart("add", order.id, weapon, quantity));
   };
   return {
     dispatch,
