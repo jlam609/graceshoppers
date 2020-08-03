@@ -1,17 +1,29 @@
 const cartRouter = require("express").Router();
 const {
-  models: {Cart},
-} = require("../db/models");
+  models: {Cart, Product, Order},
+} = require("../db");
 
 cartRouter.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const products = Cart.findAll({
+    const cart = await Cart.findAll({
       where: {
         orderId: id,
       },
     });
-    res.status(200).send({products});
+    const products = await Product.findAll({
+      include: [
+        {
+          model: Order,
+          where: {
+            id: id,
+          },
+        },
+      ],
+    });
+    if (cart.length) {
+      res.status(200).send({cart, products});
+    }
   } catch (e) {
     res.status(500).send(e);
   }
@@ -19,20 +31,34 @@ cartRouter.get("/:id", async (req, res) => {
 
 cartRouter.put("/:id", async (req, res) => {
   try {
-    const {productId, orderId, quantity} = req.body;
-    const product = await Cart.findOne({
+    const id = req.params.id;
+    const {productId, quantity} = req.body;
+    console.log(id, productId, quantity);
+    const cart = await Cart.findAll({
       where: {
-        productId,
-        orderId,
+        productId: productId,
+        orderId: id,
       },
     });
-    if (!product)
-      await Cart.create({
+    if (!cart.length) {
+      const cartItem = await Cart.create({
+        quantity,
         productId,
-        orderId,
+        orderId: id,
       });
-    product.quantity = quantity;
-    await product.save();
+    } else if (cart.length) {
+      await Cart.update(
+        {
+          quantity: parseInt(quantity, 10) + cart[0].dataValues.quantity,
+        },
+        {
+          where: {
+            productId: productId,
+            orderId: id,
+          },
+        }
+      );
+    }
     res.status(202).send({
       message: "Successfully Added to Cart",
     });

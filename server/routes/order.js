@@ -1,26 +1,81 @@
 const orderRouter = require("express").Router();
 const {
   models: {Order},
-} = require("../db/models/index.js");
+} = require("../db");
+const Session = require("../db/models/session");
 
-orderRouter.get("/", async (req, res, next) => {
-  const orders = await Order.findAll();
-  res.send({
-    orders,
+orderRouter.get("/session", async (req, res) => {
+  let order = await Order.findAll({
+    where: {
+      sessionId: req.sessionId,
+    },
+  });
+  if (!order.length) {
+    order = await Order.create();
+    order.sessionId = req.sessionId;
+    await order.save();
+    return res.status(201).send({
+      order,
+    });
+  }
+  return res.status(201).send({
+    order,
   });
 });
 
 orderRouter.post("/", async (req, res) => {
-  await Order.create(req.body);
-  res.sendStatus(201);
+  const {userId} = req.body;
+  try {
+    const order = await Order.create({
+      userId,
+    });
+    res.status(201).send({
+      order,
+    });
+  } catch (e) {
+    res.status(500).send({
+      message: "error, e",
+    });
+  }
 });
 
-orderRouter.get("/:id", async (req, res, next) => {
+orderRouter.put("/:id", async (req, res) => {
+  const id = req.params.id;
+  const {userId} = req.body;
   try {
-    const user = await Order.findByPK(req.params.id);
-    res.send(user);
+    const order = await Order.update(
+      {
+        userId: userId,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(201).send({
+      order,
+    });
+  } catch (e) {
+    res.status(500).send({
+      message: "error, e",
+    });
+  }
+});
+
+orderRouter.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const orders = await Order.findAll({
+      where: {
+        userId: id,
+      },
+    });
+    if (orders) {
+      res.status(200).send({orders});
+    }
   } catch (err) {
-    next(err);
+    console.error(err);
   }
 });
 

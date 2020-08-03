@@ -47,12 +47,20 @@ app.use(async (req, res, next) => {
       path: "/",
       expires: new Date(Date.now() + oneWeek),
     });
-    req.session_id = session.id;
+    req.sessionId = session.id;
     next();
   } else {
-    req.session_id = req.cookies.session_id;
-    const user = await findUserBySession(req.session_id);
-
+    let session = await Session.findAll({
+      where: {
+        id: req.cookies.session_id,
+      },
+    });
+    if (!session) {
+      session = await Session.create();
+      req.cookies.session_id = session.id;
+    }
+    req.sessionId = req.cookies.session_id;
+    const user = await findUserBySession(req.sessionId);
     if (user) {
       req.user = user;
     }
@@ -67,7 +75,7 @@ app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/categories", categoryRouter);
-app.use("/api/cart", cartRouter);
+app.use("/api/carts", cartRouter);
 app.use("/api/auth", authRouter);
 
 app.get("/*", (req, res) => {
