@@ -3,7 +3,7 @@ const {
   models: {Product},
 } = require("../db/models/index.js");
 
-productRouter.get("/", async (req, res, next) => {
+productRouter.get("/", async (req, res) => {
   const products = await Product.findAll();
   res.send({
     products,

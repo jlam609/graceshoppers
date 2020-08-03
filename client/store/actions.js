@@ -26,14 +26,11 @@ const removeCategory = (category) => ({
   category,
 });
 
-const getCart = (cart) => ({
+const getCart = (cart, total, quantity) => ({
   type: TYPES.GET_CART,
   cart,
-});
-
-const addToCart = (product) => ({
-  type: TYPES.ADD_TO_CART,
-  product,
+  total,
+  quantity,
 });
 
 const removeFromCart = (product) => ({
@@ -55,17 +52,29 @@ const fetchCategories = () => {
   };
 };
 
-const fetchOrders = () => {
+const fetchOrders = (userId) => {
   return async (dispatch) => {
-    const {orders} = (await axios.get("/api/orders")).data;
-    return dispatch(getOrders(orders));
+    const {orders} = (await axios.get(`/api/orders/${userId}`)).data;
+    await dispatch(getOrders(orders));
+    return orders;
   };
 };
 
-const fetchCart = (user) => {
+const fetchCart = (orderId) => {
   return async (dispatch) => {
-    const {products} = (await axios.get(`/api/cart/${user.id}`)).data;
-    return dispatch(getCart(products));
+    const {cart, products} = (await axios.get(`/api/carts/${orderId}`)).data;
+    let total = 0;
+    let quantity = 0;
+    if (cart.length) {
+      cart.forEach((item) => {
+        const curProduct = products.find((product) => product.id === item.productId);
+        total += curProduct.price * item.quantity;
+        quantity += item.quantity;
+        item.product = curProduct;
+      });
+    }
+    console.log(cart, total, quantity);
+    return dispatch(getCart(cart, total, quantity));
   };
 };
 
@@ -90,11 +99,14 @@ const fetchUser = () => {
   return async (dispatch) => {
     const {user} = (await axios.get(`/api/auth/login`)).data;
     if (user) {
-      console.log(user);
       await dispatch(getUser(user));
-      // await dispatch(fetchCart(user.id));
-      // await dispatch(fetchOrders(user.id));
+      const orders = await dispatch(fetchOrders(user.id));
+      const activeOrders = orders.length
+        ? orders.find((order) => order.status === "active")
+        : false;
+      return [user, activeOrders];
     }
+    return [false, false];
   };
 };
 
@@ -116,20 +128,27 @@ const setOrder = (order) => ({
   order,
 });
 
-const createOrder = (userId = null) => {
+const fetchSessionOrder = () => {
+  return async (dispatch) => {
+    const {order} = (await axios.get(`/api/orders/session`)).data;
+    await dispatch(setOrder(order));
+    console.log(order);
+    await dispatch(fetchCart(order[0].id));
+    return order;
+  };
+};
+const createOrder = (userId) => {
   return async (dispatch) => {
     if (userId) {
-      const {order} = (await axios.post(`/api/order`, {userId})).data;
+      const {order} = (await axios.post(`/api/orders`, {userId})).data;
       return dispatch(setOrder(order));
     }
-    const {order} = (await axios.post(`/api/order`)).data;
-    return dispatch(setOrder(order));
   };
 };
 
 const updateOrder = (orderId, userId) => {
   return async (dispatch) => {
-    await axios.put(`/api/order/${orderId}`, {userId});
+    await axios.put(`/api/orders/${orderId}`, {userId});
     return dispatch(fetchCart(userId));
   };
 };
@@ -137,28 +156,34 @@ const updateOrder = (orderId, userId) => {
 const updateCart = (mode = "add", orderId, product, quantity) => {
   return async (dispatch) => {
     if (mode === "add") {
-      await axios.put(`/api/cart/${orderId}`, {
-        productId: product.id,
-        orderId,
-        quantity,
-      });
-      return dispatch(addToCart(product));
+      const {message} = (
+        await axios.put(`/api/carts/${orderId}`, {
+          productId: product.id,
+          quantity,
+        })
+      ).data;
+      await dispatch(fetchCart(orderId));
+      return alert(`${message}`);
     }
     if (mode === "remove") {
       if (quantity === 0) {
-        await axios.delete(`/api/cart/${orderId}`, {
-          productId: product.id,
-          orderId,
-          quantity,
-        });
-        return dispatch(removeFromCart(product));
+        const {message} = (
+          await axios.delete(`/api/carts/${orderId}`, {
+            productId: product.id,
+            quantity,
+          })
+        ).data;
+        await dispatch(fetchCart(orderId));
+        return alert(`${message}`);
       }
-      await axios.put(`/api/cart/${orderId}`, {
-        productId: product.id,
-        orderId,
-        quantity,
-      });
-      return dispatch(removeFromCart(product));
+      const {message} = (
+        await axios.put(`/api/carts/${orderId}`, {
+          productId: product.id,
+          quantity,
+        })
+      ).data;
+      await dispatch(fetchCart(orderId));
+      return alert(`${message}`);
     }
   };
 };
@@ -180,7 +205,6 @@ module.exports = {
   addCategory,
   removeCategory,
   getCart,
-  addToCart,
   removeFromCart,
   fetchProducts,
   fetchOrders,
@@ -196,4 +220,5 @@ module.exports = {
   updateCart,
   updateInput,
   clearInput,
+  fetchSessionOrder,
 };
