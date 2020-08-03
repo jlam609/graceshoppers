@@ -134,8 +134,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const App = ({
-  products,
-  categories,
   loggedIn,
   dispatch,
   user
@@ -144,16 +142,22 @@ const App = ({
     const getData = async () => {
       await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchCategories"])());
       await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchProducts"])());
+      const sessionOrder = await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchSessionOrder"])());
 
       if (!loggedIn) {
-        try {
-          await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUser"])());
+        const [res, activeOrders] = await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUser"])());
 
-          if (user) {
-            dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["updateForm"])("loggedIn", true));
+        if (res) {
+          await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["updateForm"])("loggedIn", true));
+
+          if (activeOrders.length) {
+            console.log(activeOrders);
+            await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["fetchCart"])(activeOrders[0].id));
           }
-        } catch (e) {
-          console.error(e);
+
+          if (!sessionOrder[0].userId && !activeOrders.length) {
+            await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["updateOrder"])(sessionOrder[0].id, res.id));
+          }
         }
       }
     };
@@ -202,18 +206,20 @@ const App = ({
 };
 
 const mapStateToProps = ({
-  products,
-  categories,
   form,
-  user
+  user,
+  orders
 }) => {
   const {
     loggedIn
   } = form;
+  const {
+    activeOrders
+  } = orders;
   return {
-    products,
-    categories,
-    user
+    user,
+    activeOrders,
+    loggedIn
   };
 };
 
@@ -351,8 +357,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/actions */ "./client/store/actions.js");
-/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_store_actions__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/actions */ "./client/store/actions.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_store_actions__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -360,14 +368,28 @@ __webpack_require__.r(__webpack_exports__);
 const Cart = ({
   products,
   total,
-  removeItem
+  removeItem,
+  quantity
 }) => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " My Shopping Cart "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " ", products.length, " Items! "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, products && products.map(product => {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "product.name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "product.price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      type: "submit",
-      onClick: e => removeItem(e, product)
-    }, "Remove"));
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "$", total)));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "cart"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " My Shopping Cart "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " ", quantity, " Items! "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, products.length ? products.map(product => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: product.id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Card"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["CardContent"], {
+      className: "card"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Name: ", product.product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Price: ", product.product.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Quantity: ", product.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: product.product.image,
+      width: 100,
+      height: 100,
+      alt: ""
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["CardActions"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+      onClick: e => removeItem(e, product),
+      variant: "outlined"
+    }, "Remove Item")))));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "No items in cart! Buy Items")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Total Amount (", quantity, ") Items"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "$", total), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    variant: "outlined"
+  }, "Submit Order")));
 };
 
 const mapState = ({
@@ -375,18 +397,21 @@ const mapState = ({
 }) => {
   const {
     products,
-    total
+    total,
+    quantity
   } = cart;
+  console.log(products, total, quantity);
   return {
     products,
-    total
+    total,
+    quantity
   };
 };
 
 const mapDispatch = dispatch => {
-  const removeItem = (e, product) => {
+  const removeItem = async (e, product) => {
     e.preventDefault();
-    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_2__["removeFromCart"])(product));
+    await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_3__["removeFromCart"])(product));
   };
 
   return {
@@ -635,7 +660,8 @@ const Login = ({
 };
 
 const mapState = ({
-  form
+  form,
+  order
 }) => {
   const {
     username,
@@ -716,7 +742,8 @@ const Nav = ({
   toggle,
   toggleMenu,
   logout,
-  handleClose
+  handleClose,
+  products
 }) => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "nav"
@@ -754,7 +781,7 @@ const Nav = ({
     onClick: handleClose
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/cart"
-  }, "Cart")), loggedIn ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+  }, "Cart (", products.length, ")")), loggedIn ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], {
     onClick: e => logout(e),
     className: "menuItem",
     variant: "outlined"
@@ -771,7 +798,8 @@ const Nav = ({
 
 const mapState = ({
   input,
-  form
+  form,
+  cart
 }) => {
   const {
     toggle
@@ -779,9 +807,13 @@ const mapState = ({
   const {
     loggedIn
   } = form;
+  const {
+    products
+  } = cart;
   return {
     toggle,
-    loggedIn
+    loggedIn,
+    products
   };
 };
 
@@ -1064,7 +1096,7 @@ const WeaponPage = ({
   match,
   products,
   quantity,
-  order,
+  activeOrders,
   updateQuantity,
   addToCart
 }) => {
@@ -1074,7 +1106,7 @@ const WeaponPage = ({
     const mapQuant = num => {
       const map = [];
 
-      for (let i = 0; i <= num; i += 1) {
+      for (let i = 1; i <= num; i++) {
         map.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: i
         }, i));
@@ -1099,7 +1131,7 @@ const WeaponPage = ({
         value: ""
       }, "0"), mapQuant(weapon.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
-        onClick: e => addToCart(e, order, weapon, quantity)
+        onClick: e => addToCart(e, activeOrders, weapon, quantity)
       }, "Add to Cart"));
     }
 
@@ -1112,15 +1144,18 @@ const WeaponPage = ({
 const mapState = ({
   products,
   input,
-  order
+  orders
 }) => {
   const {
     quantity
   } = input;
+  const {
+    activeOrders
+  } = orders;
   return {
     products,
     quantity,
-    order
+    activeOrders
   };
 };
 
@@ -1131,7 +1166,7 @@ const mapDispatch = dispatch => {
 
   const addToCart = (e, order, weapon, quantity) => {
     e.preventDefault();
-    console.log(order, weapon, quantity);
+    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_2__["updateCart"])("add", order.id, weapon, quantity));
   };
 
   return {
@@ -1261,14 +1296,11 @@ const removeCategory = category => ({
   category
 });
 
-const getCart = cart => ({
+const getCart = (cart, total, quantity) => ({
   type: TYPES.GET_CART,
-  cart
-});
-
-const addToCart = product => ({
-  type: TYPES.ADD_TO_CART,
-  product
+  cart,
+  total,
+  quantity
 });
 
 const removeFromCart = product => ({
@@ -1294,21 +1326,36 @@ const fetchCategories = () => {
   };
 };
 
-const fetchOrders = () => {
+const fetchOrders = userId => {
   return async dispatch => {
     const {
       orders
-    } = (await axios.get("/api/orders")).data;
-    return dispatch(getOrders(orders));
+    } = (await axios.get(`/api/orders/${userId}`)).data;
+    await dispatch(getOrders(orders));
+    return orders;
   };
 };
 
-const fetchCart = user => {
+const fetchCart = orderId => {
   return async dispatch => {
     const {
+      cart,
       products
-    } = (await axios.get(`/api/cart/${user.id}`)).data;
-    return dispatch(getCart(products));
+    } = (await axios.get(`/api/carts/${orderId}`)).data;
+    let total = 0;
+    let quantity = 0;
+
+    if (cart.length) {
+      cart.forEach(item => {
+        const curProduct = products.find(product => product.id === item.productId);
+        total += curProduct.price * item.quantity;
+        quantity += item.quantity;
+        item.product = curProduct;
+      });
+    }
+
+    console.log(cart, total, quantity);
+    return dispatch(getCart(cart, total, quantity));
   };
 };
 
@@ -1338,10 +1385,13 @@ const fetchUser = () => {
     } = (await axios.get(`/api/auth/login`)).data;
 
     if (user) {
-      console.log(user);
-      await dispatch(getUser(user)); // await dispatch(fetchCart(user.id));
-      // await dispatch(fetchOrders(user.id));
+      await dispatch(getUser(user));
+      const orders = await dispatch(fetchOrders(user.id));
+      const activeOrders = orders.length ? orders.find(order => order.status === "active") : false;
+      return [user, activeOrders];
     }
+
+    return [false, false];
   };
 };
 
@@ -1368,27 +1418,34 @@ const setOrder = order => ({
   order
 });
 
-const createOrder = (userId = null) => {
+const fetchSessionOrder = () => {
+  return async dispatch => {
+    const {
+      order
+    } = (await axios.get(`/api/orders/session`)).data;
+    await dispatch(setOrder(order));
+    console.log(order);
+    await dispatch(fetchCart(order[0].id));
+    return order;
+  };
+};
+
+const createOrder = userId => {
   return async dispatch => {
     if (userId) {
       const {
         order
-      } = (await axios.post(`/api/order`, {
+      } = (await axios.post(`/api/orders`, {
         userId
       })).data;
       return dispatch(setOrder(order));
     }
-
-    const {
-      order
-    } = (await axios.post(`/api/order`)).data;
-    return dispatch(setOrder(order));
   };
 };
 
 const updateOrder = (orderId, userId) => {
   return async dispatch => {
-    await axios.put(`/api/order/${orderId}`, {
+    await axios.put(`/api/orders/${orderId}`, {
       userId
     });
     return dispatch(fetchCart(userId));
@@ -1398,30 +1455,36 @@ const updateOrder = (orderId, userId) => {
 const updateCart = (mode = "add", orderId, product, quantity) => {
   return async dispatch => {
     if (mode === "add") {
-      await axios.put(`/api/cart/${orderId}`, {
+      const {
+        message
+      } = (await axios.put(`/api/carts/${orderId}`, {
         productId: product.id,
-        orderId,
         quantity
-      });
-      return dispatch(addToCart(product));
+      })).data;
+      await dispatch(fetchCart(orderId));
+      return alert(`${message}`);
     }
 
     if (mode === "remove") {
       if (quantity === 0) {
-        await axios.delete(`/api/cart/${orderId}`, {
+        const {
+          message
+        } = (await axios.delete(`/api/carts/${orderId}`, {
           productId: product.id,
-          orderId,
           quantity
-        });
-        return dispatch(removeFromCart(product));
+        })).data;
+        await dispatch(fetchCart(orderId));
+        return alert(`${message}`);
       }
 
-      await axios.put(`/api/cart/${orderId}`, {
+      const {
+        message
+      } = (await axios.put(`/api/carts/${orderId}`, {
         productId: product.id,
-        orderId,
         quantity
-      });
-      return dispatch(removeFromCart(product));
+      })).data;
+      await dispatch(fetchCart(orderId));
+      return alert(`${message}`);
     }
   };
 };
@@ -1443,7 +1506,6 @@ module.exports = {
   addCategory,
   removeCategory,
   getCart,
-  addToCart,
   removeFromCart,
   fetchProducts,
   fetchOrders,
@@ -1458,7 +1520,8 @@ module.exports = {
   updateOrder,
   updateCart,
   updateInput,
-  clearInput
+  clearInput,
+  fetchSessionOrder
 };
 
 /***/ }),
@@ -1476,17 +1539,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./types */ "./client/store/types.js");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./client/store/actions.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_actions__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 
-
-const productReducer = (state = {}, action) => {
+const productReducer = (state = [], action) => {
   switch (action.type) {
     case _types__WEBPACK_IMPORTED_MODULE_2___default.a.GET_PRODUCTS:
-      return [...action.products];
+      return action.products ? [...action.products] : [];
 
     default:
       return state;
@@ -1495,15 +1555,21 @@ const productReducer = (state = {}, action) => {
 
 const orderReducer = (state = {
   pendingOrders: [],
-  activeOrders: [],
+  activeOrders: {},
   doneOrders: []
 }, action) => {
   switch (action.type) {
     case _types__WEBPACK_IMPORTED_MODULE_2___default.a.GET_ORDERS:
       return {
-        pendingOrders: [...action.orders.filter(order => order.status === "pending")],
-        activeOrders: [...action.orders.filter(order => order.status === "active")],
-        doneOrders: [...action.orders.filter(order => order.status === "done")]
+        pendingOrders: action.orders ? action.orders.filter(order => order.status === "pending") : [],
+        activeOrders: action.orders ? action.orders.find(order => order.status === "active") : [],
+        doneOrders: action.orders ? action.orders.filter(order => order.status === "done") : []
+      };
+
+    case _types__WEBPACK_IMPORTED_MODULE_2___default.a.SET_ORDER:
+      console.log(action.order);
+      return { ...state,
+        activeOrders: action.order ? [...action.order] : {}
       };
 
     default:
@@ -1529,29 +1595,18 @@ const categoryReducer = (state = [], action) => {
 
 const cartReducer = (state = {
   products: [],
-  total: 0
+  total: 0,
+  quantity: 0
 }, action) => {
   switch (action.type) {
     case _types__WEBPACK_IMPORTED_MODULE_2___default.a.GET_CART:
       {
-        const total = action.cart.reduce((a, b) => a.price + b.price);
         return {
-          products: [...action.cart],
-          total
+          products: action.cart ? [...action.cart] : [],
+          total: action.total,
+          quantity: action.quantity
         };
       }
-
-    case _types__WEBPACK_IMPORTED_MODULE_2___default.a.ADD_TO_CART:
-      return {
-        products: [...state.products, action.product],
-        total: state.total + action.product.price
-      };
-
-    case _types__WEBPACK_IMPORTED_MODULE_2___default.a.RM_FROM_CART:
-      return {
-        products: [...state.products.filter(product => product !== action.product)],
-        total: state.total - action.product.price
-      };
 
     default:
       return state;
@@ -1581,13 +1636,14 @@ const formReducer = (state = {
   }
 };
 
-const userReducer = (state = [], action) => {
+const userReducer = (state = {}, action) => {
   switch (action.type) {
     case _types__WEBPACK_IMPORTED_MODULE_2___default.a.GET_USER:
-      return [action.user];
+      return { ...action.user
+      };
 
     case _types__WEBPACK_IMPORTED_MODULE_2___default.a.CLEAR_USER:
-      return [];
+      return {};
 
     default:
       return state;
