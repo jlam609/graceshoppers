@@ -1,6 +1,13 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import {IconButton, MenuList, MenuItem, Button} from "@material-ui/core";
+import {
+  IconButton,
+  MenuList,
+  MenuItem,
+  Button,
+  AppBar,
+  InputBase,
+} from "@material-ui/core";
 import StarsIcon from "@material-ui/icons/Stars";
 import {connect} from "react-redux";
 import Axios from "axios";
@@ -53,19 +60,17 @@ const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose}) => {
               </MenuItem>
             </div>
           ) : (
-            <div>
-              <MenuList className="list">
-                <MenuItem>
-                  <Link to="/login" className="menuItem">
-                    Log In
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="/register" className="menuItem">
-                    Register
-                  </Link>
-                </MenuItem>
-              </MenuList>
+            <div className="menuR">
+              <MenuItem>
+                <Link to="/login" className="menuItem">
+                  Log In
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/register" className="menuItem">
+                  Register
+                </Link>
+              </MenuItem>
             </div>
           )}
         </MenuList>

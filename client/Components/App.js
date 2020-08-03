@@ -37,7 +37,7 @@ const App = ({products, categories, loggedIn, dispatch, user}) => {
   }, []);
 
   return (
-    <div>
+    <div className="maindiv">
       <Nav />
       <Switch>
         <Route path="/home" component={HomePage} />
