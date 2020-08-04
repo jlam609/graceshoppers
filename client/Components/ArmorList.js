@@ -1,17 +1,13 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link, Route} from "react-router-dom";
-// import Pagination from "./Pagination";
+import {Pagination} from "@material-ui/lab/Pagination";
+import {updateInput, fetchProducts} from "../store/actions";
 
-const ArmorList = ({products}) => {
+const ArmorList = ({products, page, productsCount, handleChange}) => {
   if (products.length) {
     const armors = products.filter((armor) => armor.categoryId === 2);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [prodPerPage, setProdPerPage] = useState(5);
-    const indexOfLastProd = currentPage * prodPerPage;
-    const indexOfFirstProd = indexOfLastProd - prodPerPage;
-    const currentProds = armors.slice(indexOfFirstProd, indexOfLastProd);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    console.log(armors);
     return (
       <div className="productList">
         <h1 className="header">Armor</h1>
@@ -28,17 +24,37 @@ const ArmorList = ({products}) => {
             })}
           </ul>
         </div>
-        {/* <Pagination
-          prodPerPage={prodPerPage}
-          totalProds={armors.length}
-          paginate={paginate}
-        /> */}
+        <Pagination
+          count={Math.ceil(productsCount / 10)}
+          page={page}
+          onChange={handleChange}
+        />
       </div>
     );
   }
   return <h1>Armor Loading...</h1>;
 };
 
-const mapState = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {productsCount} = count;
+  const {page, product, filter} = input;
+  return {
+    products,
+    page,
+    productsCount,
+  };
+};
 
-export default connect(mapState)(ArmorList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(updateInput("page", value));
+    dispatch(fetchProducts(value));
+  };
+  return {
+    handleChange,
+  };
+};
+
+export default connect(mapState, mapDispatch)(ArmorList);

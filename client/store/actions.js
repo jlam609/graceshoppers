@@ -6,8 +6,8 @@ const getProducts = (products) => ({
   products,
 });
 
-const getWeaponsCount = (count) => ({
-  type: TYPES.GET_WEAPONS_COUNT,
+const getProductsCount = (count) => ({
+  type: TYPES.GET_PRODUCTS_COUNT,
   count,
 });
 
@@ -52,18 +52,21 @@ const fetchProducts = (page = 1, size = 5) => {
       await axios.get(`/api/products?page=${page}&size=${size}`)
     ).data;
     console.log(rows);
-    dispatch(getWeaponsCount(count));
+    dispatch(getProductsCount(count));
     return dispatch(getProducts(rows));
   };
 };
 
-// const fetchWeapons = () => {
-//   return async (dispatch) => {
-//     const {weapons} = (await axios.get("/api/products/weapons")).data;
-//     console.log(weapons);
-//     return dispatch(getWeapons(weapons));
-//   };
-// };
+const fetchWeapons = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {count, rows} = (
+      await axios.get(`/api/products/weapons?page=${page}&size=${size}`)
+    ).data;
+    console.log(rows);
+    dispatch(getProductsCount(count));
+    return dispatch(getProducts(rows));
+  };
+};
 
 const fetchCategories = () => {
   return async (dispatch) => {
@@ -202,6 +205,7 @@ module.exports = {
   fetchProducts,
   fetchOrders,
   fetchCategories,
+  fetchWeapons,
   fetchCart,
   updateForm,
   clearForm,

@@ -1,18 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Link, Route, Switch, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
-import {updateInput, fetchProducts} from "../store/actions";
+import {updateInput, fetchProducts, fetchWeapons} from "../store/actions";
 
-const WeaponsList = ({products, handleChange, page, weaponsCount}) => {
+const WeaponsList = ({dispatch, products, handleChange, page, productsCount}) => {
+  useEffect(() => {
+    const getData = async () => {
+      await dispatch(fetchWeapons());
+    };
+    getData();
+  }, []);
+  console.log(products);
   if (products.length) {
-    const weapons = products.filter((weapon) => weapon.categoryId === 1);
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const [prodPerPage, setProdPerPage] = useState(5);
-    // const indexOfLastProd = currentPage * prodPerPage;
-    // const indexOfFirstProd = indexOfLastProd - prodPerPage;
-    // const currentProds = weapons.slice(indexOfFirstProd, indexOfLastProd);
-    // const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
       <div className="productList">
         <div className="header">
@@ -20,9 +20,9 @@ const WeaponsList = ({products, handleChange, page, weaponsCount}) => {
         </div>
         <div>
           <ul>
-            {weapons.map((weapon) => {
+            {products.map((weapon) => {
               return (
-                <div key={weapon.id}>
+                <div key={products.id}>
                   <Link to={`/weapons/${weapon.id}`} key={weapon.id}>
                     {weapon.name} ({weapon.price})
                   </Link>
@@ -32,7 +32,7 @@ const WeaponsList = ({products, handleChange, page, weaponsCount}) => {
           </ul>
         </div>
         <Pagination
-          count={Math.ceil(weaponsCount / 10)}
+          count={Math.ceil(productsCount / 10)}
           page={page}
           onChange={handleChange}
         />
@@ -43,13 +43,12 @@ const WeaponsList = ({products, handleChange, page, weaponsCount}) => {
 };
 
 const mapState = ({products, count, input}) => {
-  const {weaponsCount} = count;
+  const {productsCount} = count;
   const {page, product, filter} = input;
-  console.log(input)
   return {
     products,
     page,
-    weaponsCount,
+    productsCount,
   };
 };
 
@@ -61,6 +60,7 @@ const mapDispatch = (dispatch) => {
     dispatch(fetchProducts(value));
   };
   return {
+    dispatch,
     handleChange,
   };
 };

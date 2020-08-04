@@ -240,23 +240,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/lab/Pagination */ "./node_modules/@material-ui/lab/esm/Pagination/index.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/actions */ "./client/store/actions.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_store_actions__WEBPACK_IMPORTED_MODULE_4__);
 
 
- // import Pagination from "./Pagination";
+
+
+
 
 const ArmorList = ({
-  products
+  products,
+  page,
+  productsCount,
+  handleChange
 }) => {
   if (products.length) {
     const armors = products.filter(armor => armor.categoryId === 2);
-    const [currentPage, setCurrentPage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1);
-    const [prodPerPage, setProdPerPage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(5);
-    const indexOfLastProd = currentPage * prodPerPage;
-    const indexOfFirstProd = indexOfLastProd - prodPerPage;
-    const currentProds = armors.slice(indexOfFirstProd, indexOfLastProd);
-
-    const paginate = pageNumber => setCurrentPage(pageNumber);
-
+    console.log(armors);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "productList"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -268,19 +269,50 @@ const ArmorList = ({
         to: `/armor/${armor.id}`,
         key: armor.id
       }, armor.name));
-    }))));
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["Pagination"], {
+      count: Math.ceil(productsCount / 10),
+      page: page,
+      onChange: handleChange
+    }));
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Armor Loading...");
 };
 
 const mapState = ({
-  products
-}) => ({
-  products
-});
+  products,
+  count,
+  input
+}) => {
+  const {
+    productsCount
+  } = count;
+  const {
+    page,
+    product,
+    filter
+  } = input;
+  return {
+    products,
+    page,
+    productsCount
+  };
+};
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState)(ArmorList));
+const mapDispatch = dispatch => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_4__["updateInput"])("page", value));
+    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_4__["fetchProducts"])(value));
+  };
+
+  return {
+    handleChange
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(ArmorList));
 
 /***/ }),
 
@@ -517,23 +549,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/lab/Pagination */ "./node_modules/@material-ui/lab/esm/Pagination/index.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/actions */ "./client/store/actions.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_store_actions__WEBPACK_IMPORTED_MODULE_4__);
 
 
- // import Pagination from "./Pagination";
+
+
+
 
 const ItemList = ({
-  products
+  products,
+  page,
+  handleChange,
+  productsCount
 }) => {
   if (products.length) {
     const items = products.filter(item => item.categoryId === 4);
-    const [currentPage, setCurrentPage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1);
-    const [prodPerPage, setProdPerPage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(5);
-    const indexOfLastProd = currentPage * prodPerPage;
-    const indexOfFirstProd = indexOfLastProd - prodPerPage;
-    const currentProds = items.slice(indexOfFirstProd, indexOfLastProd);
-
-    const paginate = pageNumber => setCurrentPage(pageNumber);
-
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "productList"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -545,19 +577,50 @@ const ItemList = ({
         to: `/items/${item.id}`,
         key: item.id
       }, item.name));
-    }))));
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["Pagination"], {
+      count: Math.ceil(productsCount / 10),
+      page: page,
+      onChange: handleChange
+    }));
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Items Loading...");
 };
 
 const mapState = ({
-  products
-}) => ({
-  products
-});
+  products,
+  count,
+  input
+}) => {
+  const {
+    productsCount
+  } = count;
+  const {
+    page,
+    product,
+    filter
+  } = input;
+  return {
+    products,
+    page,
+    productsCount
+  };
+};
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState)(ItemList));
+const mapDispatch = dispatch => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_4__["updateInput"])("page", value));
+    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_4__["fetchProducts"])(value));
+  };
+
+  return {
+    handleChange
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(ItemList));
 
 /***/ }),
 
@@ -1036,26 +1099,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _SpellPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SpellPage */ "./client/Components/SpellPage.js");
+/* harmony import */ var _material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/lab/Pagination */ "./node_modules/@material-ui/lab/esm/Pagination/index.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/actions */ "./client/store/actions.js");
+/* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_store_actions__WEBPACK_IMPORTED_MODULE_4__);
 
 
- // import {Pagination} from "@material-ui/lab";
+
 
 
 
 const SpellList = ({
-  products
+  products,
+  handleChange,
+  page,
+  productsCount
 }) => {
   if (products.length) {
     const spells = products.filter(spell => spell.categoryId === 3);
-    const [currentPage, setCurrentPage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1);
-    const [prodPerPage, setProdPerPage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(5);
-    const indexOfLastProd = currentPage * prodPerPage;
-    const indexOfFirstProd = indexOfLastProd - prodPerPage;
-    const currentProds = spells.slice(indexOfFirstProd, indexOfLastProd);
-
-    const paginate = pageNumber => setCurrentPage(pageNumber);
-
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "productList"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -1067,19 +1127,50 @@ const SpellList = ({
         to: `/magic/${spell.id}`,
         key: spell.id
       }, spell.name));
-    }))));
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["Pagination"], {
+      count: Math.ceil(productsCount / 10),
+      page: page,
+      onChange: handleChange
+    }));
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Spells Loading...");
 };
 
 const mapState = ({
-  products
-}) => ({
-  products
-});
+  products,
+  count,
+  input
+}) => {
+  const {
+    productsCount
+  } = count;
+  const {
+    page,
+    product,
+    filter
+  } = input;
+  return {
+    products,
+    page,
+    productsCount
+  };
+};
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState)(SpellList));
+const mapDispatch = dispatch => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_4__["updateInput"])("page", value));
+    dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_4__["fetchProducts"])(value));
+  };
+
+  return {
+    handleChange
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(SpellList));
 
 /***/ }),
 
@@ -1309,32 +1400,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const WeaponsList = ({
+  dispatch,
   products,
   handleChange,
   page,
-  weaponsCount
+  productsCount
 }) => {
-  if (products.length) {
-    const weapons = products.filter(weapon => weapon.categoryId === 1); // const [currentPage, setCurrentPage] = useState(1);
-    // const [prodPerPage, setProdPerPage] = useState(5);
-    // const indexOfLastProd = currentPage * prodPerPage;
-    // const indexOfFirstProd = indexOfLastProd - prodPerPage;
-    // const currentProds = weapons.slice(indexOfFirstProd, indexOfLastProd);
-    // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    const getData = async () => {
+      await dispatch(Object(_store_actions__WEBPACK_IMPORTED_MODULE_4__["fetchWeapons"])());
+    };
 
+    getData();
+  }, []);
+  console.log(products);
+
+  if (products.length) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "productList"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "header"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Weapons")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, weapons.map(weapon => {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Weapons")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, products.map(weapon => {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        key: weapon.id
+        key: products.id
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: `/weapons/${weapon.id}`,
         key: weapon.id
       }, weapon.name, " (", weapon.price, ")"));
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      count: Math.ceil(weaponsCount / 10),
+      count: Math.ceil(productsCount / 10),
       page: page,
       onChange: handleChange
     }));
@@ -1349,18 +1443,17 @@ const mapState = ({
   input
 }) => {
   const {
-    weaponsCount
+    productsCount
   } = count;
   const {
     page,
     product,
     filter
   } = input;
-  console.log(input);
   return {
     products,
     page,
-    weaponsCount
+    productsCount
   };
 };
 
@@ -1373,6 +1466,7 @@ const mapDispatch = dispatch => {
   };
 
   return {
+    dispatch,
     handleChange
   };
 };
@@ -1427,8 +1521,8 @@ const getProducts = products => ({
   products
 });
 
-const getWeaponsCount = count => ({
-  type: TYPES.GET_WEAPONS_COUNT,
+const getProductsCount = count => ({
+  type: TYPES.GET_PRODUCTS_COUNT,
   count
 });
 
@@ -1474,17 +1568,22 @@ const fetchProducts = (page = 1, size = 5) => {
       rows
     } = (await axios.get(`/api/products?page=${page}&size=${size}`)).data;
     console.log(rows);
-    dispatch(getWeaponsCount(count));
+    dispatch(getProductsCount(count));
     return dispatch(getProducts(rows));
   };
-}; // const fetchWeapons = () => {
-//   return async (dispatch) => {
-//     const {weapons} = (await axios.get("/api/products/weapons")).data;
-//     console.log(weapons);
-//     return dispatch(getWeapons(weapons));
-//   };
-// };
+};
 
+const fetchWeapons = (page = 1, size = 5) => {
+  return async dispatch => {
+    const {
+      count,
+      rows
+    } = (await axios.get(`/api/products/weapons?page=${page}&size=${size}`)).data;
+    console.log(rows);
+    dispatch(getProductsCount(count));
+    return dispatch(getProducts(rows));
+  };
+};
 
 const fetchCategories = () => {
   return async dispatch => {
@@ -1649,6 +1748,7 @@ module.exports = {
   fetchProducts,
   fetchOrders,
   fetchCategories,
+  fetchWeapons,
   fetchCart,
   updateForm,
   clearForm,
@@ -1684,7 +1784,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const productReducer = (state = {}, action) => {
+const productReducer = (state = [], action) => {
   switch (action.type) {
     case _types__WEBPACK_IMPORTED_MODULE_2___default.a.GET_PRODUCTS:
       return [...action.products];
@@ -1796,12 +1896,12 @@ const userReducer = (state = [], action) => {
 };
 
 const countReducer = (state = {
-  weaponsCount: 0
+  productsCount: 0
 }, action) => {
   switch (action.type) {
-    case _types__WEBPACK_IMPORTED_MODULE_2___default.a.GET_WEAPONS_COUNT:
+    case _types__WEBPACK_IMPORTED_MODULE_2___default.a.GET_PRODUCTS_COUNT:
       return { ...state,
-        weaponsCount: action.count
+        productsCount: action.count
       };
 
     default:
@@ -1857,6 +1957,7 @@ const store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(masterRe
 const TYPES = {
   GET_PRODUCTS: "GET_PRODUCTS",
   GET_WEAPONS_COUNT: "GET_WEAPONS_COUNT",
+  GET_PRODUCTS_COUNT: "GET_PRODUCTS_COUNT",
   ADD_PRODUCT: "ADD_PRODUCT",
   REMOVE_PRODUCT: "REMOVE_PRODUCT",
   GET_ORDERS: "GET_ORDERS",

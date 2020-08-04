@@ -1,17 +1,12 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-// import Pagination from "./Pagination";
+import {Pagination} from "@material-ui/lab/Pagination";
+import {updateInput, fetchProducts} from "../store/actions";
 
-const ItemList = ({products}) => {
+const ItemList = ({products, page, handleChange, productsCount}) => {
   if (products.length) {
     const items = products.filter((item) => item.categoryId === 4);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [prodPerPage, setProdPerPage] = useState(5);
-    const indexOfLastProd = currentPage * prodPerPage;
-    const indexOfFirstProd = indexOfLastProd - prodPerPage;
-    const currentProds = items.slice(indexOfFirstProd, indexOfLastProd);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
       <div className="productList">
         <h1 className="header">Items</h1>
@@ -28,17 +23,37 @@ const ItemList = ({products}) => {
             })}
           </ul>
         </div>
-        {/* <Pagination
-          prodPerPage={prodPerPage}
-          totalProds={items.length}
-          paginate={paginate}
-        /> */}
+        <Pagination
+          count={Math.ceil(productsCount / 10)}
+          page={page}
+          onChange={handleChange}
+        />
       </div>
     );
   }
   return <h1>Items Loading...</h1>;
 };
 
-const mapState = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {productsCount} = count;
+  const {page, product, filter} = input;
+  return {
+    products,
+    page,
+    productsCount,
+  };
+};
 
-export default connect(mapState)(ItemList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(updateInput("page", value));
+    dispatch(fetchProducts(value));
+  };
+  return {
+    handleChange,
+  };
+};
+
+export default connect(mapState, mapDispatch)(ItemList);

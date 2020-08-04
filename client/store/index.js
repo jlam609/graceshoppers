@@ -3,7 +3,7 @@ import thunks from "redux-thunk";
 import TYPES from "./types";
 import {updateInput} from "./actions";
 
-const productReducer = (state = {}, action) => {
+const productReducer = (state = [], action) => {
   switch (action.type) {
     case TYPES.GET_PRODUCTS:
       return [...action.products];
@@ -113,15 +113,15 @@ const userReducer = (state = [], action) => {
 
 const countReducer = (
   state = {
-    weaponsCount: 0,
+    productsCount: 0,
   },
   action
 ) => {
   switch (action.type) {
-    case TYPES.GET_WEAPONS_COUNT:
+    case TYPES.GET_PRODUCTS_COUNT:
       return {
         ...state,
-        weaponsCount: action.count,
+        productsCount: action.count,
       };
     default:
       return state;
