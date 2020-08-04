@@ -1,17 +1,18 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link, Route, Switch, Redirect} from "react-router-dom";
-import Pagination from "./Pagination";
+import Pagination from "@material-ui/lab/Pagination";
+import {updateInput, fetchProducts} from "../store/actions";
 
-const WeaponsList = ({products, match}) => {
+const WeaponsList = ({products, handleChange, page, weaponsCount}) => {
   if (products.length) {
     const weapons = products.filter((weapon) => weapon.categoryId === 1);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [prodPerPage, setProdPerPage] = useState(5);
-    const indexOfLastProd = currentPage * prodPerPage;
-    const indexOfFirstProd = indexOfLastProd - prodPerPage;
-    const currentProds = weapons.slice(indexOfFirstProd, indexOfLastProd);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const [prodPerPage, setProdPerPage] = useState(5);
+    // const indexOfLastProd = currentPage * prodPerPage;
+    // const indexOfFirstProd = indexOfLastProd - prodPerPage;
+    // const currentProds = weapons.slice(indexOfFirstProd, indexOfLastProd);
+    // const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
       <div className="productList">
         <div className="header">
@@ -19,7 +20,7 @@ const WeaponsList = ({products, match}) => {
         </div>
         <div>
           <ul>
-            {currentProds.map((weapon) => {
+            {weapons.map((weapon) => {
               return (
                 <div key={weapon.id}>
                   <Link to={`/weapons/${weapon.id}`} key={weapon.id}>
@@ -31,9 +32,9 @@ const WeaponsList = ({products, match}) => {
           </ul>
         </div>
         <Pagination
-          prodPerPage={prodPerPage}
-          totalProds={weapons.length}
-          paginate={paginate}
+          count={Math.ceil(weaponsCount / 10)}
+          page={page}
+          onChange={handleChange}
         />
       </div>
     );
@@ -41,6 +42,26 @@ const WeaponsList = ({products, match}) => {
   return <h1>Weapons Loading...</h1>;
 };
 
-const mapState = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {weaponsCount} = count;
+  const {page, product, filter} = input;
+  console.log(input)
+  return {
+    products,
+    page,
+    weaponsCount,
+  };
+};
 
-export default connect(mapState)(WeaponsList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(updateInput("page", value));
+    dispatch(fetchProducts(value));
+  };
+  return {
+    handleChange,
+  };
+};
+export default connect(mapState, mapDispatch)(WeaponsList);

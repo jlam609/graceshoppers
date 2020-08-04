@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link, Route} from "react-router-dom";
+// import {Pagination} from "@material-ui/lab";
 import SpellPage from "./SpellPage";
-import Pagination from "./Pagination";
 
 const SpellList = ({products}) => {
   if (products.length) {
@@ -29,11 +29,15 @@ const SpellList = ({products}) => {
             })}
           </ul>
         </div>
-        <Pagination
-          prodPerPage={prodPerPage}
-          totalProds={spells.length}
-          paginate={paginate}
-        />
+        {/* <Pagination
+          count={Math.ceil(classesCount / 3)}
+          page={page}
+          siblingCount={1}
+          boundaryCount={1}
+          variant="outlined"
+          shape="rounded"
+          onChange={handlePageChange}
+        /> */}
       </div>
     );
   }

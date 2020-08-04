@@ -111,11 +111,29 @@ const userReducer = (state = [], action) => {
   }
 };
 
+const countReducer = (
+  state = {
+    weaponsCount: 0,
+  },
+  action
+) => {
+  switch (action.type) {
+    case TYPES.GET_WEAPONS_COUNT:
+      return {
+        ...state,
+        weaponsCount: action.count,
+      };
+    default:
+      return state;
+  }
+};
+
 const inputReducer = (
   state = {
     toggle: false,
     filter: "",
     quantity: 0,
+    page: 1,
   },
   action
 ) => {
@@ -140,6 +158,7 @@ const masterReducer = combineReducers({
   orders: orderReducer,
   products: productReducer,
   categories: categoryReducer,
+  count: countReducer,
   form: formReducer,
   user: userReducer,
   input: inputReducer,

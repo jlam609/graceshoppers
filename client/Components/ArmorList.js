@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link, Route} from "react-router-dom";
-import Pagination from "./Pagination";
+// import Pagination from "./Pagination";
 
 const ArmorList = ({products}) => {
   if (products.length) {
@@ -28,11 +28,11 @@ const ArmorList = ({products}) => {
             })}
           </ul>
         </div>
-        <Pagination
+        {/* <Pagination
           prodPerPage={prodPerPage}
           totalProds={armors.length}
           paginate={paginate}
-        />
+        /> */}
       </div>
     );
   }
