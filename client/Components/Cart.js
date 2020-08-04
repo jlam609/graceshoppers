@@ -1,13 +1,36 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Card, CardContent, CardActions, Button} from "@material-ui/core";
-import {removeFromCart, fetchCart} from "../store/actions";
+import {Card, CardContent, CardActions, Button, Select} from "@material-ui/core";
+import {updateCart, clearInput, updateInput} from "../store/actions";
 
-const Cart = ({products, total, removeItem, quantity}) => {
+const Cart = ({
+  products,
+  total,
+  removeItem,
+  itemQuantity,
+  quantity,
+  dispatch,
+  updateQuantity,
+  activeOrders,
+}) => {
+  useEffect(() => {
+    dispatch(clearInput());
+  }, []);
+  const createOption = (num) => {
+    const options = [];
+    for (let i = 1; i < num; i++) {
+      options.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return options;
+  };
   return (
     <div className="cart">
       <h2> My Shopping Cart </h2>
-      <h4> {quantity} Items! </h4>
+      <h4> {itemQuantity} Items! </h4>
       <ul>
         {products.length ? (
           products.map((product) => {
@@ -22,7 +45,15 @@ const Cart = ({products, total, removeItem, quantity}) => {
                       <img src={product.product.image} width={100} height={100} alt="" />
                     </CardContent>
                     <CardActions>
-                      <Button onClick={(e) => removeItem(e, product)} variant="outlined">
+                      <select value={quantity} onChange={(e) => updateQuantity(e)}>
+                        <option value={0}>0</option>
+                        {createOption(product.quantity)}
+                        <option value="remove all">Remove all</option>
+                      </select>
+                      <Button
+                        onClick={(e) => removeItem(e, activeOrders, product, quantity)}
+                        variant="outlined"
+                      >
                         Remove Item
                       </Button>
                     </CardActions>
@@ -36,7 +67,7 @@ const Cart = ({products, total, removeItem, quantity}) => {
         )}
       </ul>
       <div>
-        <h3>Total Amount ({quantity}) Items</h3>
+        <h3>Total Amount ({itemQuantity}) Items</h3>
         <hr />
         <span>${total}</span>
         <hr />
@@ -46,23 +77,36 @@ const Cart = ({products, total, removeItem, quantity}) => {
   );
 };
 
-const mapState = ({cart}) => {
-  const {products, total, quantity} = cart;
-  console.log(products, total, quantity);
+const mapState = ({cart, input, orders}) => {
+  const {products, total, itemQuantity} = cart;
+  const {quantity} = input;
+  const {activeOrders} = orders;
+  console.log(quantity, activeOrders, cart);
   return {
     products,
     total,
+    itemQuantity,
+    activeOrders,
     quantity,
   };
 };
 
 const mapDispatch = (dispatch) => {
-  const removeItem = async (e, product) => {
+  const removeItem = async (e, order, product, quantity) => {
     e.preventDefault();
-    await dispatch(removeFromCart(product));
+    console.log(order, product, -quantity);
+    if (quantity === "remove all") {
+      return dispatch(updateCart("remove", order.id, product.productId, quantity));
+    }
+    await dispatch(updateCart("remove", order.id, product.productId, -quantity));
+  };
+  const updateQuantity = (e) => {
+    return dispatch(updateInput("quantity", e.target.value));
   };
   return {
     removeItem,
+    dispatch,
+    updateQuantity,
   };
 };
 export default connect(mapState, mapDispatch)(Cart);

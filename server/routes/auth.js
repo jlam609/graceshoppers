@@ -55,7 +55,7 @@ authRouter.get("/login", (req, res) => {
 authRouter.delete("/logout", (req, res) => {
   try {
     req.logOut();
-    res.clearCookie("sessionId");
+    res.clearCookie("session_id");
     res.status(200).send({
       message: "successfully deleted",
     });

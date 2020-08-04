@@ -3,7 +3,7 @@ const {
   models: {Cart, Product, Order},
 } = require("../db");
 
-cartRouter.get("/:id", async (req, res) => {
+cartRouter.get("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const cart = await Cart.findAll({
@@ -21,9 +21,7 @@ cartRouter.get("/:id", async (req, res) => {
         },
       ],
     });
-    if (cart.length) {
-      res.status(200).send({cart, products});
-    }
+    res.status(200).send({cart, products});
   } catch (e) {
     res.status(500).send(e);
   }
@@ -32,8 +30,7 @@ cartRouter.get("/:id", async (req, res) => {
 cartRouter.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const {productId, quantity} = req.body;
-    console.log(id, productId, quantity);
+    const {mode, productId, quantity} = req.body;
     const cart = await Cart.findAll({
       where: {
         productId: productId,
@@ -41,7 +38,7 @@ cartRouter.put("/:id", async (req, res) => {
       },
     });
     if (!cart.length) {
-      const cartItem = await Cart.create({
+      await Cart.create({
         quantity,
         productId,
         orderId: id,
@@ -59,9 +56,14 @@ cartRouter.put("/:id", async (req, res) => {
         }
       );
     }
-    res.status(202).send({
-      message: "Successfully Added to Cart",
-    });
+    if (mode === "add") {
+      res.status(202).send({
+        message: "Successfully Added to Cart",
+      });
+    } else
+      res.status(202).send({
+        message: "Successfully Removed From Cart",
+      });
   } catch (e) {
     res.status(500).send({
       message: "Error Occurred",
@@ -71,15 +73,16 @@ cartRouter.put("/:id", async (req, res) => {
 
 cartRouter.delete("/:id", async (req, res) => {
   try {
-    const {productId, orderId} = req.body;
+    const id = req.params.id;
+    const {productId} = req.query;
     await Cart.destroy({
       where: {
         productId,
-        orderId,
+        orderId: id,
       },
     });
     res.status(202).send({
-      message: `Successfully Added to Cart `,
+      message: `Removed From Cart`,
     });
   } catch (e) {
     res.status(500).send({

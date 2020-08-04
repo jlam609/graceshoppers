@@ -73,7 +73,7 @@ const fetchCart = (orderId) => {
         item.product = curProduct;
       });
     }
-    console.log(cart, total, quantity);
+    console.log(cart);
     return dispatch(getCart(cart, total, quantity));
   };
 };
@@ -98,6 +98,7 @@ const clearUser = () => ({
 const fetchUser = () => {
   return async (dispatch) => {
     const {user} = (await axios.get(`/api/auth/login`)).data;
+    console.log(user);
     if (user) {
       await dispatch(getUser(user));
       const orders = await dispatch(fetchOrders(user.id));
@@ -109,14 +110,21 @@ const fetchUser = () => {
     return [false, false];
   };
 };
+const updateOrder = (orderId, userId) => {
+  return async (dispatch) => {
+    await axios.put(`/api/orders/${orderId}`, {userId});
+    return dispatch(fetchOrders(userId));
+  };
+};
 
-const login = (userObj) => {
+const login = (userObj, products, order) => {
   return async (dispatch) => {
     const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
     if (user) {
       await dispatch(getUser(user));
       await dispatch(fetchOrders(user.id));
-      await dispatch(fetchCart(user.id));
+      if (!products) await dispatch(fetchCart(user.id));
+      if (products) await dispatch(updateOrder(order.id, user.id));
       return alert(`${message}`);
     }
     return alert(`${message}`);
@@ -130,10 +138,10 @@ const setOrder = (order) => ({
 
 const fetchSessionOrder = () => {
   return async (dispatch) => {
-    const {order} = (await axios.get(`/api/orders/session`)).data;
+    let {order} = (await axios.get(`/api/orders/session`)).data;
+    if (order.length) order = order[0];
     await dispatch(setOrder(order));
-    console.log(order);
-    await dispatch(fetchCart(order[0].id));
+    await dispatch(fetchCart(order.id));
     return order;
   };
 };
@@ -145,20 +153,13 @@ const createOrder = (userId) => {
     }
   };
 };
-
-const updateOrder = (orderId, userId) => {
-  return async (dispatch) => {
-    await axios.put(`/api/orders/${orderId}`, {userId});
-    return dispatch(fetchCart(userId));
-  };
-};
-
-const updateCart = (mode = "add", orderId, product, quantity) => {
+const updateCart = (mode = "add", orderId, productId, quantity) => {
   return async (dispatch) => {
     if (mode === "add") {
       const {message} = (
         await axios.put(`/api/carts/${orderId}`, {
-          productId: product.id,
+          mode,
+          productId,
           quantity,
         })
       ).data;
@@ -166,19 +167,17 @@ const updateCart = (mode = "add", orderId, product, quantity) => {
       return alert(`${message}`);
     }
     if (mode === "remove") {
-      if (quantity === 0) {
+      if (quantity === "remove all") {
         const {message} = (
-          await axios.delete(`/api/carts/${orderId}`, {
-            productId: product.id,
-            quantity,
-          })
+          await axios.delete(`/api/carts/${orderId}?productId=${productId}`)
         ).data;
         await dispatch(fetchCart(orderId));
         return alert(`${message}`);
       }
       const {message} = (
         await axios.put(`/api/carts/${orderId}`, {
-          productId: product.id,
+          mode,
+          productId,
           quantity,
         })
       ).data;

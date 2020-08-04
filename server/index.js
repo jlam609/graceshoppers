@@ -39,6 +39,7 @@ const findUserBySession = (sessionId) =>
       },
     ],
   });
+
 app.use(async (req, res, next) => {
   if (!req.cookies.session_id) {
     const session = await Session.create();
@@ -50,21 +51,25 @@ app.use(async (req, res, next) => {
     req.sessionId = session.id;
     next();
   } else {
-    let session = await Session.findAll({
-      where: {
-        id: req.cookies.session_id,
-      },
-    });
-    if (!session) {
-      session = await Session.create();
-      req.cookies.session_id = session.id;
-    }
     req.sessionId = req.cookies.session_id;
-    const user = await findUserBySession(req.sessionId);
-    if (user) {
-      req.user = user;
-    }
-    next();
+    Session.findByPk(req.cookies.session_id)
+      .then((data) => {
+        if (!data)
+          Session.create({
+            id: req.sessionId,
+          });
+        const user = findUserBySession(req.sessionId);
+        return user;
+      })
+      .then((user) => {
+        if (user) {
+          req.user = user;
+          next();
+        } else {
+          next();
+        }
+      })
+      .catch((e) => console.error(e));
   }
 });
 app.use(express.static(path.join(__dirname, "../assets")));
