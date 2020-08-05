@@ -5,7 +5,7 @@ const {models} = require("../db");
 
 const {Session, User} = models;
 
-authRouter.post("/api/register", async (req, res) => {
+authRouter.post("/register", async (req, res) => {
   try {
     const {username, password} = req.body;
     if (username && password) {
@@ -26,40 +26,36 @@ authRouter.post("/api/register", async (req, res) => {
     });
   }
 });
-authRouter.post(
-  "/login",
-  passport.authenticate("local", {
-    failureRedirect: "/login",
-    failureFlash: "Login failed",
-  }),
-  async function (req, res) {
-    const userId = req.user.id;
-    let usersSession = await Session.findByPk(req.cookies.session_id);
-    if (!usersSession) {
-      usersSession = await Session.create({id: req.cookies.session_id});
-    }
-    await usersSession.setUser(userId);
-    res.send({
-      message: `${req.user.username} found`,
-    });
+authRouter.post("/login", passport.authenticate("local"), async function (req, res) {
+  const userId = req.user.id;
+  let usersSession = await Session.findByPk(req.sessionId);
+  if (!usersSession) {
+    usersSession = await Session.create({id: req.sessionId});
   }
-);
-authRouter.get("/api/login", (req, res) => {
+  await usersSession.setUser(userId);
+  res.send({
+    message: `${req.user.username} found`,
+  });
+});
+authRouter.get("/login", (req, res) => {
   try {
     if (req.user) {
-      res.send({
-        username: req.user.username,
-        password: req.user.password,
+      res.status(200).send({
+        user: req.user,
+      });
+    } else {
+      res.status(200).send({
+        user: "",
       });
     }
   } catch (e) {
     console.error(e);
   }
 });
-authRouter.delete("/api/logout", (req, res) => {
+authRouter.delete("/logout", (req, res) => {
   try {
     req.logOut();
-    res.clearCookie("session_id");
+    res.clearCookie("sessionId");
     res.status(200).send({
       message: "successfully deleted",
     });

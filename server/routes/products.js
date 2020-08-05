@@ -1,12 +1,85 @@
 const productRouter = require("express").Router();
+const Sequelize = require("sequelize");
+
 const {
   models: {Product},
 } = require("../db/models/index.js");
 
-productRouter.get("/", async (req, res, next) => {
-  const products = await Product.findAll();
+const {Op} = Sequelize;
+
+const getPagination = (page, size) => {
+  const limit = size ? +size : 10;
+  const offset = page ? (page - 1) * limit : 0;
+  return {
+    limit,
+    offset,
+  };
+};
+
+const getPagingData = (data, page, limit) => {
+  const {count: totalProd, rows: products} = data;
+  const currentPage = page ? +page : 0;
+  const totalPages = Math.ceil(totalProd / limit);
+  return {totalProd, products, totalPages, currentPage};
+};
+
+productRouter.get("/?", async (req, res, next) => {
+  const {page, size} = req.query;
+  console.log(req.query);
+  const {limit, offset} = getPagination(page, size);
+  const products = await Product.findAndCountAll({
+    limit,
+    offset,
+    where: {},
+  });
+  console.log(products);
+  res.send(products);
+});
+productRouter.get("/weapons?", async (req, res, next) => {
+  const {page, size} = req.query;
+  const {limit, offset} = getPagination(page, size);
+  const weapons = await Product.findAndCountAll({
+    limit,
+    offset,
+    where: {
+      categoryId: 1,
+    },
+  });
   res.send({
-    products,
+    weapons,
+  });
+});
+
+productRouter.get("/magic", async (req, res, next) => {
+  const spells = await Product.findAll({
+    where: {
+      categoryId: 2,
+    },
+  });
+  res.send({
+    spells,
+  });
+});
+
+productRouter.get("/items", async (req, res, next) => {
+  const items = await Product.findAll({
+    where: {
+      categoryId: 3,
+    },
+  });
+  res.send({
+    items,
+  });
+});
+
+productRouter.get("/armor", async (req, res, next) => {
+  const armor = await Product.findAll({
+    where: {
+      categoryId: 4,
+    },
+  });
+  res.send({
+    armor,
   });
 });
 

@@ -1,21 +1,20 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
-import {Link, Route} from "react-router-dom";
-import ItemPage from "./ItemPage";
+import {Link} from "react-router-dom";
+import {Pagination} from "@material-ui/lab/Pagination";
+import {updateInput, fetchProducts} from "../store/actions";
 
-class ItemList extends Component {
-  render() {
-    const {products} = this.props;
-    console.log(products);
+const ItemList = ({products, page, handleChange, productsCount}) => {
+  if (products.length) {
     const items = products.filter((item) => item.categoryId === 4);
     return (
-      <div>
-        <h1>Items</h1>
+      <div className="productList">
+        <h1 className="header">Items</h1>
         <div>
           <ul>
             {items.map((item) => {
               return (
-                <div>
+                <div key={item.id}>
                   <Link to={`/items/${item.id}`} key={item.id}>
                     {item.name}
                   </Link>
@@ -23,19 +22,38 @@ class ItemList extends Component {
               );
             })}
           </ul>
-          <Route
-            path="/items/:id"
-            component={ItemPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
         </div>
+        <Pagination
+          count={Math.ceil(productsCount / 10)}
+          page={page}
+          onChange={handleChange}
+        />
       </div>
     );
   }
-}
+  return <h1>Items Loading...</h1>;
+};
 
-const mapStateToProps = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {productsCount} = count;
+  const {page, product, filter} = input;
+  return {
+    products,
+    page,
+    productsCount,
+  };
+};
 
-export default connect(mapStateToProps)(ItemList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(updateInput("page", value));
+    dispatch(fetchProducts(value));
+  };
+  return {
+    handleChange,
+  };
+};
+
+export default connect(mapState, mapDispatch)(ItemList);

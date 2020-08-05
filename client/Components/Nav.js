@@ -7,7 +7,7 @@ import Axios from "axios";
 
 import {clearForm, updateInput, clearInput} from "../store/actions";
 
-const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose}) => {
+const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose, products}) => {
   return (
     <div className="nav">
       <img src="./Tacks_Sign.png" className="logo" />
@@ -37,7 +37,7 @@ const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose}) => {
             <Link to="/items">Items</Link>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Link to="/cart">Cart</Link>
+            <Link to="/cart">Cart ({products.length})</Link>
           </MenuItem>
           {loggedIn ? (
             <div>
@@ -74,12 +74,14 @@ const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose}) => {
   );
 };
 
-const mapState = ({input, form}) => {
+const mapState = ({input, form, cart}) => {
   const {toggle} = input;
   const {loggedIn} = form;
+  const {products} = cart;
   return {
     toggle,
     loggedIn,
+    products,
   };
 };
 
@@ -91,7 +93,7 @@ const mapDispatch = (dispatch) => {
   };
   const logout = (e) => {
     e.preventDefault();
-    Axios.delete("/api/logout");
+    Axios.delete("/api/auth/logout");
     dispatch(clearForm());
     return <Redirect to="/login" />;
   };

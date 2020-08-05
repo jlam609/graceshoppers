@@ -1,8 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, {Component} from "react";
+import React, {useEffect} from "react";
 import {Route, Switch, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {fetchCategories, fetchProducts} from "../store/actions";
+import {
+  fetchCategories,
+  fetchProducts,
+  fetchUser,
+  updateForm,
+  createOrder,
+  fetchSessionOrder,
+  updateOrder,
+  fetchCart,
+} from "../store/actions";
 import WeaponsList from "./WeaponsList";
 import ArmorList from "./ArmorList";
 import SpellList from "./SpellList";
@@ -12,48 +21,69 @@ import HomePage from "./Homepage";
 import Register from "./Register";
 import Login from "./Login";
 import Cart from "./Cart";
+import WeaponPage from "./WeaponPage";
+import SpellPage from "./SpellPage";
+import ArmorPage from "./ArmorPage";
+import ItemPage from "./ItemPage";
 
-class App extends Component {
-  async componentDidMount() {
-    await this.props.fetchProducts();
-    await this.props.fetchCategories();
-  }
+const App = ({loggedIn, dispatch, user}) => {
+  useEffect(() => {
+    const getData = async () => {
+      await dispatch(fetchCategories());
+      await dispatch(fetchProducts());
+      const sessionOrder = await dispatch(fetchSessionOrder());
+      if (!loggedIn) {
+        const [res, activeOrders] = await dispatch(fetchUser());
+        if (res) {
+          await dispatch(updateForm("loggedIn", true));
+          if (activeOrders.length) {
+            console.log(activeOrders);
+            await dispatch(fetchCart(activeOrders[0].id));
+          }
+          if (!sessionOrder[0].userId && !activeOrders.length) {
+            await dispatch(updateOrder(sessionOrder[0].id, res.id));
+          }
+        }
+      }
+    };
+    getData();
+  }, []);
 
-  render() {
-    return (
-      <div>
-        <Nav />
-        <Switch>
-          <Route path="/weapons" component={WeaponsList} />
-          <Route path="/armor" component={ArmorList} />
-          <Route path="/magic" component={SpellList} />
-          <Route path="/items" component={ItemList} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Redirect to="/home" />
-        </Switch>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Nav />
+      <Switch>
+        <Route path="/home" component={HomePage} />
+        <Route path="/magic/:id" component={SpellPage} />
+        <Route path="/items/:id" component={ItemPage} />
+        <Route path="/weapons/:id" component={WeaponPage} />
+        <Route path="/armor/:id" component={ArmorPage} />
+        <Route path="/weapons" component={WeaponsList} />
+        <Route path="/armor" component={ArmorList} />
+        <Route path="/magic" component={SpellList} />
+        <Route path="/items" component={ItemList} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Redirect to="/home" />
+      </Switch>
+    </div>
+  );
+};
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({form, user, orders}) => {
+  const {loggedIn} = form;
+  const {activeOrders} = orders;
   return {
-    products: state.products,
-    categories: state.categories,
+    user,
+    activeOrders,
+    loggedIn,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchProducts: () => {
-      dispatch(fetchProducts());
-    },
-    fetchCategories: () => {
-      dispatch(fetchCategories());
-    },
+    dispatch,
   };
 };
 

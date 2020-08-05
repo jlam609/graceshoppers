@@ -1,21 +1,20 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link, Route} from "react-router-dom";
-import SpellPage from "./SpellPage";
+import {Pagination} from "@material-ui/lab/Pagination";
+import {updateInput, fetchProducts} from "../store/actions";
 
-class SpellList extends Component {
-  render() {
-    const {products} = this.props;
-    console.log(products);
+const SpellList = ({products, handleChange, page, productsCount}) => {
+  if (products.length) {
     const spells = products.filter((spell) => spell.categoryId === 3);
     return (
-      <div>
-        <h1>Magic</h1>
+      <div className="productList">
+        <h1 className="header">Magic</h1>
         <div>
           <ul>
             {spells.map((spell) => {
               return (
-                <div>
+                <div key={spell.id}>
                   <Link to={`/magic/${spell.id}`} key={spell.id}>
                     {spell.name}
                   </Link>
@@ -23,19 +22,38 @@ class SpellList extends Component {
               );
             })}
           </ul>
-          <Route
-            path="/magic/:id"
-            component={SpellPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
         </div>
+        <Pagination
+          count={Math.ceil(productsCount / 10)}
+          page={page}
+          onChange={handleChange}
+        />
       </div>
     );
   }
-}
+  return <h1>Spells Loading...</h1>;
+};
 
-const mapStateToProps = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {productsCount} = count;
+  const {page, product, filter} = input;
+  return {
+    products,
+    page,
+    productsCount,
+  };
+};
 
-export default connect(mapStateToProps)(SpellList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(updateInput("page", value));
+    dispatch(fetchProducts(value));
+  };
+  return {
+    handleChange,
+  };
+};
+
+export default connect(mapState, mapDispatch)(SpellList);

@@ -1,21 +1,21 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link, Route} from "react-router-dom";
-import ArmorPage from "./ArmorPage";
+import {Pagination} from "@material-ui/lab/Pagination";
+import {updateInput, fetchProducts} from "../store/actions";
 
-class ArmorList extends Component {
-  render() {
-    const {products} = this.props;
-    console.log(products);
+const ArmorList = ({products, page, productsCount, handleChange}) => {
+  if (products.length) {
     const armors = products.filter((armor) => armor.categoryId === 2);
+    console.log(armors);
     return (
-      <div>
-        <h1>Armor</h1>
+      <div className="productList">
+        <h1 className="header">Armor</h1>
         <div>
           <ul>
             {armors.map((armor) => {
               return (
-                <div>
+                <div key={armor.id}>
                   <Link to={`/armor/${armor.id}`} key={armor.id}>
                     {armor.name}
                   </Link>
@@ -23,19 +23,38 @@ class ArmorList extends Component {
               );
             })}
           </ul>
-          <Route
-            path="/armor/:id"
-            component={ArmorPage}
-            render={({match}) => {
-              return {match};
-            }}
-          />
         </div>
+        <Pagination
+          count={Math.ceil(productsCount / 10)}
+          page={page}
+          onChange={handleChange}
+        />
       </div>
     );
   }
-}
+  return <h1>Armor Loading...</h1>;
+};
 
-const mapStateToProps = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {productsCount} = count;
+  const {page, product, filter} = input;
+  return {
+    products,
+    page,
+    productsCount,
+  };
+};
 
-export default connect(mapStateToProps)(ArmorList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    dispatch(updateInput("page", value));
+    dispatch(fetchProducts(value));
+  };
+  return {
+    handleChange,
+  };
+};
+
+export default connect(mapState, mapDispatch)(ArmorList);
