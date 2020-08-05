@@ -275,7 +275,7 @@ const ArmorList = ({
         to: `/armor/${armor.id}`,
         key: armor.id
       }, armor.name));
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["Pagination"], {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
       count: Math.ceil(productsCount / 10),
       page: page,
       onChange: handleChange
@@ -602,7 +602,7 @@ const ItemList = ({
         to: `/items/${item.id}`,
         key: item.id
       }, item.name));
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["Pagination"], {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
       count: Math.ceil(productsCount / 10),
       page: page,
       onChange: handleChange
@@ -1159,7 +1159,7 @@ const SpellList = ({
         to: `/magic/${spell.id}`,
         key: spell.id
       }, spell.name));
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["Pagination"], {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
       count: Math.ceil(productsCount / 10),
       page: page,
       onChange: handleChange

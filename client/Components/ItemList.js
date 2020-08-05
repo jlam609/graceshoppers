@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import {Pagination} from "@material-ui/lab/Pagination";
+import Pagination from "@material-ui/lab/Pagination";
 import {updateInput, fetchProducts} from "../store/actions";
 
 const ItemList = ({products, page, handleChange, productsCount}) => {
