@@ -51,7 +51,7 @@ const Login = ({
   );
 };
 
-const mapState = ({form}) => {
+const mapState = ({form, order}) => {
   const {username, password, loggedIn} = form;
   return {
     username,
