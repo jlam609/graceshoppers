@@ -10,7 +10,7 @@ const SearchList = ({products, filter, handleChange}) => {
         <div className="header">
           <h1>Search!</h1>
           <form>
-            <input className="input" onChange={handleChange}></input>
+            <input className="input" onChange={handleChange} />
           </form>
         </div>
         <div>
