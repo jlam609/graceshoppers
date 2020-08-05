@@ -1,39 +1,82 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
+import {updateInput, clearInput, updateCart} from "../store/actions";
 
-const SpellPage = ({match, products}) => {
-  const spell = products.filter((product) => product.id === match.params.id);
-  const mySpell = spell[0];
-  const quantity = mySpell.quantity;
-  const mapQuant = (num) => {
-    for (let i = 0; i <= num.length; i += 1) {
-      return <option>i</option>;
+const SpellPage = ({
+  match,
+  products,
+  quantity,
+  activeOrders,
+  updateQuantity,
+  addToCart,
+  dispatch,
+}) => {
+  useEffect(() => {
+    dispatch(clearInput());
+  }, []);
+  if (products.length) {
+    const item = products.find((product) => product.id === match.params.id);
+    const mapQuant = (num) => {
+      const map = [];
+      for (let i = 1; i <= num; i++) {
+        map.push(<option key={i}>{i}</option>);
+      }
+      return map;
+    };
+    if (item) {
+      return (
+        <div className="productCard">
+          <h2>
+            {item.name}({item.price})
+          </h2>
+          <p>{item.description}</p>
+          <img className="productImg" src={item.image} alt="" />
+          <br />
+          <select
+            id="quantity"
+            name="quantity"
+            value={quantity}
+            onChange={(e) => updateQuantity(e)}
+          >
+            <option value="">0</option>
+            {mapQuant(item.quantity)}
+          </select>
+          <button
+            type="button"
+            onClick={(e) => addToCart(e, activeOrders, item, quantity)}
+          >
+            Add to Cart
+          </button>
+        </div>
+      );
     }
-  };
-  if (spell.length) {
-    return (
-      <div className="productCard">
-        <h2>
-          {mySpell.name} ({mySpell.price})
-        </h2>
-        <p>{mySpell.description}</p>
-        <img className="productImg" src={mySpell.image} alt="" />
-        <br />
-        <select id="quantity" name="quantity" value={mySpell.id}>
-          <option value="">0</option>
-          {mapQuant(quantity)}
-        </select>
-        <button type="button">Add to Cart</button>
-      </div>
-    );
+    return <h2>Loading..</h2>;
   }
-  return <h2>Spell Loading...</h2>;
+  return <h2>Loading..</h2>;
 };
-
-const mapState = ({products}) => {
+const mapState = ({products, input, orders}) => {
+  const {quantity} = input;
+  const {activeOrders} = orders;
   return {
     products,
+    quantity,
+    activeOrders,
   };
 };
 
-export default connect(mapState)(SpellPage);
+const mapDispatch = (dispatch) => {
+  const updateQuantity = (e) => {
+    dispatch(updateInput("quantity", e.target.value));
+  };
+  const addToCart = (e, order, item, quantity) => {
+    e.preventDefault();
+    dispatch(updateCart("add", order.id, item.id, quantity));
+  };
+  return {
+    dispatch,
+    updateQuantity,
+    addToCart,
+  };
+};
+
+export default connect(mapState, mapDispatch)(SpellPage);
