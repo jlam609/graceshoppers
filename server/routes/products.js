@@ -35,7 +35,7 @@ productRouter.get("/?", async (req, res, next) => {
   console.log(products);
   res.send(products);
 });
-productRouter.get("/weapons?", async (req, res, next) => {
+productRouter.get("/weapons/?", async (req, res, next) => {
   const {page, size} = req.query;
   const {limit, offset} = getPagination(page, size);
   const weapons = await Product.findAndCountAll({
