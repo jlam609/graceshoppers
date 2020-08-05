@@ -25,6 +25,7 @@ import WeaponPage from "./WeaponPage";
 import SpellPage from "./SpellPage";
 import ArmorPage from "./ArmorPage";
 import ItemPage from "./ItemPage";
+import SearchList from "./SearchList";
 
 const App = ({loggedIn, dispatch, user}) => {
   useEffect(() => {
@@ -65,6 +66,7 @@ const App = ({loggedIn, dispatch, user}) => {
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/search" component={SearchList} />
         <Redirect to="/home" />
       </Switch>
     </div>

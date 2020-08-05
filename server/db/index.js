@@ -177,7 +177,7 @@ const sync = async () => {
     },
     {
       name: "Elemental Magic",
-      description: "Generic offensive damage-dealing spells.",
+      description: "Generic offensive damage-dealing spells using fire, ice, and air.",
       image:
         "https://vignette.wikia.nocookie.net/finalfantasy/images/8/88/Prime_Elements_Chart_FFXI_Art.png/revision/latest?cb=20120903224809",
       price: 100,
@@ -193,13 +193,13 @@ const sync = async () => {
       quantity: 100,
     },
     {
-      name: "Holy",
+      name: "Holy Smite",
       description: "Strongest White Magic spell, can cleanse the Planet of all threats",
       image:
         "https://vignette.wikia.nocookie.net/finalfantasy/images/c/cd/Aerith_Holy.jpeg/revision/latest/scale-to-width-down/340?cb=20110327055555",
-      price: 1000,
+      price: 10000,
       categoryId: 3,
-      quantity: 100,
+      quantity: 1,
     },
     {
       name: "Meteor",
@@ -210,6 +210,14 @@ const sync = async () => {
       price: 1000,
       categoryId: 3,
       quantity: 10,
+    },
+    {
+      name: "Crucio",
+      description: "A mid-level curse that incapacitates your foe.",
+      image: "https://i.redd.it/o8z5wbqhj87z.jpg",
+      price: 30,
+      categoryId: 3,
+      quantity: 100,
     },
   ];
   const itemList = [
@@ -237,7 +245,7 @@ const sync = async () => {
         "https://www.kindpng.com/picc/m/600-6000351_transparent-mario-mushroom-png-super-mario-1up-mushroom.png",
       price: 100,
       categoryId: 4,
-      quantity: 100,
+      quantity: 5,
     },
     {
       name: "Antidote",
@@ -255,7 +263,17 @@ const sync = async () => {
       image: "https://i1.sndcdn.com/artworks-000476941884-6ee3l2-t500x500.jpg",
       price: 100,
       categoryId: 4,
-      quantity: 100,
+      quantity: 2,
+    },
+    {
+      name: "New Leaf",
+      description:
+        "Every villager receives one upon paying off his first full Nook loan!",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/5/58/Animal_Crossing_Leaf.png",
+      price: 100000,
+      categoryId: 4,
+      quantity: 10,
     },
   ];
   await categoryList.map((category) => Category.create(category));
