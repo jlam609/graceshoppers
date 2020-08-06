@@ -100,7 +100,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchSessionOrder());
       return <Redirect to="/login" />;
     } catch (err) {
-      alert(err);
+      console.error(err);
     }
   };
   const handleClose = (e) => {

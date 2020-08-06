@@ -109,24 +109,25 @@ productRouter.post("/", async (req, res) => {
   res.sendStatus(201);
 });
 
-productRouter.get("/:id", async (req, res, next) => {
+productRouter.put("/:id", async (req, res) => {
   try {
-    const product = await Product.findByPK(req.params.id);
-    res.send(product);
-  } catch (err) {
-    next(err);
-  }
-});
-productRouter.put("/:id", async (req, newData, res, next) => {
-  try {
-    const product = await Product.findByPk(req.params.id);
-    const updatedProduct = {...product, ...newData};
-    await product.upddate(updatedProduct, {
-      fields: ["name", "image", "descripton", "price"],
+    const {id} = req.params;
+    const {quantity, productQuantity} = req.body;
+    await Product.update(
+      {
+        quantity: +productQuantity - +quantity,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).send({
+      message: "Products successfully updated!",
     });
-    res.send(updatedProduct);
   } catch (err) {
-    next(err);
+    res.status(500).send({message: "error updating products"});
   }
 });
 productRouter.delete("/:id", async (req, res, next) => {
