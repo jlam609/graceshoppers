@@ -1,10 +1,20 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Link, Route, Switch, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
+import Pagination from "@material-ui/lab/Pagination";
+import {updateInput, fetchWeapons, clearInput} from "../store/actions";
 
-const WeaponsList = ({products, match}) => {
+const WeaponsList = ({dispatch, products, handleChange, page, productsCount}) => {
+  useEffect(() => {
+    const getData = async () => {
+      await dispatch(fetchWeapons());
+    };
+    getData();
+  }, []);
+  useEffect(() => {
+    dispatch(clearInput());
+  }, []);
   if (products.length) {
-    const weapons = products.filter((weapon) => weapon.categoryId === 1);
     return (
       <div className="productList">
         <div className="header">
@@ -12,7 +22,7 @@ const WeaponsList = ({products, match}) => {
         </div>
         <div>
           <ul>
-            {weapons.map((weapon) => {
+            {products.map((weapon) => {
               return (
                 <div key={weapon.id}>
                   <Link to={`/weapons/${weapon.id}`} key={weapon.id}>
@@ -23,12 +33,38 @@ const WeaponsList = ({products, match}) => {
             })}
           </ul>
         </div>
+        <Pagination
+          count={Math.ceil(productsCount / 5)}
+          page={page}
+          siblingCount={1}
+          boundaryCount={1}
+          onChange={(e, value) => handleChange(e, value)}
+        />
       </div>
     );
   }
   return <h1>Weapons Loading...</h1>;
 };
 
-const mapState = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {productsCount} = count;
+  const {page} = input;
+  return {
+    products,
+    page,
+    productsCount,
+  };
+};
 
-export default connect(mapState)(WeaponsList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    dispatch(updateInput("page", value));
+    dispatch(fetchWeapons(value));
+  };
+  return {
+    dispatch,
+    handleChange,
+  };
+};
+export default connect(mapState, mapDispatch)(WeaponsList);
