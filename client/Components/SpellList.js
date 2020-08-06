@@ -1,33 +1,71 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Link, Route} from "react-router-dom";
-import SpellPage from "./SpellPage";
+import {Link} from "react-router-dom";
+import Pagination from "@material-ui/lab/Pagination";
+import {updateInput, fetchSpells, clearInput} from "../store/actions";
 
-const SpellList = ({products}) => {
+const SpellList = ({dispatch, products, handleChange, page, productsCount}) => {
+  useEffect(() => {
+    const getData = async () => {
+      await dispatch(fetchSpells());
+    };
+    getData();
+  }, []);
+  useEffect(() => {
+    dispatch(clearInput());
+  }, []);
   if (products.length) {
-    const spells = products.filter((spell) => spell.categoryId === 3);
     return (
       <div className="productList">
-        <h1 className="header">Magic</h1>
+        <div className="header">
+          <h1>Magic</h1>
+        </div>
         <div>
           <ul>
-            {spells.map((spell) => {
+            {products.map((spell) => {
               return (
                 <div key={spell.id}>
                   <Link to={`/magic/${spell.id}`} key={spell.id}>
-                    {spell.name}
+                    {spell.name} ({spell.price})
                   </Link>
                 </div>
               );
             })}
           </ul>
         </div>
+        <Pagination
+          count={Math.ceil(productsCount / 5)}
+          page={page}
+          siblingCount={1}
+          boundaryCount={1}
+          onChange={(e, value) => handleChange(e, value)}
+        />
       </div>
     );
   }
   return <h1>Spells Loading...</h1>;
 };
 
-const mapState = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {productsCount} = count;
+  const {page} = input;
+  return {
+    products,
+    page,
+    productsCount,
+  };
+};
 
-export default connect(mapState)(SpellList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    dispatch(updateInput("page", value));
+    dispatch(fetchSpells(value));
+  };
+  return {
+    dispatch,
+    handleChange,
+  };
+};
+
+export default connect(mapState, mapDispatch)(SpellList);

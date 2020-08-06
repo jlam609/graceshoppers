@@ -39,6 +39,9 @@ const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose, products}) => {
           <MenuItem onClick={handleClose}>
             <Link to="/cart">Cart ({products.length})</Link>
           </MenuItem>
+          <MenuItem>
+            <Link to="/search">Search!</Link>
+          </MenuItem>
           {loggedIn ? (
             <div>
               {" "}
@@ -53,19 +56,17 @@ const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose, products}) => {
               </MenuItem>
             </div>
           ) : (
-            <div>
-              <MenuList className="list">
-                <MenuItem>
-                  <Link to="/login" className="menuItem">
-                    Log In
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="/register" className="menuItem">
-                    Register
-                  </Link>
-                </MenuItem>
-              </MenuList>
+            <div className="menuR">
+              <MenuItem>
+                <Link to="/login" className="menuItem">
+                  Log In
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/register" className="menuItem">
+                  Register
+                </Link>
+              </MenuItem>
             </div>
           )}
         </MenuList>
