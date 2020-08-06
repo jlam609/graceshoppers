@@ -36,7 +36,11 @@ const orderReducer = (
       console.log(action.order);
       return {
         ...state,
-        activeOrders: action.order ? [...action.order] : {},
+        activeOrders: action.order
+          ? action.order.length
+            ? action.order.find((order) => order.status === "active")
+            : action.order
+          : {},
       };
     default:
       return state;
@@ -60,7 +64,7 @@ const cartReducer = (
   state = {
     products: [],
     total: 0,
-    quantity: 0,
+    itemQuantity: 0,
   },
   action
 ) => {
@@ -69,7 +73,7 @@ const cartReducer = (
       return {
         products: action.cart ? [...action.cart] : [],
         total: action.total,
-        quantity: action.quantity,
+        itemQuantity: action.quantity,
       };
     }
     default:

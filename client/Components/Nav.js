@@ -5,7 +5,7 @@ import StarsIcon from "@material-ui/icons/Stars";
 import {connect} from "react-redux";
 import Axios from "axios";
 
-import {clearForm, updateInput, clearInput} from "../store/actions";
+import {clearForm, updateInput, clearInput, fetchSessionOrder} from "../store/actions";
 
 const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose, products}) => {
   return (
@@ -92,11 +92,16 @@ const mapDispatch = (dispatch) => {
     const newToggle = !toggle;
     dispatch(updateInput("toggle", newToggle));
   };
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    Axios.delete("/api/auth/logout");
-    dispatch(clearForm());
-    return <Redirect to="/login" />;
+    try {
+      await Axios.delete("/api/auth/logout");
+      dispatch(clearForm());
+      dispatch(fetchSessionOrder());
+      return <Redirect to="/login" />;
+    } catch (err) {
+      alert(err);
+    }
   };
   const handleClose = (e) => {
     e.preventDefault();

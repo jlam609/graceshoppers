@@ -98,6 +98,56 @@ const sync = async () => {
       price: 1000,
       quantity: 10,
     },
+    {
+      name: "Gravity Gun",
+      description: "Iconic weapon in half life",
+      image: "https://screenshots.gamebanana.com/img/ss/srends/5e51329c34029.jpg",
+      categoryId: 1,
+      price: 1000,
+      quantity: 10,
+    },
+    {
+      name: "Shotgun",
+      description: "Sprays bullets",
+      image: "https://assets.dmagstatic.com/wp-content/uploads/2020/06/Shotgun.jpg",
+      categoryId: 1,
+      price: 1000,
+      quantity: 10,
+    },
+    {
+      name: "Bazooka",
+      description: "Fires a big missile",
+      image: "https://i.ytimg.com/vi/b8C3zhGxxgk/maxresdefault.jpg",
+      categoryId: 1,
+      price: 1000,
+      quantity: 10,
+    },
+    {
+      name: "Kitchen Knight",
+      description: "A knife from dead by daylight",
+      image: "https://i.ytimg.com/vi/UJnRHpMr4ko/hqdefault.jpg",
+      categoryId: 1,
+      price: 1000,
+      quantity: 10,
+    },
+    {
+      name: "Twin Daggers",
+      description: "Why have one when you can have 2",
+      image:
+        "https://cdnb.artstation.com/p/assets/images/images/018/492/589/4k/ciara-redding-print-2.jpg?1559592215",
+      categoryId: 1,
+      price: 1000,
+      quantity: 10,
+    },
+    {
+      name: "Gungnir",
+      description: "Spear of Odin God of Death",
+      image:
+        "https://blog.vkngjewelry.com/wp-content/uploads/2019/10/Gungnir_-The-Spear-of-Odin.png",
+      categoryId: 1,
+      price: 1000,
+      quantity: 10,
+    },
   ];
   const armorList = [
     {
@@ -142,6 +192,50 @@ const sync = async () => {
       description: "Iconic armor of Commander Shepard of the Normandy",
       image:
         "https://cdnb.artstation.com/p/assets/images/images/011/382/517/large/maria-kondratieva-n7-views.jpg?1529322965",
+      categoryId: 2,
+      price: 1000,
+      quantity: 20,
+    },
+    {
+      name: "Tin Armor",
+      description: "Decent armour with some protection",
+      image:
+        "https://cdn.shopify.com/s/files/1/0953/9550/products/MMK0704_F_650SQ_large.jpg?v=1482215275",
+      categoryId: 2,
+      price: 1000,
+      quantity: 20,
+    },
+    {
+      name: "Silver Armor",
+      description: "Shiny armour",
+      image:
+        "https://images-na.ssl-images-amazon.com/images/I/51BxbbaqwGL._AC_UY445_.jpg",
+      categoryId: 2,
+      price: 1000,
+      quantity: 20,
+    },
+    {
+      name: "Basic Cloak",
+      description: "Starting armour for mages, light and quick",
+      image:
+        "https://cdn.shopify.com/s/files/1/1625/4911/products/WizardCloak_Brown1_new_2048x.jpg?v=1545147974",
+      categoryId: 2,
+      price: 1000,
+      quantity: 20,
+    },
+    {
+      name: "Ancient Robe",
+      description: "It's Ancient",
+      image:
+        "https://ae01.alicdn.com/kf/HTB1NvFbcQxz61VjSZFrq6xeLFXa3/Male-Chinese-Traditional-Costume-Ancient-Robe-Clothing-Traditional-National-Tang-Suit-Hanfu-Clothing-Men-s-Cosplay.jpg_640x640.jpg",
+      categoryId: 2,
+      price: 1000,
+      quantity: 20,
+    },
+    {
+      name: "Diamond Armour",
+      description: "Rich and will make you a juicy target",
+      image: "https://i.redd.it/x3lgm8uhask41.png",
       categoryId: 2,
       price: 1000,
       quantity: 20,
@@ -217,13 +311,31 @@ const sync = async () => {
       image: "https://i.redd.it/o8z5wbqhj87z.jpg",
       price: 30,
       categoryId: 3,
+      quantity: 70,
+    },
+    {
+      name: "Life",
+      description: "Restores life to a target",
+      image:
+        "https://www.spaciousbreath.com/wp-content/uploads/2018/03/Giving-birth-to-Life-1080x608.jpg",
+      price: 100,
+      categoryId: 3,
+      quantity: 100,
+    },
+    {
+      name: "Death",
+      description: "Chance to instantly kill a target",
+      image:
+        "https://i2-prod.mirror.co.uk/incoming/article9536038.ece/ALTERNATES/s615/1_Grim-Reaper.jpg",
+      price: 100,
+      categoryId: 3,
       quantity: 100,
     },
   ];
   const itemList = [
     {
       name: "Potion",
-      description: "Restores some lost health",
+      description: "Restores a small amount of lost health",
       image: "https://sayonaraai.files.wordpress.com/2007/11/ffsp.jpg",
       price: 5,
       categoryId: 4,
@@ -275,6 +387,68 @@ const sync = async () => {
       categoryId: 4,
       quantity: 10,
     },
+    {
+      name: "Hi-Potion",
+      description: "Restores a medium amount of lost health",
+      image:
+        "https://cdnb.artstation.com/p/assets/images/images/012/583/941/large/alexander-coudriet-hi-potion1.jpg?1535509351",
+      price: 5,
+      categoryId: 4,
+      quantity: 300,
+    },
+    {
+      name: "Hyper-Potion",
+      description: "Restores a large amount of lost health",
+      image:
+        "https://cdn.bulbagarden.net/upload/thumb/3/3f/GO_Hyper_Potion.png/200px-GO_Hyper_Potion.png",
+      price: 5,
+      categoryId: 4,
+      quantity: 500,
+    },
+    {
+      name: "Bomb",
+      description: "Deals some damage with a blast",
+      image: "https://images-na.ssl-images-amazon.com/images/I/61UZ1SeWj6L.jpg",
+      price: 5,
+      categoryId: 4,
+      quantity: 300,
+    },
+    {
+      name: "Pokeball",
+      description: "Basic Ball. Gotta catch them all!",
+      image:
+        "https://lh3.googleusercontent.com/proxy/wOxJgXI2FuD9Pwmf3VAi-_bjnGwNrGVuyXAPzmOjop1bCBYIoWttrgpszxj-yComYrKb2fRvvGN-8FKY9ELhklyOUsEjNEwxDmNlujUp15KDBB1vY8Vo",
+      price: 5,
+      categoryId: 4,
+      quantity: 100,
+    },
+    {
+      name: "GreatBall",
+      description: "Better Ball. Gotta catch them all!",
+      image:
+        "https://d1lss44hh2trtw.cloudfront.net/assets/article/2016/07/11/great_ball_by_baconb0y-d5uf49k_feature.jpg",
+      price: 5,
+      categoryId: 4,
+      quantity: 300,
+    },
+    {
+      name: "UltraBall",
+      description: "Much Better Ball. Gotta catch them all !",
+      image:
+        "https://images3.sw-cdn.net/product/picture/625x465_654579_657444_1452804948.jpg",
+      price: 5,
+      categoryId: 4,
+      quantity: 500,
+    },
+    {
+      name: "MasterBall",
+      description: "Catch anything. Gotta catch them all !",
+      image:
+        "https://www.pngkit.com/png/detail/156-1564777_master-ball-the-best-poke-ball-transparent-background.png",
+      price: 5,
+      categoryId: 4,
+      quantity: 2000,
+    },
   ];
   await categoryList.map((category) => Category.create(category));
   await weaponList.map((weapon) => Product.create(weapon));
@@ -297,7 +471,7 @@ const seed = async (force = true) => {
     if (force) {
       await sync();
     }
-    // console.log("seed was successful");
+    console.log("seed was successful");
   } catch (e) {
     throw new Error("seed unsuccessful", e);
   }

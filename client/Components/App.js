@@ -7,7 +7,6 @@ import {
   fetchProducts,
   fetchUser,
   updateForm,
-  createOrder,
   fetchSessionOrder,
   updateOrder,
   fetchCart,
@@ -33,16 +32,17 @@ const App = ({loggedIn, dispatch, user}) => {
       await dispatch(fetchCategories());
       await dispatch(fetchProducts());
       const sessionOrder = await dispatch(fetchSessionOrder());
+      console.log(sessionOrder);
       if (!loggedIn) {
         const [res, activeOrders] = await dispatch(fetchUser());
+        console.log(res, activeOrders);
         if (res) {
           await dispatch(updateForm("loggedIn", true));
-          if (activeOrders.length) {
-            console.log(activeOrders);
-            await dispatch(fetchCart(activeOrders[0].id));
+          if (activeOrders && activeOrders.length) {
+            await dispatch(fetchCart(activeOrders.id));
           }
-          if (!sessionOrder[0].userId && !activeOrders.length) {
-            await dispatch(updateOrder(sessionOrder[0].id, res.id));
+          if (!sessionOrder.userId && !activeOrders.length) {
+            await dispatch(updateOrder(sessionOrder.id, res.id));
           }
         }
       }
@@ -76,6 +76,7 @@ const App = ({loggedIn, dispatch, user}) => {
 const mapStateToProps = ({form, user, orders}) => {
   const {loggedIn} = form;
   const {activeOrders} = orders;
+  console.log(activeOrders);
   return {
     user,
     activeOrders,

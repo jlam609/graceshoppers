@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {updateInput, clearInput, updateCart, fetchCart} from "../store/actions";
+import {updateInput, clearInput, updateCart} from "../store/actions";
 
 const WeaponPage = ({
   match,
@@ -9,9 +9,13 @@ const WeaponPage = ({
   activeOrders,
   updateQuantity,
   addToCart,
+  dispatch,
 }) => {
+  useEffect(() => {
+    dispatch(clearInput());
+  }, []);
   if (products.length) {
-    const weapon = products.find((product) => product.id === match.params.id);
+    const item = products.find((product) => product.id === match.params.id);
     const mapQuant = (num) => {
       const map = [];
       for (let i = 1; i <= num; i++) {
@@ -19,14 +23,14 @@ const WeaponPage = ({
       }
       return map;
     };
-    if (weapon) {
+    if (item) {
       return (
         <div className="productCard">
           <h2>
-            {weapon.name}({weapon.price})
+            {item.name}({item.price})
           </h2>
-          <p>{weapon.description}</p>
-          <img className="productImg" src={weapon.image} alt="" />
+          <p>{item.description}</p>
+          <img className="productImg" src={item.image} alt="" />
           <br />
           <select
             id="quantity"
@@ -34,21 +38,21 @@ const WeaponPage = ({
             value={quantity}
             onChange={(e) => updateQuantity(e)}
           >
-            <option value="">—</option>
-            {mapQuant(weapon.quantity)}
+            <option value="">0</option>
+            {mapQuant(item.quantity)}
           </select>
           <button
             type="button"
-            onClick={(e) => addToCart(e, activeOrders, weapon, quantity)}
+            onClick={(e) => addToCart(e, activeOrders, item, quantity)}
           >
             Add to Cart
           </button>
         </div>
       );
     }
-    return <h2>WeaponLoading</h2>;
+    return <h2>Loading..</h2>;
   }
-  return <h2>WeaponLoading</h2>;
+  return <h2>Loading..</h2>;
 };
 const mapState = ({products, input, orders}) => {
   const {quantity} = input;
@@ -64,9 +68,9 @@ const mapDispatch = (dispatch) => {
   const updateQuantity = (e) => {
     dispatch(updateInput("quantity", e.target.value));
   };
-  const addToCart = (e, order, weapon, quantity) => {
+  const addToCart = (e, order, item, quantity) => {
     e.preventDefault();
-    dispatch(updateCart("add", order.id, weapon, quantity));
+    dispatch(updateCart("add", order.id, item.id, quantity));
   };
   return {
     dispatch,

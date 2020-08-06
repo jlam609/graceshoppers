@@ -26,5 +26,6 @@ module.exports = {
     "jsx-a11y/alt-text": 0,
     "react/destructuring-assignment": 0,
     "react/no-unescaped-entities": 0,
+    "no-nested-ternary": 0,
   },
 };
