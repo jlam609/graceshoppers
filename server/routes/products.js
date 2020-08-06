@@ -33,7 +33,7 @@ productRouter.get("/?", async (req, res, next) => {
         offset,
         where: {
           name: {
-            [Op.iLike]: `"%"${filter}"%"`,
+            [Op.iLike]: `%${filter}%`,
           },
         },
       });
