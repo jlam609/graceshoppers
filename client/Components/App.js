@@ -24,6 +24,7 @@ import WeaponPage from "./WeaponPage";
 import SpellPage from "./SpellPage";
 import ArmorPage from "./ArmorPage";
 import ItemPage from "./ItemPage";
+import Checkout from "./Checkout";
 
 const App = ({loggedIn, dispatch, user}) => {
   useEffect(() => {
@@ -31,10 +32,8 @@ const App = ({loggedIn, dispatch, user}) => {
       await dispatch(fetchCategories());
       await dispatch(fetchProducts());
       const sessionOrder = await dispatch(fetchSessionOrder());
-      console.log(sessionOrder);
       if (!loggedIn) {
         const [res, activeOrders] = await dispatch(fetchUser());
-        console.log(res, activeOrders);
         if (res) {
           await dispatch(updateForm("loggedIn", true));
           if (activeOrders && activeOrders.length) {
@@ -65,6 +64,7 @@ const App = ({loggedIn, dispatch, user}) => {
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/checkout" component={Checkout} />
         <Redirect to="/home" />
       </Switch>
     </div>
@@ -74,7 +74,6 @@ const App = ({loggedIn, dispatch, user}) => {
 const mapStateToProps = ({form, user, orders}) => {
   const {loggedIn} = form;
   const {activeOrders} = orders;
-  console.log(activeOrders);
   return {
     user,
     activeOrders,

@@ -33,7 +33,6 @@ const orderReducer = (
           : [],
       };
     case TYPES.SET_ORDER:
-      console.log(action.order);
       return {
         ...state,
         activeOrders: action.order
@@ -74,6 +73,13 @@ const cartReducer = (
         products: action.cart ? [...action.cart] : [],
         total: action.total,
         itemQuantity: action.quantity,
+      };
+    }
+    case TYPES.CLEAR_CART: {
+      return {
+        products: [],
+        total: 0,
+        itemQuantity: 0,
       };
     }
     default:
