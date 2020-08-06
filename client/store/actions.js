@@ -274,6 +274,7 @@ const checkout = (products) => {
     }
   };
 };
+
 module.exports = {
   getProducts,
   getOrders,

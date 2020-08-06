@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Redirect} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {Card, CardContent, CardActions, Button} from "@material-ui/core";
 import {updateCart, clearInput, updateInput} from "../store/actions";
 
@@ -13,7 +13,6 @@ const Cart = ({
   dispatch,
   updateQuantity,
   activeOrders,
-  checkout,
 }) => {
   useEffect(() => {
     dispatch(clearInput());
@@ -29,6 +28,7 @@ const Cart = ({
     }
     return options;
   };
+  const history = useHistory();
   return (
     <div className="cart">
       <h2> My Shopping Cart </h2>
@@ -55,6 +55,9 @@ const Cart = ({
                       <Button
                         onClick={(e) => removeItem(e, activeOrders, product, quantity)}
                         variant="outlined"
+                        disabled={
+                          quantity > 0 || quantity === "remove all" ? false : true
+                        }
                       >
                         Remove Item
                       </Button>
@@ -73,7 +76,11 @@ const Cart = ({
         <hr />
         <span>${total}</span>
         <hr />
-        <Button variant="outlined" onClick={(e) => checkout(e)}>
+        <Button
+          variant="outlined"
+          onClick={(e) => history.push("/checkout")}
+          disabled={products.length ? false : true}
+        >
           Submit Order
         </Button>
       </div>
@@ -105,15 +112,10 @@ const mapDispatch = (dispatch) => {
   const updateQuantity = (e) => {
     return dispatch(updateInput("quantity", e.target.value));
   };
-  const checkout = (e) => {
-    e.preventDefault();
-    window.location.href = "/checkout";
-  };
   return {
     removeItem,
     dispatch,
     updateQuantity,
-    checkout,
   };
 };
 export default connect(mapState, mapDispatch)(Cart);

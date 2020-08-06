@@ -12,6 +12,8 @@
   justify-content: center;
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
+  overflow-x: scroll;
   position: absolute;
   top: 0;
   left: 0;
@@ -26,6 +28,8 @@
   background-color: blueviolet;
   flex-direction: row;
   justify-content: space-between;
+  margin-left: 0;
+  margin-right: 0;
 }
 .list {
   display: flex;
@@ -35,12 +39,6 @@
   justify-content: space-around;
   min-width: 30%;
   width: 70%;
-}
-
-.menuR {
-  display: flex;
-  flex-direction: column;
-  justify-content: right;
 }
 
 .shopKeep {
@@ -62,8 +60,9 @@
 }
 
 .book {
-  height: 100px;
-  width: 80px;
+  height: 250px;
+  width: 170px;
+  padding: 20px;
 }
 
 .table {
@@ -74,6 +73,8 @@
 .maindiv {
   width: 100%;
   height: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .form {
@@ -103,11 +104,11 @@
   background-image: url("./openbook.jpg");
   background-size: cover;
   border-radius: 8px;
-  background-position: left;
+  justify-content: center;
 }
 
 .productCard {
-  margin-top: 100px;
+  margin-top: 50px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 200px;
   background-color: antiquewhite;
@@ -150,10 +151,11 @@
 .cart {
   background-color: whitesmoke;
   text-align: center;
-  width: 100%;
   padding: 20px;
-  height: 100%;
-  margin: 15px 15px 15px 15px;
+  margin-top: 20px;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 .card {
   list-style-type: none;
@@ -162,4 +164,9 @@
   margin-bottom: 10px;
   border: black solid 1px;
   border-radius: 15px;
+}
+.homeIcon {
+  position: absolute;
+  right: 100px;
+  bottom: 40px;
 }
