@@ -6,6 +6,11 @@ const getProducts = (products) => ({
   products,
 });
 
+const getProductsCount = (count) => ({
+  type: TYPES.GET_PRODUCTS_COUNT,
+  count,
+});
+
 const getOrders = (orders) => ({
   type: TYPES.GET_ORDERS,
   orders,
@@ -38,10 +43,53 @@ const removeFromCart = (product) => ({
   product,
 });
 
-const fetchProducts = () => {
+const fetchProducts = (where = "", page = 1, size = 5) => {
   return async (dispatch) => {
-    const {products} = (await axios.get("/api/products")).data;
-    return dispatch(getProducts(products));
+    const {count, rows} = (
+      await axios.get(`/api/products?filter=${where}&page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(count));
+    return dispatch(getProducts(rows));
+  };
+};
+
+const fetchWeapons = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {weapons} = (
+      await axios.get(`/api/products/weapons?page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(weapons.count));
+    return dispatch(getProducts(weapons.rows));
+  };
+};
+
+const fetchSpells = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {spells} = (
+      await axios.get(`/api/products/spells?page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(spells.count));
+    return dispatch(getProducts(spells.rows));
+  };
+};
+
+const fetchItems = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {items} = (
+      await axios.get(`/api/products/items?page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(items.count));
+    return dispatch(getProducts(items.rows));
+  };
+};
+
+const fetchArmor = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {armor} = (
+      await axios.get(`/api/products/armor?page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(armor.count));
+    return dispatch(getProducts(armor.rows));
   };
 };
 
@@ -209,6 +257,10 @@ module.exports = {
   fetchProducts,
   fetchOrders,
   fetchCategories,
+  fetchWeapons,
+  fetchArmor,
+  fetchSpells,
+  fetchItems,
   fetchCart,
   updateForm,
   clearForm,

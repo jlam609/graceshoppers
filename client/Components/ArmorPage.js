@@ -1,53 +1,67 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {fetchCategories, fetchProducts} from "../store/actions";
+import {updateInput, clearInput} from "../store/actions";
 
-const ArmorPage = ({match, products, dispatch}) => {
-  console.log("products", products);
-  useEffect(() => {
-    const getData = async () => {
-      await dispatch(fetchCategories());
-      await dispatch(fetchProducts());
-    };
-    getData();
-  }, []);
-
+const ArmorPage = ({match, products, quantity, order, updateQuantity, addToCart}) => {
   if (products.length) {
-    const armor = products.filter((product) => product.id === match.params.id);
-    const myArmor = armor[0];
-    const quantity = myArmor.quantity;
+    const armor = products.find((product) => product.id === match.params.id);
     const mapQuant = (num) => {
-      for (let i = 0; i <= num.length; i += 1) {
-        return <option>i</option>;
+      const map = [];
+      for (let i = 0; i <= num; i += 1) {
+        map.push(<option key={i}>{i}</option>);
       }
+      return map;
     };
-    return (
-      <div className="productCard">
-        <h2>
-          {myArmor.name} ({myArmor.price})
-        </h2>
-        <p>{myArmor.description}</p>
-        <img className="productImg" src={myArmor.image} />
-        <br />
-        <select id="quantity" name="quantity" defaultValue={myArmor.id}>
-          <option value="">0</option>
-          {mapQuant(quantity)}
-        </select>
-        <button type="button">Add to Cart</button>
-      </div>
-    );
+    if (armor) {
+      return (
+        <div className="productCard">
+          <h2>
+            {armor.name} ({armor.price})
+          </h2>
+          <p>{armor.description}</p>
+          <img className="productImg" src={armor.image} />
+          <br />
+          <select
+            id="quantity"
+            name="quantity"
+            value={armor.id}
+            onChange={(e) => updateQuantity(e)}
+          >
+            <option value="">-</option>
+            {mapQuant(armor.quantity)}
+          </select>
+          <button type="button" onClick={(e) => addToCart(e, order, armor, quantity)}>
+            Add to Cart
+          </button>
+        </div>
+      );
+    }
+    return <h2>Armor Loading...</h2>;
   }
-  return <h2>Armor Loading</h2>;
+  return <h2>Armor Loading...</h2>;
 };
 
-const mapState = ({products}) => {
+const mapState = ({products, input, order}) => {
+  const {quantity} = input;
   return {
     products,
+    quantity,
+    order,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {dispatch};
+const mapDispatch = (dispatch) => {
+  const updateQuantity = (e) => {
+    dispatch(updateInput("quantity", e.target.value));
+  };
+  const addToCart = (e, order, armor, quantity) => {
+    e.preventDefault();
+  };
+  return {
+    dispatch,
+    updateQuantity,
+    addToCart,
+  };
 };
 
-export default connect(mapState, mapDispatchToProps)(ArmorPage);
+export default connect(mapState, mapDispatch)(ArmorPage);

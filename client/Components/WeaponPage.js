@@ -34,7 +34,7 @@ const WeaponPage = ({
             value={quantity}
             onChange={(e) => updateQuantity(e)}
           >
-            <option value="">0</option>
+            <option value="">—</option>
             {mapQuant(weapon.quantity)}
           </select>
           <button

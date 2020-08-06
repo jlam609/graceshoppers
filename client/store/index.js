@@ -113,11 +113,29 @@ const userReducer = (state = {}, action) => {
   }
 };
 
+const countReducer = (
+  state = {
+    productsCount: 0,
+  },
+  action
+) => {
+  switch (action.type) {
+    case TYPES.GET_PRODUCTS_COUNT:
+      return {
+        ...state,
+        productsCount: action.count,
+      };
+    default:
+      return state;
+  }
+};
+
 const inputReducer = (
   state = {
     toggle: false,
     filter: "",
     quantity: 0,
+    page: 1,
   },
   action
 ) => {
@@ -131,6 +149,8 @@ const inputReducer = (
       return {
         toggle: false,
         filter: "",
+        quantity: 0,
+        page: 1,
       };
     default:
       return state;
@@ -142,6 +162,7 @@ const masterReducer = combineReducers({
   orders: orderReducer,
   products: productReducer,
   categories: categoryReducer,
+  count: countReducer,
   form: formReducer,
   user: userReducer,
   input: inputReducer,

@@ -40,7 +40,7 @@ const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose, products}) => {
             <Link to="/cart">Cart ({products.length})</Link>
           </MenuItem>
           <MenuItem>
-            <Button href="/search">Search!</Button>
+            <Link to="/search">Search!</Link>
           </MenuItem>
           {loggedIn ? (
             <div>

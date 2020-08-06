@@ -134,6 +134,19 @@
   width: 80%;
   justify-content: center;
 }
+
+.pagination {
+  display: inline-block;
+  list-style: none;
+}
+
+.pagenum {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
 .cart {
   background-color: whitesmoke;
   text-align: center;
