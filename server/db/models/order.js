@@ -1,4 +1,4 @@
-const {UUID, UUIDV4, ENUM} = require("sequelize");
+const {UUID, UUIDV4, ENUM, INTEGER, STRING} = require("sequelize");
 const db = require("../db");
 
 const Order = db.define("order", {
@@ -11,6 +11,15 @@ const Order = db.define("order", {
     type: ENUM,
     values: ["active", "pending", "done"],
     defaultValue: "active",
+  },
+  total: {
+    type: INTEGER,
+  },
+  address: {
+    type: STRING,
+  },
+  name: {
+    type: STRING,
   },
 });
 

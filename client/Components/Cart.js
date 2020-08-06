@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Card, CardContent, CardActions, Button, Select} from "@material-ui/core";
+import {Redirect} from "react-router-dom";
+import {Card, CardContent, CardActions, Button} from "@material-ui/core";
 import {updateCart, clearInput, updateInput} from "../store/actions";
 
 const Cart = ({
@@ -12,6 +13,7 @@ const Cart = ({
   dispatch,
   updateQuantity,
   activeOrders,
+  checkout,
 }) => {
   useEffect(() => {
     dispatch(clearInput());
@@ -71,7 +73,9 @@ const Cart = ({
         <hr />
         <span>${total}</span>
         <hr />
-        <Button variant="outlined">Submit Order</Button>
+        <Button variant="outlined" onClick={(e) => checkout(e)}>
+          Submit Order
+        </Button>
       </div>
     </div>
   );
@@ -81,7 +85,6 @@ const mapState = ({cart, input, orders}) => {
   const {products, total, itemQuantity} = cart;
   const {quantity} = input;
   const {activeOrders} = orders;
-  console.log(quantity, activeOrders, cart);
   return {
     products,
     total,
@@ -94,7 +97,6 @@ const mapState = ({cart, input, orders}) => {
 const mapDispatch = (dispatch) => {
   const removeItem = async (e, order, product, quantity) => {
     e.preventDefault();
-    console.log(order, product, -quantity);
     if (quantity === "remove all") {
       return dispatch(updateCart("remove", order.id, product.productId, quantity));
     }
@@ -103,10 +105,15 @@ const mapDispatch = (dispatch) => {
   const updateQuantity = (e) => {
     return dispatch(updateInput("quantity", e.target.value));
   };
+  const checkout = (e) => {
+    e.preventDefault();
+    window.location.href = "/checkout";
+  };
   return {
     removeItem,
     dispatch,
     updateQuantity,
+    checkout,
   };
 };
 export default connect(mapState, mapDispatch)(Cart);

@@ -74,7 +74,6 @@ const mapDispatch = (dispatch) => {
       axios
         .post("/api/auth/register", {username, password})
         .then((res) => {
-          console.log(res.data.message);
           dispatch(clearForm());
         })
         .catch((err) => console.error(err));

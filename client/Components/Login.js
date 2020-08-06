@@ -2,9 +2,12 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {TextField, FormControl, Button} from "@material-ui/core";
-import axios from "axios";
+import {toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {clearForm, login, updateForm} from "../store/actions";
+
+toast.configure();
 
 const Login = ({
   username,
@@ -51,12 +54,15 @@ const Login = ({
   );
 };
 
-const mapState = ({form, order}) => {
+const mapState = ({form, order, cart}) => {
   const {username, password, loggedIn} = form;
+  const {products} = cart;
+  console.log(products);
   return {
     username,
     password,
     loggedIn,
+    products,
   };
 };
 
@@ -73,7 +79,7 @@ const mapDispatch = (dispatch) => {
       console.log(username, password);
       dispatch(login({username, password}));
       dispatch(updateForm("loggedIn", true));
-    } else alert("All Fields Must Be Completed");
+    } else toast("All Fields Must Be Completed");
   };
   return {
     setUsername,
