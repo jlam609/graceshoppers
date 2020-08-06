@@ -34,6 +34,7 @@ authRouter.post("/login", passport.authenticate("local"), async function (req, r
   }
   await usersSession.setUser(userId);
   res.send({
+    user: req.user,
     message: `${req.user.username} found`,
   });
 });
