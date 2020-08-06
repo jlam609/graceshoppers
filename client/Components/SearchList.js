@@ -2,6 +2,9 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
+import {IconButton} from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
+
 import {fetchProducts, clearInput, updateInput} from "../store/actions";
 
 const SearchList = ({
@@ -25,48 +28,57 @@ const SearchList = ({
   }, []);
 
   return (
-    <div className="productList">
-      <div className="header">
-        <h1>Search!</h1>
-        <form>
-          <input
-            value={filter}
-            className="input"
-            onChange={changeFilter}
-            onKeyUp={(e) => searchProducts(e, filter)}
-          />
-        </form>
+    <div>
+      <div className="productList">
+        <div className="header">
+          <h1>Search!</h1>
+          <form>
+            <input
+              value={filter}
+              className="input"
+              onChange={changeFilter}
+              onKeyUp={(e) => searchProducts(e, filter)}
+            />
+          </form>
+        </div>
+        <div>
+          <ul>
+            {products.map((product) => {
+              let searchname;
+              if (product.categoryId === 1) {
+                searchname = "weapons";
+              } else if (product.categoryId === 2) {
+                searchname = "armor";
+              } else if (product.categoryId === 3) {
+                searchname = "spells";
+              } else {
+                searchname = "items";
+              }
+              return (
+                <div key={product.id}>
+                  <Link to={`/${searchname}/${product.id}`} key={product.id}>
+                    {product.name} ({product.price})
+                  </Link>
+                </div>
+              );
+            })}
+          </ul>
+        </div>
+        <Pagination
+          count={Math.ceil(productsCount / 5)}
+          page={page}
+          siblingCount={1}
+          boundaryCount={1}
+          onChange={(e, value) => handlePage(e, value, filter)}
+        />
       </div>
-      <div>
-        <ul>
-          {products.map((product) => {
-            let searchname;
-            if (product.categoryId === 1) {
-              searchname = "weapons";
-            } else if (product.categoryId === 2) {
-              searchname = "armor";
-            } else if (product.categoryId === 3) {
-              searchname = "spells";
-            } else {
-              searchname = "items";
-            }
-            return (
-              <div key={product.id}>
-                <Link to={`/${searchname}/${product.id}`} key={product.id}>
-                  {product.name} ({product.price})
-                </Link>
-              </div>
-            );
-          })}
-        </ul>
+      <div className="homeIcon">
+        <IconButton>
+          <Link to="/home">
+            <HomeIcon fontSize="large" />
+          </Link>
+        </IconButton>
       </div>
-      <Pagination
-        count={Math.ceil(productsCount / 5)}
-        page={page}
-        siblingCount={1}
-        boundaryCount={1}
-        onChange={(e, value) => handlePage(e, value, filter)}
-      />
     </div>
   );
 };

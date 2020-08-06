@@ -170,6 +170,7 @@ const updateOrder = (orderId, userId) => {
 const login = (userObj, products, order) => {
   return async (dispatch) => {
     const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
+    console.log(user);
     if (user) {
       await dispatch(getUser(user));
       await dispatch(fetchOrders(user.id));
@@ -274,6 +275,7 @@ const checkout = (products) => {
     }
   };
 };
+
 module.exports = {
   getProducts,
   getOrders,

@@ -27,5 +27,7 @@ module.exports = {
     "react/destructuring-assignment": 0,
     "react/no-unescaped-entities": 0,
     "no-nested-ternary": 0,
+    "no-unneeded-ternary": "off",
+    "react/jsx-wrap-multilines": 0,
   },
 };

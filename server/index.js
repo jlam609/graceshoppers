@@ -67,6 +67,7 @@ app.use(async (req, res, next) => {
       .then((user) => {
         if (user) {
           req.user = user;
+          req.isAuthenticated = true;
           next();
         } else {
           next();
@@ -101,4 +102,4 @@ const startServer = () =>
     });
   });
 
-seed(true).then(startServer);
+seed(false).then(startServer);
