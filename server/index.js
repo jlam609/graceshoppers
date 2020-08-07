@@ -66,8 +66,7 @@ app.use(async (req, res, next) => {
       })
       .then((user) => {
         if (user) {
-          req.user = user;
-          req.isAuthenticated = true;
+          req.user = user.dataValues;
           next();
         } else {
           next();

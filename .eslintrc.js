@@ -29,5 +29,6 @@ module.exports = {
     "no-nested-ternary": 0,
     "no-unneeded-ternary": "off",
     "react/jsx-wrap-multilines": 0,
+    "import/order":"off"
   },
 };
