@@ -14,7 +14,6 @@ passport.use(
     })
       .then(function (user) {
         const hashPassword = bcrpyt.hashSync(password, user.salt);
-        console.log(hashPassword, user.password);
         if (!user) {
           return done(null, false, {
             message: "Username does not exist",

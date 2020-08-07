@@ -28,9 +28,9 @@ authRouter.post("/register", async (req, res) => {
 });
 authRouter.post("/login", passport.authenticate("local"), async function (req, res) {
   const userId = req.user.id;
-  let usersSession = await Session.findByPk(req.cookies.session_id);
+  let usersSession = await Session.findByPk(req.sessionId);
   if (!usersSession) {
-    usersSession = await Session.create({id: req.cookies.session_id});
+    usersSession = await Session.create({id: req.sessionId});
   }
   await usersSession.setUser(userId);
   res.send({
@@ -40,8 +40,12 @@ authRouter.post("/login", passport.authenticate("local"), async function (req, r
 authRouter.get("/login", (req, res) => {
   try {
     if (req.user) {
-      res.send({
+      res.status(200).send({
         user: req.user,
+      });
+    } else {
+      res.status(200).send({
+        user: "",
       });
     }
   } catch (e) {

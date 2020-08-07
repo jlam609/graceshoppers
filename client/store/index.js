@@ -1,12 +1,11 @@
 import {createStore, applyMiddleware, combineReducers} from "redux";
 import thunks from "redux-thunk";
 import TYPES from "./types";
-import {updateInput} from "./actions";
 
-const productReducer = (state = {}, action) => {
+const productReducer = (state = [], action) => {
   switch (action.type) {
     case TYPES.GET_PRODUCTS:
-      return [...action.products];
+      return action.products ? [...action.products] : [];
     default:
       return state;
   }
@@ -15,7 +14,7 @@ const productReducer = (state = {}, action) => {
 const orderReducer = (
   state = {
     pendingOrders: [],
-    activeOrders: [],
+    activeOrders: {},
     doneOrders: [],
   },
   action
@@ -23,9 +22,25 @@ const orderReducer = (
   switch (action.type) {
     case TYPES.GET_ORDERS:
       return {
-        pendingOrders: [...action.orders.filter((order) => order.status === "pending")],
-        activeOrders: [...action.orders.filter((order) => order.status === "active")],
-        doneOrders: [...action.orders.filter((order) => order.status === "done")],
+        pendingOrders: action.orders
+          ? action.orders.filter((order) => order.status === "pending")
+          : [],
+        activeOrders: action.orders
+          ? action.orders.find((order) => order.status === "active")
+          : [],
+        doneOrders: action.orders
+          ? action.orders.filter((order) => order.status === "done")
+          : [],
+      };
+    case TYPES.SET_ORDER:
+      console.log(action.order);
+      return {
+        ...state,
+        activeOrders: action.order
+          ? action.order.length
+            ? action.order.find((order) => order.status === "active")
+            : action.order
+          : {},
       };
     default:
       return state;
@@ -49,27 +64,18 @@ const cartReducer = (
   state = {
     products: [],
     total: 0,
+    itemQuantity: 0,
   },
   action
 ) => {
   switch (action.type) {
     case TYPES.GET_CART: {
-      const total = action.cart.reduce((a, b) => a.price + b.price);
       return {
-        products: [...action.cart],
-        total,
+        products: action.cart ? [...action.cart] : [],
+        total: action.total,
+        itemQuantity: action.quantity,
       };
     }
-    case TYPES.ADD_TO_CART:
-      return {
-        products: [...state.products, action.product],
-        total: state.total + action.product.price,
-      };
-    case TYPES.RM_FROM_CART:
-      return {
-        products: [...state.products.filter((product) => product !== action.product)],
-        total: state.total - action.product.price,
-      };
     default:
       return state;
   }
@@ -100,12 +106,12 @@ const formReducer = (
   }
 };
 
-const userReducer = (state = [], action) => {
+const userReducer = (state = {}, action) => {
   switch (action.type) {
     case TYPES.GET_USER:
-      return [action.user];
+      return {...action.user};
     case TYPES.CLEAR_USER:
-      return [];
+      return {};
     default:
       return state;
   }
@@ -129,6 +135,7 @@ const inputReducer = (
       return {
         toggle: false,
         filter: "",
+        quantity: 0,
       };
     default:
       return state;

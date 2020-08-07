@@ -2,7 +2,15 @@
 import React, {useEffect} from "react";
 import {Route, Switch, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {fetchCategories, fetchProducts, fetchUser, updateForm} from "../store/actions";
+import {
+  fetchCategories,
+  fetchProducts,
+  fetchUser,
+  updateForm,
+  fetchSessionOrder,
+  updateOrder,
+  fetchCart,
+} from "../store/actions";
 import WeaponsList from "./WeaponsList";
 import ArmorList from "./ArmorList";
 import SpellList from "./SpellList";
@@ -17,19 +25,24 @@ import SpellPage from "./SpellPage";
 import ArmorPage from "./ArmorPage";
 import ItemPage from "./ItemPage";
 
-const App = ({products, categories, loggedIn, dispatch, user}) => {
+const App = ({loggedIn, dispatch, user}) => {
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchCategories());
       await dispatch(fetchProducts());
+      const sessionOrder = await dispatch(fetchSessionOrder());
+      console.log(sessionOrder);
       if (!loggedIn) {
-        try {
-          await dispatch(fetchUser());
-          if (user) {
-            dispatch(updateForm("loggedIn", true));
+        const [res, activeOrders] = await dispatch(fetchUser());
+        console.log(res, activeOrders);
+        if (res) {
+          await dispatch(updateForm("loggedIn", true));
+          if (activeOrders && activeOrders.length) {
+            await dispatch(fetchCart(activeOrders.id));
           }
-        } catch (e) {
-          console.error(e);
+          if (!sessionOrder.userId && !activeOrders.length) {
+            await dispatch(updateOrder(sessionOrder.id, res.id));
+          }
         }
       }
     };
@@ -58,12 +71,14 @@ const App = ({products, categories, loggedIn, dispatch, user}) => {
   );
 };
 
-const mapStateToProps = ({products, categories, form, user}) => {
+const mapStateToProps = ({form, user, orders}) => {
   const {loggedIn} = form;
+  const {activeOrders} = orders;
+  console.log(activeOrders);
   return {
-    products,
-    categories,
     user,
+    activeOrders,
+    loggedIn,
   };
 };
 

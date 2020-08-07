@@ -39,6 +39,7 @@ const findUserBySession = (sessionId) =>
       },
     ],
   });
+
 app.use(async (req, res, next) => {
   if (!req.cookies.session_id) {
     const session = await Session.create();
@@ -47,16 +48,28 @@ app.use(async (req, res, next) => {
       path: "/",
       expires: new Date(Date.now() + oneWeek),
     });
-    req.session_id = session.id;
+    req.sessionId = session.id;
     next();
   } else {
-    req.session_id = req.cookies.session_id;
-    const user = await findUserBySession(req.session_id);
-
-    if (user) {
-      req.user = user;
-    }
-    next();
+    req.sessionId = req.cookies.session_id;
+    Session.findByPk(req.cookies.session_id)
+      .then((data) => {
+        if (!data)
+          Session.create({
+            id: req.sessionId,
+          });
+        const user = findUserBySession(req.sessionId);
+        return user;
+      })
+      .then((user) => {
+        if (user) {
+          req.user = user;
+          next();
+        } else {
+          next();
+        }
+      })
+      .catch((e) => console.error(e));
   }
 });
 app.use(express.static(path.join(__dirname, "../assets")));
@@ -67,7 +80,7 @@ app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/categories", categoryRouter);
-app.use("/api/cart", cartRouter);
+app.use("/api/carts", cartRouter);
 app.use("/api/auth", authRouter);
 
 app.get("/*", (req, res) => {
@@ -84,4 +97,4 @@ const startServer = () =>
     });
   });
 
-seed(false).then(startServer);
+seed(true).then(startServer);
