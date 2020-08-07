@@ -48,7 +48,7 @@ const SearchList = ({
               if (product.categoryId === 1) {
                 searchname = "weapons";
               } else if (product.categoryId === 2) {
-                searchname = "armor";
+                searchname = "armors";
               } else if (product.categoryId === 3) {
                 searchname = "spells";
               } else {

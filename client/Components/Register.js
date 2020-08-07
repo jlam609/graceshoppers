@@ -3,8 +3,12 @@ import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {TextField, FormControl, Button} from "@material-ui/core";
 import axios from "axios";
+import {toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {clearForm, updateForm} from "../store/actions";
+
+toast.configure();
 
 const Register = ({
   username,
@@ -75,8 +79,9 @@ const mapDispatch = (dispatch) => {
         .post("/api/auth/register", {username, password})
         .then((res) => {
           dispatch(clearForm());
+          toast(`${username} succcesfully created!`);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => toast(`User was not created`));
     }
   };
   return {

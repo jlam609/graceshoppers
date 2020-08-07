@@ -29,7 +29,7 @@ const ArmorList = ({dispatch, products, handleChange, page, productsCount}) => {
               {products.map((armor) => {
                 return (
                   <div key={armor.id}>
-                    <Link to={`/armor/${armor.id}`} key={armor.id}>
+                    <Link to={`/armors/${armor.id}`} key={armor.id}>
                       {armor.name} ({armor.price})
                     </Link>
                   </div>

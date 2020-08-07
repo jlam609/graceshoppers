@@ -13,12 +13,7 @@ const Pagination = ({prodPerPage, totalProds, paginate}) => {
           console.log(number);
           return (
             <li key={number} className="pagenum">
-              <button
-                type="button"
-                onClick={() => paginate(number)}
-                href=""
-                className="pagelink"
-              >
+              <button type="button" onClick={() => paginate(number)} className="pagelink">
                 {number}
               </button>
             </li>
