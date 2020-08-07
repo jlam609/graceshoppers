@@ -4,6 +4,7 @@ const orderRouter = require("./order");
 const categoryRouter = require("./category");
 const cartRouter = require("./cart");
 const authRouter = require("./auth");
+const stripeRouter = require("./stripe");
 
 module.exports = {
   userRouter,
@@ -12,4 +13,5 @@ module.exports = {
   categoryRouter,
   cartRouter,
   authRouter,
+  stripeRouter,
 };

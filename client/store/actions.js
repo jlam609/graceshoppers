@@ -1,5 +1,9 @@
+const {toast} = require("react-toastify");
+require("react-toastify/dist/ReactToastify.css");
 const axios = require("axios");
 const TYPES = require("./types");
+
+toast.configure();
 
 const getProducts = (products) => ({
   type: TYPES.GET_PRODUCTS,
@@ -121,7 +125,6 @@ const fetchCart = (orderId) => {
         item.product = curProduct;
       });
     }
-    console.log(cart);
     return dispatch(getCart(cart, total, quantity));
   };
 };
@@ -146,7 +149,6 @@ const clearUser = () => ({
 const fetchUser = () => {
   return async (dispatch) => {
     const {user} = (await axios.get(`/api/auth/login`)).data;
-    console.log(user);
     if (user) {
       await dispatch(getUser(user));
       const orders = await dispatch(fetchOrders(user.id));
@@ -168,14 +170,15 @@ const updateOrder = (orderId, userId) => {
 const login = (userObj, products, order) => {
   return async (dispatch) => {
     const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
+    console.log(user);
     if (user) {
       await dispatch(getUser(user));
       await dispatch(fetchOrders(user.id));
       if (!products) await dispatch(fetchCart(user.id));
       if (products) await dispatch(updateOrder(order.id, user.id));
-      return alert(`${message}`);
+      return toast(`${message}`);
     }
-    return alert(`${message}`);
+    return toast(`${message}`);
   };
 };
 
@@ -193,12 +196,22 @@ const fetchSessionOrder = () => {
     return order;
   };
 };
-const createOrder = (userId) => {
+const createOrder = (type, id) => {
   return async (dispatch) => {
-    if (userId) {
-      const {order} = (await axios.post(`/api/orders`, {userId})).data;
-      return dispatch(setOrder(order));
+    if (type === "user") {
+      await axios.post(`/api/orders`, {
+        id,
+        type,
+      }).data;
+      return dispatch(fetchOrders(id));
     }
+    const {order} = (
+      await axios.post(`/api/orders`, {
+        id,
+        type,
+      })
+    ).data;
+    return dispatch(setOrder(order));
   };
 };
 const updateCart = (mode = "add", orderId, productId, quantity) => {
@@ -212,7 +225,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
         })
       ).data;
       await dispatch(fetchCart(orderId));
-      return alert(`${message}`);
+      return toast(`${message}`);
     }
     if (mode === "remove") {
       if (quantity === "remove all") {
@@ -220,7 +233,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
           await axios.delete(`/api/carts/${orderId}?productId=${productId}`)
         ).data;
         await dispatch(fetchCart(orderId));
-        return alert(`${message}`);
+        return toast(`${message}`);
       }
       const {message} = (
         await axios.put(`/api/carts/${orderId}`, {
@@ -230,7 +243,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
         })
       ).data;
       await dispatch(fetchCart(orderId));
-      return alert(`${message}`);
+      return toast(`${message}`);
     }
   };
 };
@@ -244,6 +257,24 @@ const updateInput = (name, value) => ({
 const clearInput = () => ({
   type: TYPES.CLEAR_INPUT,
 });
+
+const clearCart = () => ({
+  type: TYPES.CLEAR_CART,
+});
+
+const checkout = (products) => {
+  return async (dispatch) => {
+    if (products.length) {
+      products.forEach(async (product) => {
+        await axios.put(`/api/products/${product.productId}`, {
+          quantity: product.quantity,
+          productQuantity: product.product.quantity,
+        });
+      });
+      toast("Product backend updated successfully!");
+    }
+  };
+};
 
 module.exports = {
   getProducts,
@@ -272,4 +303,6 @@ module.exports = {
   updateInput,
   clearInput,
   fetchSessionOrder,
+  clearCart,
+  checkout,
 };

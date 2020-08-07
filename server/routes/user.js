@@ -3,7 +3,7 @@ const {
   models: {User},
 } = require("../db/models/index.js");
 
-userRouter.get("/", async (req, res, next) => {
+userRouter.get("/", async (req, res) => {
   const users = await User.findAll();
   res.send({
     users,
@@ -15,12 +15,12 @@ userRouter.post("/", async (req, res) => {
   res.sendStatus(201);
 });
 
-userRouter.get("/:id", async (req, res, next) => {
+userRouter.put("/:id", async (req, res) => {
   try {
-    const user = await User.findByPK(req.params.id);
-    res.send(user);
+    const {id} = req.params;
+    console.log(req.isAuthenticated);
   } catch (err) {
-    next(err);
+    console.error(err);
   }
 });
 

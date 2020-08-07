@@ -5,6 +5,7 @@ const path = require("path");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const {
   seed,
   models: {Session, User},
@@ -16,11 +17,13 @@ const {
   categoryRouter,
   cartRouter,
   authRouter,
+  stripeRouter,
 } = require("./routes");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 dotenv.config();
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -64,6 +67,7 @@ app.use(async (req, res, next) => {
       .then((user) => {
         if (user) {
           req.user = user;
+          req.isAuthenticated = true;
           next();
         } else {
           next();
@@ -82,6 +86,7 @@ app.use("/api/orders", orderRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/stripe", stripeRouter);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/index.html"), (err) => {
@@ -97,4 +102,4 @@ const startServer = () =>
     });
   });
 
-seed(true).then(startServer);
+seed(false).then(startServer);

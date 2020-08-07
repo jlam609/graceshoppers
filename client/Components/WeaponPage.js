@@ -44,6 +44,7 @@ const WeaponPage = ({
           <button
             type="button"
             onClick={(e) => addToCart(e, activeOrders, item, quantity)}
+            disabled={!!(!quantity || !item.quantity)}
           >
             Add to Cart
           </button>
