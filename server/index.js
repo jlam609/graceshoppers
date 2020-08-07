@@ -101,4 +101,4 @@ const startServer = () =>
     });
   });
 
-seed(false).then(startServer);
+seed(true).then(startServer);

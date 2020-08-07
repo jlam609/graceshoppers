@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {updateInput, clearInput, updateCart} from "../store/actions";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {IconButton} from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
