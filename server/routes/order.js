@@ -8,6 +8,7 @@ orderRouter.get("/session", async (req, res) => {
   let order = await Order.findAll({
     where: {
       sessionId: req.sessionId,
+      status: "active",
     },
   });
   if (!order.length) {
@@ -24,14 +25,21 @@ orderRouter.get("/session", async (req, res) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const {userId} = req.body;
+  const {id, type} = req.body;
   try {
-    const order = await Order.create({
-      userId,
-    });
-    res.status(201).send({
-      order,
-    });
+    if (type === "user") {
+      await Order.create({
+        userId: id,
+      });
+      res.sendStatus(201);
+    } else {
+      const order = await Order.create({
+        sessionId: id,
+      });
+      res.status(201).send({
+        order,
+      });
+    }
   } catch (e) {
     res.status(500).send({
       message: "error, e",

@@ -1,7 +1,7 @@
 const path = require("path");
 const dotenv = require("dotenv");
 
-dotenv.config;
+dotenv.config();
 
 module.exports = {
   entry: path.join(__dirname, "/client/index.js"),
@@ -10,10 +10,13 @@ module.exports = {
   module: {
     rules: [
       {
-        use: {
-          loader: "babel-loader",
-        },
+        test: /\.jsx?$/,
         exclude: /node_modules/,
+        loader: "babel-loader",
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },

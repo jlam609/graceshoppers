@@ -24,6 +24,9 @@ import WeaponPage from "./WeaponPage";
 import SpellPage from "./SpellPage";
 import ArmorPage from "./ArmorPage";
 import ItemPage from "./ItemPage";
+import SearchList from "./SearchList";
+import Admin from "./Admin";
+import Checkout from "./Checkout";
 
 const App = ({loggedIn, dispatch, user}) => {
   useEffect(() => {
@@ -31,10 +34,8 @@ const App = ({loggedIn, dispatch, user}) => {
       await dispatch(fetchCategories());
       await dispatch(fetchProducts());
       const sessionOrder = await dispatch(fetchSessionOrder());
-      console.log(sessionOrder);
       if (!loggedIn) {
         const [res, activeOrders] = await dispatch(fetchUser());
-        console.log(res, activeOrders);
         if (res) {
           await dispatch(updateForm("loggedIn", true));
           if (activeOrders && activeOrders.length) {
@@ -50,21 +51,24 @@ const App = ({loggedIn, dispatch, user}) => {
   }, []);
 
   return (
-    <div>
+    <div className="maindiv">
       <Nav />
       <Switch>
         <Route path="/home" component={HomePage} />
         <Route path="/magic/:id" component={SpellPage} />
         <Route path="/items/:id" component={ItemPage} />
         <Route path="/weapons/:id" component={WeaponPage} />
-        <Route path="/armor/:id" component={ArmorPage} />
+        <Route path="/armors/:id" component={ArmorPage} />
         <Route path="/weapons" component={WeaponsList} />
-        <Route path="/armor" component={ArmorList} />
+        <Route path="/armors" component={ArmorList} />
         <Route path="/magic" component={SpellList} />
         <Route path="/items" component={ItemList} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/search" component={SearchList} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/admin" component={Admin} />
         <Redirect to="/home" />
       </Switch>
     </div>
@@ -74,7 +78,6 @@ const App = ({loggedIn, dispatch, user}) => {
 const mapStateToProps = ({form, user, orders}) => {
   const {loggedIn} = form;
   const {activeOrders} = orders;
-  console.log(activeOrders);
   return {
     user,
     activeOrders,

@@ -1,10 +1,23 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
-import {TextField, FormControl, Button} from "@material-ui/core";
-import axios from "axios";
+import {
+  TextField,
+  FormControl,
+  Button,
+  InputAdornment,
+  IconButton,
+  Input,
+  InputLabel,
+} from "@material-ui/core";
+import {toast} from "react-toastify";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import "react-toastify/dist/ReactToastify.css";
 
 import {clearForm, login, updateForm} from "../store/actions";
+
+toast.configure();
 
 const Login = ({
   username,
@@ -13,7 +26,9 @@ const Login = ({
   setUsername,
   setPassword,
   logInUser,
+  visible,
   dispatch,
+  seePassword,
 }) => {
   useEffect(() => {
     dispatch(clearForm());
@@ -34,11 +49,23 @@ const Login = ({
           </FormControl>
           <br />
           <FormControl>
-            <TextField
+            <InputLabel>Password</InputLabel>
+            <Input
               value={password}
               label="Password"
               onChange={setPassword}
+              type={visible ? "text" : "password"}
               inputProps={{style: {textAlign: "center"}}}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={(e) => seePassword(e, visible)}
+                  >
+                    {visible ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           </FormControl>
           <br />
@@ -51,12 +78,15 @@ const Login = ({
   );
 };
 
-const mapState = ({form, order}) => {
-  const {username, password, loggedIn} = form;
+const mapState = ({form, order, cart}) => {
+  const {username, password, loggedIn, visible} = form;
+  const {products} = cart;
   return {
     username,
     password,
     loggedIn,
+    products,
+    visible,
   };
 };
 
@@ -73,12 +103,17 @@ const mapDispatch = (dispatch) => {
       console.log(username, password);
       dispatch(login({username, password}));
       dispatch(updateForm("loggedIn", true));
-    } else alert("All Fields Must Be Completed");
+    } else toast("All Fields Must Be Completed");
+  };
+  const seePassword = (e, visible) => {
+    e.preventDefault();
+    dispatch(updateForm("visible", !visible));
   };
   return {
     setUsername,
     setPassword,
     logInUser,
+    seePassword,
     dispatch,
   };
 };

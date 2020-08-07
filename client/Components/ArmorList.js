@@ -1,26 +1,56 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Link, Route} from "react-router-dom";
-import ArmorPage from "./ArmorPage";
+import {Link} from "react-router-dom";
+import Pagination from "@material-ui/lab/Pagination";
+import {IconButton} from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
 
-const ArmorList = ({products}) => {
+import {updateInput, fetchArmor, clearInput} from "../store/actions";
+
+const ArmorList = ({dispatch, products, handleChange, page, productsCount}) => {
+  useEffect(() => {
+    const getData = async () => {
+      await dispatch(fetchArmor());
+    };
+    getData();
+  }, []);
+  useEffect(() => {
+    dispatch(clearInput());
+  }, []);
   if (products.length) {
-    const armors = products.filter((armor) => armor.categoryId === 2);
     return (
-      <div className="productList">
-        <h1 className="header">Armor</h1>
-        <div>
-          <ul>
-            {armors.map((armor) => {
-              return (
-                <div key={armor.id}>
-                  <Link to={`/armor/${armor.id}`} key={armor.id}>
-                    {armor.name}
-                  </Link>
-                </div>
-              );
-            })}
-          </ul>
+      <div>
+        <div className="productList">
+          <div className="header">
+            <h1>Armor</h1>
+          </div>
+          <div>
+            <ul>
+              {products.map((armor) => {
+                return (
+                  <div key={armor.id}>
+                    <Link to={`/armor/${armor.id}`} key={armor.id}>
+                      {armor.name} ({armor.price})
+                    </Link>
+                  </div>
+                );
+              })}
+            </ul>
+          </div>
+          <Pagination
+            count={Math.ceil(productsCount / 5)}
+            page={page}
+            siblingCount={1}
+            boundaryCount={1}
+            onChange={(e, value) => handleChange(e, value)}
+          />
+        </div>
+        <div className="homeIcon">
+          <IconButton>
+            <Link to="/home">
+              <HomeIcon fontSize="large" />
+            </Link>
+          </IconButton>
         </div>
       </div>
     );
@@ -28,6 +58,25 @@ const ArmorList = ({products}) => {
   return <h1>Armor Loading...</h1>;
 };
 
-const mapState = ({products}) => ({products});
+const mapState = ({products, count, input}) => {
+  const {productsCount} = count;
+  const {page} = input;
+  return {
+    products,
+    page,
+    productsCount,
+  };
+};
 
-export default connect(mapState)(ArmorList);
+const mapDispatch = (dispatch) => {
+  const handleChange = (e, value) => {
+    e.preventDefault();
+    dispatch(updateInput("page", value));
+    dispatch(fetchArmor(value));
+  };
+  return {
+    dispatch,
+    handleChange,
+  };
+};
+export default connect(mapState, mapDispatch)(ArmorList);

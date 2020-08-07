@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Card, CardContent, CardActions, Button, Select} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
+import {Card, CardContent, CardActions, Button} from "@material-ui/core";
 import {updateCart, clearInput, updateInput} from "../store/actions";
 
 const Cart = ({
@@ -27,6 +28,7 @@ const Cart = ({
     }
     return options;
   };
+  const history = useHistory();
   return (
     <div className="cart">
       <h2> My Shopping Cart </h2>
@@ -53,6 +55,9 @@ const Cart = ({
                       <Button
                         onClick={(e) => removeItem(e, activeOrders, product, quantity)}
                         variant="outlined"
+                        disabled={
+                          quantity > 0 || quantity === "remove all" ? false : true
+                        }
                       >
                         Remove Item
                       </Button>
@@ -71,7 +76,13 @@ const Cart = ({
         <hr />
         <span>${total}</span>
         <hr />
-        <Button variant="outlined">Submit Order</Button>
+        <Button
+          variant="outlined"
+          onClick={(e) => history.push("/checkout")}
+          disabled={products.length ? false : true}
+        >
+          Submit Order
+        </Button>
       </div>
     </div>
   );
@@ -81,7 +92,6 @@ const mapState = ({cart, input, orders}) => {
   const {products, total, itemQuantity} = cart;
   const {quantity} = input;
   const {activeOrders} = orders;
-  console.log(quantity, activeOrders, cart);
   return {
     products,
     total,
@@ -94,7 +104,6 @@ const mapState = ({cart, input, orders}) => {
 const mapDispatch = (dispatch) => {
   const removeItem = async (e, order, product, quantity) => {
     e.preventDefault();
-    console.log(order, product, -quantity);
     if (quantity === "remove all") {
       return dispatch(updateCart("remove", order.id, product.productId, quantity));
     }

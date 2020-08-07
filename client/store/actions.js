@@ -1,9 +1,18 @@
+const {toast} = require("react-toastify");
+require("react-toastify/dist/ReactToastify.css");
 const axios = require("axios");
 const TYPES = require("./types");
+
+toast.configure();
 
 const getProducts = (products) => ({
   type: TYPES.GET_PRODUCTS,
   products,
+});
+
+const getProductsCount = (count) => ({
+  type: TYPES.GET_PRODUCTS_COUNT,
+  count,
 });
 
 const getOrders = (orders) => ({
@@ -38,10 +47,53 @@ const removeFromCart = (product) => ({
   product,
 });
 
-const fetchProducts = () => {
+const fetchProducts = (where = "", page = 1, size = 5) => {
   return async (dispatch) => {
-    const {products} = (await axios.get("/api/products")).data;
-    return dispatch(getProducts(products));
+    const {count, rows} = (
+      await axios.get(`/api/products?filter=${where}&page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(count));
+    return dispatch(getProducts(rows));
+  };
+};
+
+const fetchWeapons = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {weapons} = (
+      await axios.get(`/api/products/weapons?page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(weapons.count));
+    return dispatch(getProducts(weapons.rows));
+  };
+};
+
+const fetchSpells = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {spells} = (
+      await axios.get(`/api/products/spells?page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(spells.count));
+    return dispatch(getProducts(spells.rows));
+  };
+};
+
+const fetchItems = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {items} = (
+      await axios.get(`/api/products/items?page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(items.count));
+    return dispatch(getProducts(items.rows));
+  };
+};
+
+const fetchArmor = (page = 1, size = 5) => {
+  return async (dispatch) => {
+    const {armor} = (
+      await axios.get(`/api/products/armor?page=${page}&size=${size}`)
+    ).data;
+    dispatch(getProductsCount(armor.count));
+    return dispatch(getProducts(armor.rows));
   };
 };
 
@@ -73,7 +125,6 @@ const fetchCart = (orderId) => {
         item.product = curProduct;
       });
     }
-    console.log(cart);
     return dispatch(getCart(cart, total, quantity));
   };
 };
@@ -98,7 +149,6 @@ const clearUser = () => ({
 const fetchUser = () => {
   return async (dispatch) => {
     const {user} = (await axios.get(`/api/auth/login`)).data;
-    console.log(user);
     if (user) {
       await dispatch(getUser(user));
       const orders = await dispatch(fetchOrders(user.id));
@@ -120,14 +170,15 @@ const updateOrder = (orderId, userId) => {
 const login = (userObj, products, order) => {
   return async (dispatch) => {
     const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
+    console.log(user);
     if (user) {
       await dispatch(getUser(user));
       await dispatch(fetchOrders(user.id));
       if (!products) await dispatch(fetchCart(user.id));
       if (products) await dispatch(updateOrder(order.id, user.id));
-      return alert(`${message}`);
+      return toast(`${message}`);
     }
-    return alert(`${message}`);
+    return toast(`${message}`);
   };
 };
 
@@ -145,12 +196,22 @@ const fetchSessionOrder = () => {
     return order;
   };
 };
-const createOrder = (userId) => {
+const createOrder = (type, id) => {
   return async (dispatch) => {
-    if (userId) {
-      const {order} = (await axios.post(`/api/orders`, {userId})).data;
-      return dispatch(setOrder(order));
+    if (type === "user") {
+      await axios.post(`/api/orders`, {
+        id,
+        type,
+      }).data;
+      return dispatch(fetchOrders(id));
     }
+    const {order} = (
+      await axios.post(`/api/orders`, {
+        id,
+        type,
+      })
+    ).data;
+    return dispatch(setOrder(order));
   };
 };
 const updateCart = (mode = "add", orderId, productId, quantity) => {
@@ -164,7 +225,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
         })
       ).data;
       await dispatch(fetchCart(orderId));
-      return alert(`${message}`);
+      return toast(`${message}`);
     }
     if (mode === "remove") {
       if (quantity === "remove all") {
@@ -172,7 +233,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
           await axios.delete(`/api/carts/${orderId}?productId=${productId}`)
         ).data;
         await dispatch(fetchCart(orderId));
-        return alert(`${message}`);
+        return toast(`${message}`);
       }
       const {message} = (
         await axios.put(`/api/carts/${orderId}`, {
@@ -182,7 +243,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
         })
       ).data;
       await dispatch(fetchCart(orderId));
-      return alert(`${message}`);
+      return toast(`${message}`);
     }
   };
 };
@@ -197,6 +258,24 @@ const clearInput = () => ({
   type: TYPES.CLEAR_INPUT,
 });
 
+const clearCart = () => ({
+  type: TYPES.CLEAR_CART,
+});
+
+const checkout = (products) => {
+  return async (dispatch) => {
+    if (products.length) {
+      products.forEach(async (product) => {
+        await axios.put(`/api/products/${product.productId}`, {
+          quantity: product.quantity,
+          productQuantity: product.product.quantity,
+        });
+      });
+      toast("Product backend updated successfully!");
+    }
+  };
+};
+
 module.exports = {
   getProducts,
   getOrders,
@@ -208,6 +287,10 @@ module.exports = {
   fetchProducts,
   fetchOrders,
   fetchCategories,
+  fetchWeapons,
+  fetchArmor,
+  fetchSpells,
+  fetchItems,
   fetchCart,
   updateForm,
   clearForm,
@@ -220,4 +303,6 @@ module.exports = {
   updateInput,
   clearInput,
   fetchSessionOrder,
+  clearCart,
+  checkout,
 };
