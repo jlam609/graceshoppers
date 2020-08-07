@@ -1,6 +1,9 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {updateInput, clearInput, updateCart} from "../store/actions";
+import {Link, useHistory} from "react-router-dom";
+import {IconButton} from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const ItemPage = ({
   match,
@@ -23,31 +26,39 @@ const ItemPage = ({
       }
       return map;
     };
+    const history = useHistory();
     if (item) {
       return (
-        <div className="productCard">
-          <h2>
-            {item.name}({item.price})
-          </h2>
-          <p>{item.description}</p>
-          <img className="productImg" src={item.image} alt="" />
-          <br />
-          <select
-            id="quantity"
-            name="quantity"
-            value={quantity}
-            onChange={(e) => updateQuantity(e)}
-          >
-            <option value="">0</option>
-            {mapQuant(item.quantity)}
-          </select>
-          <button
-            type="button"
-            onClick={(e) => addToCart(e, activeOrders, item, quantity)}
-            disabled={!!(!quantity || !item.quantity)}
-          >
-            Add to Cart
-          </button>
+        <div>
+          <div className="productCard">
+            <h2>
+              {item.name}({item.price})
+            </h2>
+            <p>{item.description}</p>
+            <img className="productImg" src={item.image} alt="" />
+            <br />
+            <select
+              id="quantity"
+              name="quantity"
+              value={quantity}
+              onChange={(e) => updateQuantity(e)}
+            >
+              <option value="">0</option>
+              {mapQuant(item.quantity)}
+            </select>
+            <button
+              type="button"
+              onClick={(e) => addToCart(e, activeOrders, item, quantity)}
+              disabled={!!(!quantity || !item.quantity)}
+            >
+              Add to Cart
+            </button>
+          </div>
+          <div className="homeIcon">
+            <IconButton onClick={(e) => history.goBack()}>
+              <ArrowBackIcon fontSize="large" />
+            </IconButton>
+          </div>
         </div>
       );
     }

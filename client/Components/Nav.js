@@ -9,6 +9,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HowToRegIcon from "@material-ui/icons/HowToReg";
 import CreateIcon from "@material-ui/icons/Create";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import {connect} from "react-redux";
 import Axios from "axios";
 
@@ -88,7 +89,15 @@ const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose, products, user}
                     </IconButton>
                   </Link>
                 </MenuItem>
-              ) : null}
+              ) : (
+                <MenuItem>
+                  <Link to="/user" className="menuItem">
+                    <IconButton>
+                      <AccountBoxIcon fontSize="large" />
+                    </IconButton>
+                  </Link>
+                </MenuItem>
+              )}
             </div>
           ) : (
             <div className="list">
