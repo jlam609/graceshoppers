@@ -8,6 +8,7 @@ import inputReducer from "./inputReducer";
 import orderReducer from "./orderReducer";
 import productReducer from "./productReducer";
 import userReducer from "./userReducer";
+import {adminReducer} from "./adminReducer";
 
 const categoryReducer = (state = [], action) => {
   switch (action.type) {
@@ -31,6 +32,7 @@ const masterReducer = combineReducers({
   form: formReducer,
   user: userReducer,
   input: inputReducer,
+  admin: adminReducer,
 });
 
 const store = createStore(masterReducer, applyMiddleware(thunks));
