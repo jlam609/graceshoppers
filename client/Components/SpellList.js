@@ -5,9 +5,21 @@ import Pagination from "@material-ui/lab/Pagination";
 import {IconButton} from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 
-import {updateInput, fetchSpells, clearInput} from "../store/actions";
+import {
+  updateInput,
+  fetchSpells,
+  clearInput,
+  fetchSelectedProduct,
+} from "../store/actions";
 
-const SpellList = ({dispatch, products, handleChange, page, productsCount}) => {
+const SpellList = ({
+  dispatch,
+  products,
+  handleChange,
+  page,
+  productsCount,
+  setCurProduct,
+}) => {
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchSpells());
@@ -29,7 +41,11 @@ const SpellList = ({dispatch, products, handleChange, page, productsCount}) => {
               {products.map((spell) => {
                 return (
                   <div key={spell.id}>
-                    <Link to={`/magic/${spell.id}`} key={spell.id}>
+                    <Link
+                      to={`/selectedProduct/${spell.id}`}
+                      key={spell.id}
+                      onClick={(e) => setCurProduct(e, spell.id)}
+                    >
                       {spell.name} ({spell.price})
                     </Link>
                   </div>
@@ -74,9 +90,13 @@ const mapDispatch = (dispatch) => {
     dispatch(updateInput("page", value));
     dispatch(fetchSpells(value));
   };
+  const setCurProduct = async (e, id) => {
+    dispatch(fetchSelectedProduct(id));
+  };
   return {
     dispatch,
     handleChange,
+    setCurProduct,
   };
 };
 

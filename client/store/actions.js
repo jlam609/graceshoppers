@@ -176,11 +176,14 @@ const login = (userObj, products, order) => {
       await dispatch(fetchOrders(user.id));
       if (!products) await dispatch(fetchCart(user.id));
       if (products) await dispatch(updateOrder(order.id, user.id));
-      return toast(`${message}`);
+      return toast(`${message}`, {type: "success"});
     }
-    return toast(`${message}`);
+    return toast(`${message}`, {type: "error"});
   };
 };
+const logout = () => ({
+  type: TYPES.LOGOUT,
+});
 
 const setOrder = (order) => ({
   type: TYPES.SET_ORDER,
@@ -225,7 +228,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
         })
       ).data;
       await dispatch(fetchCart(orderId));
-      return toast(`${message}`);
+      return toast(`${message}`, {type: "info"});
     }
     if (mode === "remove") {
       if (quantity === "remove all") {
@@ -233,7 +236,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
           await axios.delete(`/api/carts/${orderId}?productId=${productId}`)
         ).data;
         await dispatch(fetchCart(orderId));
-        return toast(`${message}`);
+        return toast(`${message}`, {type: "info"});
       }
       const {message} = (
         await axios.put(`/api/carts/${orderId}`, {
@@ -243,7 +246,7 @@ const updateCart = (mode = "add", orderId, productId, quantity) => {
         })
       ).data;
       await dispatch(fetchCart(orderId));
-      return toast(`${message}`);
+      return toast(`${message}`, {type: "info"});
     }
   };
 };
@@ -271,11 +274,20 @@ const checkout = (products) => {
           productQuantity: product.product.quantity,
         });
       });
-      toast("Product backend updated successfully!");
+      toast("Product backend updated successfully!", {type: "success"});
     }
   };
 };
-
+const setProduct = (product) => ({
+  type: TYPES.SET_PRODUCT,
+  product,
+});
+const fetchSelectedProduct = (id) => {
+  return async (dispatch) => {
+    const {product} = (await axios.get(`/api/products/all/${id}`)).data;
+    return dispatch(setProduct(product));
+  };
+};
 module.exports = {
   getProducts,
   getOrders,
@@ -305,4 +317,6 @@ module.exports = {
   fetchSessionOrder,
   clearCart,
   checkout,
+  logout,
+  fetchSelectedProduct,
 };

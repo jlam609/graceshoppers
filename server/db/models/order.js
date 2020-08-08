@@ -9,7 +9,7 @@ const Order = db.define("order", {
   },
   status: {
     type: ENUM,
-    values: ["active", "pending", "done"],
+    values: ["active", "pending", "completed"],
     defaultValue: "active",
   },
   total: {

@@ -1,24 +1,32 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {updateInput, clearInput, updateCart} from "../store/actions";
+import {
+  updateInput,
+  clearInput,
+  updateCart,
+  fetchSelectedProduct,
+} from "../store/actions";
 import {Link, useHistory} from "react-router-dom";
 import {IconButton} from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-const SpellPage = ({
+const SelectedProduct = ({
   match,
-  products,
   quantity,
   activeOrders,
   updateQuantity,
   addToCart,
   dispatch,
+  item,
 }) => {
   useEffect(() => {
     dispatch(clearInput());
+    const fetchProduct = async () => {
+      await dispatch(fetchSelectedProduct(match.params.id));
+    };
+    fetchProduct();
   }, []);
-  if (products.length) {
-    const item = products.find((product) => product.id === match.params.id);
+  if (item) {
     const mapQuant = (num) => {
       const map = [];
       for (let i = 1; i <= num; i++) {
@@ -66,13 +74,15 @@ const SpellPage = ({
   }
   return <h2>Loading..</h2>;
 };
-const mapState = ({products, input, orders}) => {
+const mapState = ({products, input, orders, count}) => {
   const {quantity} = input;
   const {activeOrders} = orders;
+  const {item} = count;
   return {
     products,
     quantity,
     activeOrders,
+    item,
   };
 };
 
@@ -91,4 +101,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(mapState, mapDispatch)(SpellPage);
+export default connect(mapState, mapDispatch)(SelectedProduct);

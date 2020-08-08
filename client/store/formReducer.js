@@ -6,6 +6,10 @@ const formReducer = (
     password: "",
     visible: false,
     loggedIn: false,
+    policy: false,
+    firstName: "",
+    lastName: "",
+    imageUrl: "",
   },
   action
 ) => {
@@ -17,10 +21,18 @@ const formReducer = (
       };
     case TYPES.CLEAR_FORM:
       return {
+        ...state,
         username: "",
         password: "",
-        loggedIn: false,
         visible: false,
+        policy: false,
+        firstName: "",
+        lastName: "",
+        imageUrl: "",
+      };
+    case TYPES.LOGOUT:
+      return {
+        loggedIn: false,
       };
     default:
       return state;

@@ -5,9 +5,21 @@ import Pagination from "@material-ui/lab/Pagination";
 import {IconButton} from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 
-import {updateInput, fetchArmor, clearInput} from "../store/actions";
+import {
+  updateInput,
+  fetchArmor,
+  clearInput,
+  fetchSelectedProduct,
+} from "../store/actions";
 
-const ArmorList = ({dispatch, products, handleChange, page, productsCount}) => {
+const ArmorList = ({
+  dispatch,
+  products,
+  handleChange,
+  page,
+  productsCount,
+  setCurProduct,
+}) => {
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchArmor());
@@ -29,7 +41,11 @@ const ArmorList = ({dispatch, products, handleChange, page, productsCount}) => {
               {products.map((armor) => {
                 return (
                   <div key={armor.id}>
-                    <Link to={`/armors/${armor.id}`} key={armor.id}>
+                    <Link
+                      to={`/selectedProduct/${armor.id}`}
+                      key={armor.id}
+                      onClick={(e) => setCurProduct(e, armor.id)}
+                    >
                       {armor.name} ({armor.price})
                     </Link>
                   </div>
@@ -74,9 +90,13 @@ const mapDispatch = (dispatch) => {
     dispatch(updateInput("page", value));
     dispatch(fetchArmor(value));
   };
+  const setCurProduct = async (e, id) => {
+    dispatch(fetchSelectedProduct(id));
+  };
   return {
     dispatch,
     handleChange,
+    setCurProduct,
   };
 };
 export default connect(mapState, mapDispatch)(ArmorList);
