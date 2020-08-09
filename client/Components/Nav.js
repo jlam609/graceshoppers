@@ -10,6 +10,7 @@ import HowToRegIcon from "@material-ui/icons/HowToReg";
 import CreateIcon from "@material-ui/icons/Create";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import {connect} from "react-redux";
 import Axios from "axios";
 
@@ -19,9 +20,10 @@ import {
   clearInput,
   fetchSessionOrder,
   clearUser,
+  logout,
 } from "../store/actions";
 
-const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose, products, user}) => {
+const Nav = ({loggedIn, toggle, toggleMenu, logoutUser, handleClose, products, user}) => {
   return (
     <div className="nav">
       <img
@@ -76,19 +78,28 @@ const Nav = ({loggedIn, toggle, toggleMenu, logout, handleClose, products, user}
           {loggedIn ? (
             <div className="list">
               {" "}
-              <MenuItem>
-                <IconButton onClick={(e) => logout(e)}>
+              <MenuItem className="menuItem">
+                <IconButton onClick={(e) => logoutUser(e)}>
                   <ExitToAppIcon fontSize="large" />
                 </IconButton>
               </MenuItem>
               {user.clearance === 5 ? (
-                <MenuItem>
-                  <Link to="/admin" className="menuItem">
-                    <IconButton>
-                      <SupervisorAccountIcon fontSize="large" />
-                    </IconButton>
-                  </Link>
-                </MenuItem>
+                <MenuList className="list">
+                  <MenuItem>
+                    <Link to="/admin" className="menuItem">
+                      <IconButton>
+                        <SupervisorAccountIcon fontSize="large" />
+                      </IconButton>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link to="/registerAdmin" className="menuItem">
+                      <IconButton>
+                        <AddCircleIcon fontSize="large" />
+                      </IconButton>
+                    </Link>
+                  </MenuItem>
+                </MenuList>
               ) : (
                 <MenuItem>
                   <Link to="/user" className="menuItem">
@@ -127,7 +138,6 @@ const mapState = ({input, form, cart, user}) => {
   const {toggle} = input;
   const {loggedIn} = form;
   const {products} = cart;
-  console.log(user, loggedIn);
   return {
     toggle,
     loggedIn,
@@ -142,12 +152,13 @@ const mapDispatch = (dispatch) => {
     const newToggle = !toggle;
     dispatch(updateInput("toggle", newToggle));
   };
-  const logout = async (e) => {
+  const logoutUser = async (e) => {
     e.preventDefault();
     try {
       await Axios.delete("/api/auth/logout");
       dispatch(clearForm());
       dispatch(clearUser());
+      dispatch(logout());
       dispatch(fetchSessionOrder());
       return <Redirect to="/login" />;
     } catch (err) {
@@ -160,7 +171,7 @@ const mapDispatch = (dispatch) => {
   };
   return {
     toggleMenu,
-    logout,
+    logoutUser,
     handleClose,
   };
 };

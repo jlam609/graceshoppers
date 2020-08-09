@@ -18,7 +18,6 @@ userRouter.post("/", async (req, res) => {
 userRouter.put("/:id", async (req, res) => {
   try {
     const {id} = req.params;
-    console.log(req.isAuthenticated);
   } catch (err) {
     console.error(err);
   }

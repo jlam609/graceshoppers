@@ -18,6 +18,7 @@ const {
   cartRouter,
   authRouter,
   stripeRouter,
+  adminRouter,
 } = require("./routes");
 
 const PORT = process.env.PORT || 3000;
@@ -86,6 +87,7 @@ app.use("/api/categories", categoryRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/stripe", stripeRouter);
+app.use("/api/admin", adminRouter);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/index.html"), (err) => {

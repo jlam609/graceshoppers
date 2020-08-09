@@ -16,7 +16,16 @@ const getPagination = (page, size) => {
   };
 };
 
-productRouter.get("/?", async (req, res, next) => {
+productRouter.get("/all/:id", async (req, res) => {
+  try {
+    const {id} = req.params;
+    const product = await Product.findByPk(id);
+    res.status(201).send({product});
+  } catch (e) {
+    console.error(e);
+  }
+});
+productRouter.get("/?", async (req, res) => {
   try {
     const {filter, page, size} = req.query;
     let productData;
