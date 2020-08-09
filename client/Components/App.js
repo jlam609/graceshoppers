@@ -27,6 +27,7 @@ import ItemPage from "./ItemPage";
 import SearchList from "./SearchList";
 import Admin from "./Admin";
 import Checkout from "./Checkout";
+import UserProfile from "./UserProfile";
 
 const App = ({loggedIn, dispatch, user}) => {
   useEffect(() => {
@@ -69,6 +70,7 @@ const App = ({loggedIn, dispatch, user}) => {
         <Route path="/search" component={SearchList} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/admin" component={Admin} />
+        <Route path="/user" component={UserProfile} />
         <Redirect to="/home" />
       </Switch>
     </div>

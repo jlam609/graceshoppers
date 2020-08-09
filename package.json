@@ -1,7 +1,7 @@
 {
   "name": "graceshoppers",
   "version": "1.0.0",
-  "description": "",
+  "description": "Shopping platform for retro arcade game items",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode=\"production\"",
@@ -64,6 +64,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mysql2": "^2.1.0",
     "node-dev": "^5.1.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
@@ -77,6 +78,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "sequelize": "^6.3.3",
+    "sequelize-cli": "^6.2.0",
     "stripe": "^8.83.0"
   }
 }
