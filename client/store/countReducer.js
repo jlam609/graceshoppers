@@ -3,6 +3,7 @@ import TYPES from "./types";
 const countReducer = (
   state = {
     productsCount: 0,
+    item: [],
   },
   action
 ) => {
@@ -11,6 +12,11 @@ const countReducer = (
       return {
         ...state,
         productsCount: action.count,
+      };
+    case TYPES.SET_PRODUCT:
+      return {
+        ...state,
+        item: action.product,
       };
     default:
       return state;

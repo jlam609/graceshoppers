@@ -1,25 +1,26 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Link, useHistory, Redirect} from "react-router-dom";
+import {Redirect, Link, useHistory} from "react-router-dom";
 import {
   Button,
-  InputAdornment,
-  IconButton,
-  Typography,
   Grid,
+  Typography,
   Input,
+  IconButton,
+  InputAdornment,
+  Checkbox,
   InputLabel,
+  TextField,
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import axios from "axios";
 import {toast} from "react-toastify";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import GitHubIcon from "@material-ui/icons/GitHub";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-import {clearForm, login, updateForm} from "../store/actions";
+import {clearForm, updateForm} from "../store/actions";
 
 toast.configure();
 
@@ -45,7 +46,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
     backgroundImage:
-      "url(https://kecbio.com/wallpaper/cool-gaming-wallpapers-full-hd-For-Full-Resolution-Wallpaper.jpg)",
+      "url(https://i.pinimg.com/originals/63/43/68/6343686d5ae1eb0f852f3d088b8eda9c.jpg)",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
@@ -56,7 +57,7 @@ const useStyles = makeStyles({
   },
   quoteText: {
     color: "white",
-    fontWeight: 300,
+    fontWeight: 100,
     marginBottom: 40,
   },
   name: {
@@ -85,52 +86,62 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   form: {
-    marginRight: "10px",
-    marginLeft: "20px",
+    marginLeft: 30,
+    marginRight: 10,
   },
   title: {
-    padding: "15px",
-    marginBottom: "20px",
+    marginBottom: 30,
   },
-  socialIcon: {
-    padding: "10px",
-  },
-  sugestion: {
-    marginTop: "10px",
-    padding: "15px",
+  phrase: {
+    marginBottom: 50,
   },
   textField: {
-    padding: "10px",
-    marginLeft: "0",
+    marginTop: 15,
+    marginBottom: 15,
   },
-  signInButton: {
-    padding: "15px",
-    marginBottom: "20px",
-    marginTop: "15px",
+  policy: {
+    marginTop: 15,
+    marginBottom: 15,
+    display: "flex",
+    alignItems: "center",
+  },
+  policyCheckbox: {
+    marginLeft: "-14px",
+    marginTop: 15,
+    marginBottom: 15,
+  },
+  signUpButton: {
+    marginTop: 15,
+    marginBottom: 30,
   },
 });
 
-const Login = ({
+const RegisterAdmin = ({
   username,
   password,
   loggedIn,
-  setUsername,
-  setPassword,
-  logInUser,
-  visible,
+  setData,
   dispatch,
+  user,
+  visible,
   seePassword,
+  policy,
+  setPolicy,
+  createAdmin,
+  firstName,
+  lastName,
+  imageUrl,
 }) => {
   useEffect(() => {
     dispatch(clearForm());
   }, []);
-  const classes = useStyles();
   const history = useHistory();
+  const classes = useStyles();
   return (
     <div className={classes.root}>
-      {loggedIn ? (
+      {loggedIn && user.clearance < 5 ? (
         <div>
-          <Redirect to="/home" />
+          <Redirect to="/" />
         </div>
       ) : (
         <Grid className={classes.grid} container>
@@ -138,14 +149,14 @@ const Login = ({
             <div className={classes.quote}>
               <div className={classes.quoteInner}>
                 <Typography className={classes.quoteText} variant="h2">
-                  It’s dangerous to go alone, take this!
+                  Finish him!
                 </Typography>
                 <div className={classes.person}>
                   <Typography className={classes.name} variant="body1">
-                    Old Man
+                    Mortal Kombat announcer,
                   </Typography>
                   <Typography className={classes.bio} variant="body2">
-                    The Legend of Zelda
+                    Mortal Kombat
                   </Typography>
                 </div>
               </div>
@@ -154,39 +165,21 @@ const Login = ({
           <Grid className={classes.content} item lg={7} xs={12}>
             <div className={classes.content}>
               <div className={classes.contentHeader}>
-                <IconButton onClick={() => history.goBack()}>
+                <IconButton onClick={(e) => history.goBack()}>
                   <ArrowBackIcon />
                 </IconButton>
               </div>
               <div className={classes.contentBody}>
                 <form className={classes.form}>
                   <Typography className={classes.title} variant="h2">
-                    Sign in
+                    Create new account
                   </Typography>
-                  <Typography color="textSecondary" gutterBottom>
-                    Sign in with social media
-                  </Typography>
-                  <Grid className={classes.socialButtons} container spacing={2}>
-                    <Grid item>
-                      <Button color="primary" size="large" variant="contained">
-                        <FacebookIcon className={classes.socialIcon} />
-                        Login with Facebook
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button size="large" variant="contained">
-                        <GitHubIcon className={classes.socialIcon} />
-                        Login with GitHub
-                      </Button>
-                    </Grid>
-                  </Grid>
                   <Typography
-                    align="center"
-                    className={classes.sugestion}
                     color="textSecondary"
-                    variant="body1"
+                    gutterBottom
+                    className={classes.phrase}
                   >
-                    Login With Email
+                    Use your email to create new account
                   </Typography>
                   <InputLabel>Email</InputLabel>
                   <Input
@@ -194,10 +187,11 @@ const Login = ({
                     fullWidth
                     label="Email address"
                     name="email"
-                    onChange={setUsername}
+                    onChange={(e) => setData(e, "username")}
                     type="text"
                     value={username}
                     inputProps={{style: {textAlign: "center"}}}
+                    variant="outlined"
                   />
                   <InputLabel>Password</InputLabel>
                   <Input
@@ -205,8 +199,9 @@ const Login = ({
                     fullWidth
                     label="Password"
                     name="password"
-                    onChange={setPassword}
+                    onChange={(e) => setData(e, "username")}
                     value={password}
+                    variant="outlined"
                     type={visible ? "text" : "password"}
                     inputProps={{style: {textAlign: "center"}}}
                     endAdornment={
@@ -220,23 +215,64 @@ const Login = ({
                       </InputAdornment>
                     }
                   />
+                  <TextField
+                    className={classes.textField}
+                    fullWidth
+                    label="First Name"
+                    name="First Name"
+                    onChange={(e) => setData(e, "firstName")}
+                    type="text"
+                    value={firstName}
+                    inputProps={{style: {textAlign: "center"}}}
+                  />
+                  <TextField
+                    className={classes.textField}
+                    fullWidth
+                    label="Last Name"
+                    name="Last Name"
+                    onChange={(e) => setData(e, "lastName")}
+                    type="text"
+                    value={lastName}
+                    inputProps={{style: {textAlign: "center"}}}
+                  />
+                  <TextField
+                    className={classes.textField}
+                    fullWidth
+                    label="imageUrl"
+                    name="imageUrl"
+                    onChange={(e) => setData(e, "imageUrl")}
+                    type="text"
+                    value={imageUrl}
+                    inputProps={{style: {textAlign: "center"}}}
+                  />
+                  <div className={classes.policy}>
+                    <Checkbox
+                      checked={policy}
+                      className={classes.policyCheckbox}
+                      color="primary"
+                      name="policy"
+                      onChange={(e) => setPolicy(e, policy)}
+                    />
+                    <Typography
+                      className={classes.policyText}
+                      color="textSecondary"
+                      variant="body1"
+                    >
+                      I have read the Terms and Conditions
+                    </Typography>
+                  </div>
                   <Button
-                    className={classes.signInButton}
+                    className={classes.signUpButton}
                     color="primary"
                     fullWidth
                     size="large"
                     type="submit"
                     variant="contained"
-                    onClick={(e) => logInUser(e, username, password)}
+                    disabled={!policy}
+                    onClick={(e) => createAdmin(e, username, password, history)}
                   >
-                    Sign in now
+                    Create as Admin
                   </Button>
-                  <Typography color="textSecondary" variant="body1">
-                    Don't have an account?{" "}
-                    <Link to="/register" variant="h6">
-                      Sign up
-                    </Link>
-                  </Typography>
                 </form>
               </div>
             </div>
@@ -247,43 +283,61 @@ const Login = ({
   );
 };
 
-const mapState = ({form, cart}) => {
-  const {username, password, loggedIn, visible} = form;
-  const {products} = cart;
+const mapState = ({form, user}) => {
+  const {
+    username,
+    password,
+    loggedIn,
+    visible,
+    policy,
+    firstName,
+    lastName,
+    imageUrl,
+  } = form;
   return {
     username,
     password,
     loggedIn,
-    products,
+    user,
     visible,
+    policy,
+    firstName,
+    lastName,
+    imageUrl,
   };
 };
 
 const mapDispatch = (dispatch) => {
-  const setUsername = (e) => {
-    dispatch(updateForm("username", e.target.value));
+  const setData = (e, name) => {
+    dispatch(updateForm(name, e.target.value));
   };
-  const setPassword = (e) => {
-    dispatch(updateForm("password", e.target.value));
-  };
-  const logInUser = (e, username, password) => {
+  const createAdmin = (e, username, password, history) => {
     e.preventDefault();
     if (username.length && password.length) {
-      dispatch(login({username, password}));
-      dispatch(updateForm("loggedIn", true));
-    } else toast("All Fields Must Be Completed");
+      axios
+        .post("/api/admin/register", {username, password})
+        .then((res) => {
+          dispatch(clearForm());
+          toast(res.data.message);
+          history.push("/home");
+        })
+        .catch((err) => toast(`Admin was not created`));
+    }
   };
   const seePassword = (e, visible) => {
     e.preventDefault();
     dispatch(updateForm("visible", !visible));
   };
+  const setPolicy = (e, policy) => {
+    e.preventDefault();
+    dispatch(updateForm("policy", !policy));
+  };
   return {
-    setUsername,
-    setPassword,
-    logInUser,
-    seePassword,
+    setData,
+    createAdmin,
     dispatch,
+    seePassword,
+    setPolicy,
   };
 };
-
-export default connect(mapState, mapDispatch)(Login);
+export default connect(mapState, mapDispatch)(RegisterAdmin);

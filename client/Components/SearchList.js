@@ -5,7 +5,12 @@ import Pagination from "@material-ui/lab/Pagination";
 import {IconButton} from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 
-import {fetchProducts, clearInput, updateInput} from "../store/actions";
+import {
+  fetchProducts,
+  clearInput,
+  updateInput,
+  fetchSelectedProduct,
+} from "../store/actions";
 
 const SearchList = ({
   searchProducts,
@@ -16,6 +21,7 @@ const SearchList = ({
   handlePage,
   page,
   productsCount,
+  setCurProduct,
 }) => {
   useEffect(() => {
     const getData = async () => {
@@ -44,19 +50,13 @@ const SearchList = ({
         <div>
           <ul>
             {products.map((product) => {
-              let searchname;
-              if (product.categoryId === 1) {
-                searchname = "weapons";
-              } else if (product.categoryId === 2) {
-                searchname = "armors";
-              } else if (product.categoryId === 3) {
-                searchname = "spells";
-              } else {
-                searchname = "items";
-              }
               return (
                 <div key={product.id}>
-                  <Link to={`/${searchname}/${product.id}`} key={product.id}>
+                  <Link
+                    to={`/selectedProduct/${product.id}`}
+                    key={product.id}
+                    onClick={(e) => setCurProduct(e, product.id)}
+                  >
                     {product.name} ({product.price})
                   </Link>
                 </div>
@@ -86,6 +86,7 @@ const SearchList = ({
 const mapState = ({products, count, input}) => {
   const {productsCount} = count;
   const {page, filter} = input;
+
   return {
     products,
     page,
@@ -108,12 +109,15 @@ const mapDispatch = (dispatch) => {
   const searchProducts = (e, filter) => {
     dispatch(fetchProducts(filter));
   };
-
+  const setCurProduct = async (e, id) => {
+    dispatch(fetchSelectedProduct(id));
+  };
   return {
     dispatch,
     handlePage,
     changeFilter,
     searchProducts,
+    setCurProduct,
   };
 };
 

@@ -5,9 +5,21 @@ import Pagination from "@material-ui/lab/Pagination";
 import {IconButton} from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 
-import {updateInput, fetchWeapons, clearInput} from "../store/actions";
+import {
+  updateInput,
+  fetchWeapons,
+  clearInput,
+  fetchSelectedProduct,
+} from "../store/actions";
 
-const WeaponsList = ({dispatch, products, handleChange, page, productsCount}) => {
+const WeaponsList = ({
+  dispatch,
+  products,
+  handleChange,
+  page,
+  productsCount,
+  setCurProduct,
+}) => {
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchWeapons());
@@ -41,7 +53,11 @@ const WeaponsList = ({dispatch, products, handleChange, page, productsCount}) =>
               {products.map((weapon) => {
                 return (
                   <div key={weapon.id}>
-                    <Link to={`/weapons/${weapon.id}`} key={weapon.id}>
+                    <Link
+                      to={`/selectedProduct/${weapon.id}`}
+                      key={weapon.id}
+                      onClick={(e) => setCurProduct(e, weapon.id)}
+                    >
                       {weapon.name} ({weapon.price})
                     </Link>
                   </div>
@@ -86,9 +102,13 @@ const mapDispatch = (dispatch) => {
     dispatch(updateInput("page", value));
     dispatch(fetchWeapons(value));
   };
+  const setCurProduct = async (e, id) => {
+    dispatch(fetchSelectedProduct(id));
+  };
   return {
     dispatch,
     handleChange,
+    setCurProduct,
   };
 };
 export default connect(mapState, mapDispatch)(WeaponsList);

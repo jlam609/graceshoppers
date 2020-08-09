@@ -30,5 +30,6 @@ module.exports = {
     "no-unneeded-ternary": "off",
     "react/jsx-wrap-multilines": 0,
     "import/order": "off",
+    "react/jsx-curly-newline": 0,
   },
 };

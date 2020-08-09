@@ -20,14 +20,12 @@ import HomePage from "./Homepage";
 import Register from "./Register";
 import Login from "./Login";
 import Cart from "./Cart";
-import WeaponPage from "./WeaponPage";
-import SpellPage from "./SpellPage";
-import ArmorPage from "./ArmorPage";
-import ItemPage from "./ItemPage";
+import SelectedProduct from "./SelectedProduct";
 import SearchList from "./SearchList";
 import Admin from "./Admin";
 import Checkout from "./Checkout";
 import UserProfile from "./UserProfile";
+import RegisterAdmin from "./RegisterAdmin";
 
 const App = ({loggedIn, dispatch, user}) => {
   useEffect(() => {
@@ -56,17 +54,15 @@ const App = ({loggedIn, dispatch, user}) => {
       <Nav />
       <Switch>
         <Route path="/home" component={HomePage} />
-        <Route path="/magic/:id" component={SpellPage} />
-        <Route path="/items/:id" component={ItemPage} />
-        <Route path="/weapons/:id" component={WeaponPage} />
-        <Route path="/armors/:id" component={ArmorPage} />
+        <Route path="/selectedProduct/:id" component={SelectedProduct} />
         <Route path="/weapons" component={WeaponsList} />
         <Route path="/armors" component={ArmorList} />
         <Route path="/magic" component={SpellList} />
         <Route path="/items" component={ItemList} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <Route exact path="/registerAdmin" component={RegisterAdmin} />
+        <Route exact path="/register" component={Register} />
         <Route path="/search" component={SearchList} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/admin" component={Admin} />

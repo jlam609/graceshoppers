@@ -5,12 +5,10 @@ const Pagination = ({prodPerPage, totalProds, paginate}) => {
   for (let i = 1; i <= Math.ceil(totalProds / prodPerPage); i += 1) {
     pageNumbers.push(i);
   }
-  console.log(pageNumbers);
   return (
     <nav>
       <ul className="pagination">
         {pageNumbers.map((number) => {
-          console.log(number);
           return (
             <li key={number} className="pagenum">
               <button type="button" onClick={() => paginate(number)} className="pagelink">
