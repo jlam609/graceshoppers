@@ -4,8 +4,11 @@ const Order = require("./order");
 const Category = require("./category");
 const Session = require("./session");
 const Cart = require("./cart");
+const Rating = require("./rating");
 const db = require("../db");
 
+Product.hasMany(Rating);
+Rating.belongsToMany(Product, {through: User});
 User.hasMany(Session);
 Session.belongsTo(User);
 Product.belongsToMany(Order, {through: Cart});
@@ -26,5 +29,6 @@ module.exports = {
     Order,
     Category,
     Cart,
+    Rating,
   },
 };

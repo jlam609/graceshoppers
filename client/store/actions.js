@@ -25,6 +25,16 @@ const getCategories = (categories) => ({
   categories,
 });
 
+const getRating = (rating) => ({
+  type: TYPES.GET_RATING,
+  rating,
+});
+
+const setAverage = (average) => ({
+  type: TYPES.SET_AVERAGE,
+  average,
+});
+
 const addCategory = (category) => ({
   type: TYPES.ADD_CATEGORY,
   category,
@@ -46,6 +56,22 @@ const removeFromCart = (product) => ({
   type: TYPES.RM_FROM_CART,
   product,
 });
+
+const getAverage = (id) => {
+  return async (dispatch) => {
+    const {average} = (await axios.get(`/api/ratings/${id}`)).data;
+    dispatch(setAverage(average));
+  };
+};
+
+const addRating = (rValue, id) => {
+  console.log("entered addRating");
+  return async (dispatch) => {
+    await axios.post(`/api/ratings/new`, {rValue, id});
+    dispatch(getAverage(id));
+    return toast(`Thank you for your rating!`, {type: "success"});
+  };
+};
 
 const fetchProducts = (where = "", page = 1, size = 5) => {
   return async (dispatch) => {
@@ -278,16 +304,26 @@ const checkout = (products) => {
     }
   };
 };
+
 const setProduct = (product) => ({
   type: TYPES.SET_PRODUCT,
   product,
 });
+
 const fetchSelectedProduct = (id) => {
   return async (dispatch) => {
+    dispatch(updateInput("loading", true));
     const {product} = (await axios.get(`/api/products/all/${id}`)).data;
+    const {average} = (await axios.get(`/api/ratings/${id}`)).data;
+    dispatch(clearInput());
+    console.log("fetch", average);
+    if (average) {
+      dispatch(setAverage(average));
+    }
     return dispatch(setProduct(product));
   };
 };
+
 module.exports = {
   getProducts,
   getOrders,
@@ -319,4 +355,7 @@ module.exports = {
   checkout,
   logout,
   fetchSelectedProduct,
+  addRating,
+  getRating,
+  getAverage,
 };

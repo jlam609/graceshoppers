@@ -42,7 +42,8 @@ orderRouter.post("/", async (req, res) => {
     }
   } catch (e) {
     res.status(500).send({
-      message: "error, e",
+      message: "error",
+      e,
     });
   }
 });

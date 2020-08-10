@@ -5,12 +5,19 @@ import {
   clearInput,
   updateCart,
   fetchSelectedProduct,
+  addRating,
+  getRating,
 } from "../store/actions";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {IconButton} from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const SelectedProduct = ({
+  updateRating,
+  rValue,
+  average,
+  user,
   match,
   quantity,
   activeOrders,
@@ -18,15 +25,23 @@ const SelectedProduct = ({
   addToCart,
   dispatch,
   item,
+  failed,
 }) => {
   useEffect(() => {
-    dispatch(clearInput());
     const fetchProduct = async () => {
-      await dispatch(fetchSelectedProduct(match.params.id));
+      try {
+        await dispatch(fetchSelectedProduct(match.params.id));
+      } catch (e) {
+        console.log(e, "failure to find item");
+        dispatch(updateInput("failed", true));
+      }
     };
     fetchProduct();
+    dispatch(clearInput());
+    console.log("selected Product effect used!");
   }, []);
-  if (item) {
+  const history = useHistory();
+  if (item.name) {
     const mapQuant = (num) => {
       const map = [];
       for (let i = 1; i <= num; i++) {
@@ -34,8 +49,7 @@ const SelectedProduct = ({
       }
       return map;
     };
-    const history = useHistory();
-    if (item) {
+    if (item.name) {
       return (
         <div>
           <div className="productCard">
@@ -61,6 +75,22 @@ const SelectedProduct = ({
             >
               Add to Cart
             </button>
+            <p>Average rating is: {average}</p>
+            <select
+              id="rating"
+              name="rating"
+              value={rValue}
+              onChange={(e) => updateRating(e)}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <button type="button" onClick={(e) => dispatch(addRating(rValue, item.id))}>
+              Submit Rating
+            </button>
           </div>
           <div className="homeIcon">
             <IconButton onClick={(e) => history.goBack()}>
@@ -70,25 +100,48 @@ const SelectedProduct = ({
         </div>
       );
     }
-    return <h2>Loading..</h2>;
   }
-  return <h2>Loading..</h2>;
+  if (!failed) {
+    return (
+      <div className="loadingDiv">
+        <CircularProgress className="loading" />
+      </div>
+    );
+  }
+  return (
+    <div className="errorDiv">
+      <p>Sorry, item could not be found.</p>
+      <div className="backButton">
+        <IconButton onClick={(e) => history.goBack()} className="backButton">
+          <ArrowBackIcon fontSize="large" />
+        </IconButton>
+      </div>
+    </div>
+  );
 };
-const mapState = ({products, input, orders, count}) => {
-  const {quantity} = input;
+const mapState = ({products, input, orders, count, user, rating}) => {
+  const {average, rValue} = rating;
+  const {quantity, failed} = input;
   const {activeOrders} = orders;
   const {item} = count;
   return {
+    failed,
     products,
     quantity,
     activeOrders,
     item,
+    user,
+    average,
+    rValue,
   };
 };
 
 const mapDispatch = (dispatch) => {
   const updateQuantity = (e) => {
     dispatch(updateInput("quantity", e.target.value));
+  };
+  const updateRating = (e) => {
+    dispatch(getRating(e.target.value));
   };
   const addToCart = (e, order, item, quantity) => {
     e.preventDefault();
@@ -98,6 +151,7 @@ const mapDispatch = (dispatch) => {
     dispatch,
     updateQuantity,
     addToCart,
+    updateRating,
   };
 };
 
