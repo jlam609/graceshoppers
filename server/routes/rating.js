@@ -5,7 +5,6 @@ const {
 
 ratingRouter.get("/all/:itemId/:userId", async (req, res) => {
   const {itemId, userId} = req.params;
-  console.log("params userId", userId);
   try {
     const {count, rows} = await Rating.findAndCountAll({
       where: {
@@ -18,7 +17,6 @@ ratingRouter.get("/all/:itemId/:userId", async (req, res) => {
       if (count) {
         const total = rows.reduce((prev, cur) => {
           prev += parseInt(cur.dataValues.value, 10);
-          console.log("data userId", cur.dataValues.userId);
           if (cur.dataValues.userId === userId) {
             exists = true;
           }
@@ -27,9 +25,6 @@ ratingRouter.get("/all/:itemId/:userId", async (req, res) => {
 
         avg = (total / count).toFixed(3);
       }
-
-      console.log("average", avg, "exists", exists);
-
       res.status(200).send({
         average: avg || "No ratings yet!",
         rows,
