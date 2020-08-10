@@ -6,6 +6,7 @@ const inputReducer = (
     filter: "",
     quantity: 0,
     page: 1,
+    size: 10,
   },
   action
 ) => {
@@ -21,6 +22,7 @@ const inputReducer = (
         filter: "",
         quantity: 0,
         page: 1,
+        size: 10,
       };
     default:
       return state;

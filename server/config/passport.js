@@ -13,13 +13,12 @@ passport.use(
       },
     })
       .then(function (user) {
-        const hashPassword = bcrpyt.hashSync(password, user.salt);
         if (!user) {
           return done(null, false, {
             message: "Username does not exist",
           });
         }
-        if (user.password !== hashPassword) {
+        if (user.password !== bcrpyt.hashSync(password, user.salt)) {
           return done(null, false, {
             message: "Incorrect password.",
           });

@@ -9,6 +9,7 @@ import orderReducer from "./orderReducer";
 import productReducer from "./productReducer";
 import userReducer from "./userReducer";
 import {adminReducer} from "./adminReducer";
+import {viewReducer} from "./viewReducer";
 
 const categoryReducer = (state = [], action) => {
   switch (action.type) {
@@ -33,6 +34,7 @@ const masterReducer = combineReducers({
   user: userReducer,
   input: inputReducer,
   admin: adminReducer,
+  views: viewReducer,
 });
 
 const store = createStore(masterReducer, applyMiddleware(thunks));

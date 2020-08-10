@@ -461,6 +461,10 @@ const sync = async () => {
     username: "admin@fullstack.com",
     password: hash,
     salt,
+    firstName: "Default",
+    lastName: "Admin",
+    image:
+      "https://thumbs.dreamstime.com/b/red-admin-sign-pc-laptop-vector-illustration-administrator-icon-screen-controller-man-system-box-88756468.jpg",
     clearance: 5,
   });
 };

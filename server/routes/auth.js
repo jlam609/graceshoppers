@@ -7,14 +7,21 @@ const {Session, User} = models;
 
 authRouter.post("/register", async (req, res) => {
   try {
-    const {username, password} = req.body;
-    if (username && password) {
+    const {username, password, firstName, lastName} = req.body;
+    let {image} = req.body;
+    if (username && password && firstName && lastName) {
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(password, salt);
+      image = image
+        ? image
+        : "https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=1618390";
       await User.create({
         username,
         password: hash,
         salt,
+        firstName,
+        lastName,
+        image,
       });
       res.status(202).send({
         message: `user ${username} successfully created`,
@@ -27,16 +34,22 @@ authRouter.post("/register", async (req, res) => {
   }
 });
 authRouter.post("/login", passport.authenticate("local"), async function (req, res) {
-  const userId = req.user.id;
-  let usersSession = await Session.findByPk(req.sessionId);
-  if (!usersSession) {
-    usersSession = await Session.create({id: req.sessionId});
+  try {
+    const userId = req.user.id;
+    let usersSession = await Session.findByPk(req.sessionId);
+    if (!usersSession) {
+      usersSession = await Session.create({id: req.sessionId});
+    }
+    await usersSession.setUser(userId);
+    res.send({
+      user: req.user,
+      message: `${req.user.username} found`,
+    });
+  } catch (e) {
+    req.status(501).send({
+      message: "user not found",
+    });
   }
-  await usersSession.setUser(userId);
-  res.send({
-    user: req.user,
-    message: `${req.user.username} found`,
-  });
 });
 authRouter.get("/login", (req, res) => {
   try {
