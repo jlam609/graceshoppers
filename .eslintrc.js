@@ -31,5 +31,6 @@ module.exports = {
     "react/jsx-wrap-multilines": 0,
     "import/order": "off",
     "react/jsx-curly-newline": 0,
+    "react/jsx-props-no-spreading": "off",
   },
 };

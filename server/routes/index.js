@@ -6,8 +6,10 @@ const cartRouter = require("./cart");
 const authRouter = require("./auth");
 const stripeRouter = require("./stripe");
 const adminRouter = require("./admin");
+const ratingRouter = require("./rating");
 
 module.exports = {
+  ratingRouter,
   userRouter,
   productRouter,
   orderRouter,

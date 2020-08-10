@@ -7,6 +7,8 @@ const inputReducer = (
     quantity: 0,
     page: 1,
     size: 10,
+    loading: false,
+    failed: false,
   },
   action
 ) => {
@@ -23,6 +25,8 @@ const inputReducer = (
         quantity: 0,
         page: 1,
         size: 10,
+        loading: false,
+        failed: false,
       };
     default:
       return state;

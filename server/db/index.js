@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const {db, models} = require("./models");
 
-const {Cart, Category, Order, Product, Session, User} = models;
+const {Cart, Category, Order, Product, Session, User, Rating} = models;
 
 const sync = async () => {
   const categoryList = [
@@ -491,5 +491,6 @@ module.exports = {
     Product,
     Session,
     User,
+    Rating,
   },
 };

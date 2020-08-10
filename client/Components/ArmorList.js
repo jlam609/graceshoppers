@@ -20,18 +20,18 @@ const ArmorList = ({
   productsCount,
   setCurProduct,
 }) => {
+  console.log(productsCount);
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchArmor());
     };
     getData();
-  }, []);
-  useEffect(() => {
     dispatch(clearInput());
+    console.log("Armor List Effect Used!");
   }, []);
   if (products.length) {
     return (
-      <div>
+      <div className="listDiv">
         <div className="productList">
           <div className="header">
             <h1>Armor</h1>
@@ -91,6 +91,7 @@ const mapDispatch = (dispatch) => {
     dispatch(fetchArmor(value));
   };
   const setCurProduct = async (e, id) => {
+    dispatch(updateInput("loading", true));
     dispatch(fetchSelectedProduct(id));
   };
   return {

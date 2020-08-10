@@ -8,6 +8,7 @@ import inputReducer from "./inputReducer";
 import orderReducer from "./orderReducer";
 import productReducer from "./productReducer";
 import userReducer from "./userReducer";
+import ratingReducer from "./ratingReducer";
 import {adminReducer} from "./adminReducer";
 import {viewReducer} from "./viewReducer";
 
@@ -35,6 +36,7 @@ const masterReducer = combineReducers({
   input: inputReducer,
   admin: adminReducer,
   views: viewReducer,
+  rating: ratingReducer,
 });
 
 const store = createStore(masterReducer, applyMiddleware(thunks));

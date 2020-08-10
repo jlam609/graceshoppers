@@ -3,7 +3,7 @@ import TYPES from "./types";
 const countReducer = (
   state = {
     productsCount: 0,
-    item: [],
+    item: {},
   },
   action
 ) => {

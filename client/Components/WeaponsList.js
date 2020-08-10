@@ -31,7 +31,7 @@ const WeaponsList = ({
   }, []);
   if (products.length) {
     return (
-      <div>
+      <div className="listDiv">
         <div className="productList">
           <div className="header">
             <h1>Weapons</h1>
