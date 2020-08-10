@@ -35,6 +35,11 @@ const setAverage = (average) => ({
   average,
 });
 
+const setExists = (status) => ({
+  type: TYPES.SET_EXISTS,
+  status,
+});
+
 const addCategory = (category) => ({
   type: TYPES.ADD_CATEGORY,
   category,
@@ -59,16 +64,16 @@ const removeFromCart = (product) => ({
 
 const getAverage = (id) => {
   return async (dispatch) => {
-    const {average} = (await axios.get(`/api/ratings/${id}`)).data;
+    const {average} = (await axios.get(`/api/ratings/average/${id}`)).data;
     dispatch(setAverage(average));
   };
 };
 
-const addRating = (rValue, id) => {
-  console.log("entered addRating");
+const addRating = (rValue, itemId, userId) => {
   return async (dispatch) => {
-    await axios.post(`/api/ratings/new`, {rValue, id});
-    dispatch(getAverage(id));
+    await axios.post(`/api/ratings/new`, {rValue, itemId, userId});
+    dispatch(getAverage(itemId));
+    dispatch(setExists(true));
     return toast(`Thank you for your rating!`, {type: "success"});
   };
 };
@@ -176,7 +181,7 @@ const fetchUser = () => {
   return async (dispatch) => {
     const {user} = (await axios.get(`/api/auth/login`)).data;
     if (user) {
-      await dispatch(getUser(user));
+      dispatch(getUser(user));
       const orders = await dispatch(fetchOrders(user.id));
       const activeOrders = orders.length
         ? orders.find((order) => order.status === "active")
@@ -310,13 +315,15 @@ const setProduct = (product) => ({
   product,
 });
 
-const fetchSelectedProduct = (id) => {
+const fetchSelectedProduct = (itemId, userId) => {
   return async (dispatch) => {
     dispatch(updateInput("loading", true));
-    const {product} = (await axios.get(`/api/products/all/${id}`)).data;
-    const {average} = (await axios.get(`/api/ratings/${id}`)).data;
+    const {product} = (await axios.get(`/api/products/all/${itemId}`)).data;
+    const {average, exists} = (
+      await axios.get(`/api/ratings/all/${itemId}/${userId}`)
+    ).data;
     dispatch(clearInput());
-    console.log("fetch", average);
+    dispatch(setExists(exists));
     if (average) {
       dispatch(setAverage(average));
     }
@@ -358,4 +365,5 @@ module.exports = {
   addRating,
   getRating,
   getAverage,
+  setExists,
 };

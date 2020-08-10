@@ -34,6 +34,7 @@ const App = ({loggedIn, dispatch, loading}) => {
     const getData = async () => {
       await dispatch(fetchCategories());
       // await dispatch(fetchProducts());
+      // await dispatch(fetchUser());
       const sessionOrder = await dispatch(fetchSessionOrder());
       if (!loggedIn) {
         const [res, activeOrders] = await dispatch(fetchUser());

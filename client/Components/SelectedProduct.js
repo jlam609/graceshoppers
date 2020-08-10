@@ -14,10 +14,12 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const SelectedProduct = ({
+  exists,
+  user,
   updateRating,
   rValue,
   average,
-  user,
+  loggedIn,
   match,
   quantity,
   activeOrders,
@@ -30,16 +32,18 @@ const SelectedProduct = ({
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        await dispatch(fetchSelectedProduct(match.params.id));
+        if (user.id) {
+          await dispatch(fetchSelectedProduct(match.params.id, user.id));
+        }
       } catch (e) {
-        console.log(e, "failure to find item");
         dispatch(updateInput("failed", true));
+        console.log(e, "failure to find item");
       }
     };
     fetchProduct();
     dispatch(clearInput());
     console.log("selected Product effect used!");
-  }, []);
+  }, [user]);
   const history = useHistory();
   if (item.name) {
     const mapQuant = (num) => {
@@ -75,22 +79,34 @@ const SelectedProduct = ({
             >
               Add to Cart
             </button>
-            <p>Average rating is: {average}</p>
-            <select
-              id="rating"
-              name="rating"
-              value={rValue}
-              onChange={(e) => updateRating(e)}
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <button type="button" onClick={(e) => dispatch(addRating(rValue, item.id))}>
-              Submit Rating
-            </button>
+            <p>Average rating: {average}</p>
+            {loggedIn ? (
+              <div>
+                <select
+                  id="rating"
+                  name="rating"
+                  value={rValue}
+                  onChange={(e) => updateRating(e)}
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <button
+                  type="button"
+                  onClick={(e) => dispatch(addRating(rValue, item.id, user.id))}
+                  disabled={!!exists}
+                >
+                  Submit Rating
+                </button>
+              </div>
+            ) : (
+              <div>
+                <p>(Log in to submit a rating!)</p>
+              </div>
+            )}
           </div>
           <div className="homeIcon">
             <IconButton onClick={(e) => history.goBack()}>
@@ -119,18 +135,21 @@ const SelectedProduct = ({
     </div>
   );
 };
-const mapState = ({products, input, orders, count, user, rating}) => {
-  const {average, rValue} = rating;
+const mapState = ({products, input, orders, count, form, rating, user}) => {
+  const {average, rValue, exists} = rating;
   const {quantity, failed} = input;
   const {activeOrders} = orders;
   const {item} = count;
+  const {loggedIn} = form;
   return {
+    exists,
+    user,
+    loggedIn,
     failed,
     products,
     quantity,
     activeOrders,
     item,
-    user,
     average,
     rValue,
   };

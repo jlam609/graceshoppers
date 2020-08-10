@@ -8,7 +8,8 @@ const Rating = require("./rating");
 const db = require("../db");
 
 Product.hasMany(Rating);
-Rating.belongsToMany(Product, {through: User});
+User.hasMany(Rating);
+User.belongsToMany(Product, {through: Rating});
 User.hasMany(Session);
 Session.belongsTo(User);
 Product.belongsToMany(Order, {through: Cart});
