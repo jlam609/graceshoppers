@@ -131,7 +131,7 @@ const Admin = ({
               onChangePage={(e, value) => changePage(e, value, "pending", size, filter)}
               onChangeRowsPerPage={(e) => setData(e, "pendingOrders", filter)}
             />
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="adminTableChild">
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
@@ -188,7 +188,7 @@ const Admin = ({
               onChangePage={(e, value) => changePage(e, value, "completed", size, filter)}
               onChangeRowsPerPage={(e) => setData(e, "completed", filter)}
             />
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="adminTableChild">
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
@@ -236,7 +236,7 @@ const Admin = ({
               onChangePage={(e, value) => changePage(e, value, "users", size, filter)}
               onChangeRowsPerPage={(e) => setData(e, "users", filter)}
             />
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="adminTableChild">
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
@@ -292,7 +292,7 @@ const Admin = ({
               onChangePage={(e, value) => changePage(e, value, "admins", size, filter)}
               onChangeRowsPerPage={(e) => setData(e, "admins", filter)}
             />
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="adminTableChild">
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
@@ -352,6 +352,7 @@ const Admin = ({
               page={page - 1}
               onChangePage={(e, val) => changePage(e, val, "products", size, filter)}
               onChangeRowsPerPage={(e) => setData(e, "products", filter)}
+              className="adminTablePaginate"
             />
             <TableContainer component={Paper} className="adminTableChild">
               <Table stickyHeader>
@@ -571,7 +572,6 @@ const mapDispatch = (dispatch) => {
   };
   const edit = (e, view, selected) => {
     e.preventDefault();
-    console.log(selected);
     if (view === "Users") {
       dispatch(promote(selected));
       dispatch(fetchAdminUsers());

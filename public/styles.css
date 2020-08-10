@@ -242,11 +242,14 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-top: 15px;
+  justify-content: flex-start;
 }
 .adminImage {
   border-radius: 50%;
   height: 200px;
   width: 200px;
+  margin-bottom: 0;
 }
 .selectBar {
   height: 30px;
