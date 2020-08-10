@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 const db = new Sequelize(
-  process.env.DATABASE_URL || "postgres://localhost:5432/graceshoppers-2020",
+  process.env.DATABASE_URL || "postgres://5432/graceshoppers-2020",
   {logging: false}
 );
 

@@ -49,19 +49,23 @@ const SearchList = ({
         </div>
         <div>
           <ul>
-            {products.map((product) => {
-              return (
-                <div key={product.id}>
-                  <Link
-                    to={`/selectedProduct/${product.id}`}
-                    key={product.id}
-                    onClick={(e) => setCurProduct(e, product.id)}
-                  >
-                    {product.name} ({product.price})
-                  </Link>
-                </div>
-              );
-            })}
+            {products.length > 0 ? (
+              products.map((product) => {
+                return (
+                  <div key={product.id}>
+                    <Link
+                      to={`/selectedProduct/${product.id}`}
+                      key={product.id}
+                      onClick={(e) => setCurProduct(e, product.id)}
+                    >
+                      {product.name} ({product.price})
+                    </Link>
+                  </div>
+                );
+              })
+            ) : (
+              <p>Sorry! No products available under that name!</p>
+            )}
           </ul>
         </div>
         <Pagination

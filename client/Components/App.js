@@ -25,12 +25,16 @@ import SearchList from "./SearchList";
 import Admin from "./Admin";
 import Checkout from "./Checkout";
 import RegisterAdmin from "./RegisterAdmin";
+import isLoading from "./Loading";
 
-const App = ({loggedIn, dispatch, user}) => {
+const LoaderSelectedProduct = isLoading(SelectedProduct);
+
+const App = ({loggedIn, dispatch, loading}) => {
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchCategories());
-      await dispatch(fetchProducts());
+      // await dispatch(fetchProducts());
+      // await dispatch(fetchUser());
       const sessionOrder = await dispatch(fetchSessionOrder());
       if (!loggedIn) {
         const [res, activeOrders] = await dispatch(fetchUser());
@@ -46,6 +50,7 @@ const App = ({loggedIn, dispatch, user}) => {
       }
     };
     getData();
+    console.log("App effect used!");
   }, []);
 
   return (
@@ -53,7 +58,10 @@ const App = ({loggedIn, dispatch, user}) => {
       <Nav />
       <Switch>
         <Route path="/home" component={HomePage} />
-        <Route path="/selectedProduct/:id" component={SelectedProduct} />
+        <Route
+          path="/selectedProduct/:id"
+          render={(props) => <LoaderSelectedProduct loading={loading} {...props} />}
+        />
         <Route path="/weapons" component={WeaponsList} />
         <Route path="/armors" component={ArmorList} />
         <Route path="/magic" component={SpellList} />
@@ -71,10 +79,12 @@ const App = ({loggedIn, dispatch, user}) => {
   );
 };
 
-const mapStateToProps = ({form, user, orders}) => {
+const mapStateToProps = ({form, user, orders, input}) => {
+  const {loading} = input;
   const {loggedIn} = form;
   const {activeOrders} = orders;
   return {
+    loading,
     user,
     activeOrders,
     loggedIn,
