@@ -30,6 +30,8 @@ const useStyles = makeStyles({
     height: "100%",
     display: "flex",
     flexDirection: "row",
+    overflowX: "scroll",
+    overflowY: "scroll",
   },
   grid: {
     height: "100%",

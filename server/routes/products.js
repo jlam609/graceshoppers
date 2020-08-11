@@ -166,13 +166,5 @@ productRouter.put("/:id", async (req, res) => {
     res.status(500).send({message: "error updating products"});
   }
 });
-productRouter.delete("/:id", async (req, res, next) => {
-  try {
-    Product.destroy({where: {id: req.params.id}});
-    res.sendStatus(204);
-  } catch (err) {
-    next(err);
-  }
-});
 
 module.exports = productRouter;

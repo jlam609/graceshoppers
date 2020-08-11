@@ -29,6 +29,8 @@ const useStyles = makeStyles({
     height: "100%",
     display: "flex",
     flexDirection: "row",
+    overflowX: "scroll",
+    overflowY: "scroll",
   },
   grid: {
     height: "100%",
@@ -266,11 +268,16 @@ const mapDispatch = (dispatch) => {
   const setPassword = (e) => {
     dispatch(updateForm("password", e.target.value));
   };
-  const logInUser = (e, username, password) => {
+  const logInUser = async (e, username, password) => {
     e.preventDefault();
     if (username.length && password.length) {
-      dispatch(login({username, password}));
-      dispatch(updateForm("loggedIn", true));
+      const status = await dispatch(login({username, password}));
+      if (status) {
+        dispatch(updateForm("loggedIn", true));
+        toast("login success", {type: "success"});
+      } else {
+        toast("Wrong Username or Password", {type: "error"});
+      }
     } else toast("All Fields Must Be Completed");
   };
   const seePassword = (e, visible) => {

@@ -193,6 +193,7 @@ const fetchUser = () => {
 };
 const updateOrder = (orderId, userId) => {
   return async (dispatch) => {
+    console.log(orderId, userId);
     await axios.put(`/api/orders/${orderId}`, {userId});
     return dispatch(fetchOrders(userId));
   };
@@ -200,16 +201,19 @@ const updateOrder = (orderId, userId) => {
 
 const login = (userObj, products, order) => {
   return async (dispatch) => {
-    const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
-    console.log(user);
-    if (user) {
-      await dispatch(getUser(user));
-      await dispatch(fetchOrders(user.id));
-      if (!products) await dispatch(fetchCart(user.id));
-      if (products) await dispatch(updateOrder(order.id, user.id));
-      return toast(`${message}`, {type: "success"});
+    try {
+      const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
+      if (user) {
+        await dispatch(getUser(user));
+        if (!products) await dispatch(fetchCart(user.id));
+        if (products) await dispatch(updateOrder(order.id, user.id));
+        toast(`${message}`, {type: "success"});
+        return true;
+      }
+    } catch (e) {
+      toast("Problem Logging In", {type: "error"});
+      return false;
     }
-    return toast(`${message}`, {type: "error"});
   };
 };
 const logout = () => ({

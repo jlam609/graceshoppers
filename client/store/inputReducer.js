@@ -6,6 +6,7 @@ const inputReducer = (
     filter: "",
     quantity: 0,
     page: 1,
+    size: 10,
     loading: false,
     failed: false,
   },
@@ -23,6 +24,7 @@ const inputReducer = (
         filter: "",
         quantity: 0,
         page: 1,
+        size: 10,
         loading: false,
         failed: false,
       };

@@ -50,7 +50,6 @@ const App = ({loggedIn, dispatch, loading}) => {
       }
     };
     getData();
-    console.log("App effect used!");
   }, []);
 
   return (
@@ -83,6 +82,7 @@ const mapStateToProps = ({form, user, orders, input}) => {
   const {loading} = input;
   const {loggedIn} = form;
   const {activeOrders} = orders;
+  console.log(activeOrders);
   return {
     loading,
     user,
