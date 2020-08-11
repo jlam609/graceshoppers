@@ -105,4 +105,4 @@ const startServer = () =>
     });
   });
 
-seed(true).then(startServer());
+seed(true).then(startServer);
