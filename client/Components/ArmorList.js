@@ -20,14 +20,12 @@ const ArmorList = ({
   productsCount,
   setCurProduct,
 }) => {
-  console.log(productsCount);
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchArmor());
     };
     getData();
     dispatch(clearInput());
-    console.log("Armor List Effect Used!");
   }, []);
   if (products.length) {
     return (

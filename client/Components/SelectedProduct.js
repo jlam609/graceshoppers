@@ -37,12 +37,10 @@ const SelectedProduct = ({
         }
       } catch (e) {
         dispatch(updateInput("failed", true));
-        console.log(e, "failure to find item");
       }
     };
     fetchProduct();
     dispatch(clearInput());
-    console.log("selected Product effect used!");
   }, [user]);
   const history = useHistory();
   if (item.name) {

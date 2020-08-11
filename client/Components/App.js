@@ -50,7 +50,6 @@ const App = ({loggedIn, dispatch, loading}) => {
       }
     };
     getData();
-    console.log("App effect used!");
   }, []);
 
   return (

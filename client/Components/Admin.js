@@ -121,6 +121,7 @@ const Admin = ({
               </Tabs>
             </Paper>
           </div>
+          <hr />
           <div className={view === "Pending" ? "adminTable" : "ghost"}>
             <TablePagination
               rowsPerPageOptions={[10, 25, 100]}
@@ -453,6 +454,7 @@ const Admin = ({
               </Button>
             </form>
           </div>
+          <hr />
           <div className={view !== "Add Product" ? "editForm" : "ghost"}>
             <h2>Edit Form</h2>
             {selected && selected.name ? <h4>Now Editing {selected.name}</h4> : null}

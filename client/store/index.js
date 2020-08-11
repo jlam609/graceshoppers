@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 import {createStore, applyMiddleware, combineReducers} from "redux";
 import thunks from "redux-thunk";
 import TYPES from "./types";
