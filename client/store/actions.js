@@ -193,6 +193,7 @@ const fetchUser = () => {
 };
 const updateOrder = (orderId, userId) => {
   return async (dispatch) => {
+    console.log(orderId, userId);
     await axios.put(`/api/orders/${orderId}`, {userId});
     return dispatch(fetchOrders(userId));
   };
@@ -204,7 +205,6 @@ const login = (userObj, products, order) => {
       const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
       if (user) {
         await dispatch(getUser(user));
-        await dispatch(fetchOrders(user.id));
         if (!products) await dispatch(fetchCart(user.id));
         if (products) await dispatch(updateOrder(order.id, user.id));
         toast(`${message}`, {type: "success"});

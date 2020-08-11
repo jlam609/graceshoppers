@@ -139,6 +139,7 @@ const mapState = ({products, input, orders, count, form, rating, user}) => {
   const {activeOrders} = orders;
   const {item} = count;
   const {loggedIn} = form;
+  console.log(activeOrders);
   return {
     exists,
     user,
@@ -162,6 +163,7 @@ const mapDispatch = (dispatch) => {
   };
   const addToCart = (e, order, item, quantity) => {
     e.preventDefault();
+    console.log(order, item, quantity);
     dispatch(updateCart("add", order.id, item.id, quantity));
   };
   return {
