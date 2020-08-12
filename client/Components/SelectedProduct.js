@@ -7,6 +7,7 @@ import {
   fetchSelectedProduct,
   addRating,
   getRating,
+  setReview,
 } from "../store/actions";
 import {useHistory} from "react-router-dom";
 import {IconButton} from "@material-ui/core";
@@ -14,6 +15,8 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const SelectedProduct = ({
+  reviews,
+  review,
   exists,
   user,
   updateRating,
@@ -29,6 +32,8 @@ const SelectedProduct = ({
   item,
   failed,
 }) => {
+  console.log("review", review);
+  console.log("reviews", reviews);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -80,21 +85,37 @@ const SelectedProduct = ({
             <p>Average rating: {average}</p>
             {loggedIn ? (
               <div>
-                <select
-                  id="rating"
-                  name="rating"
-                  value={rValue}
-                  onChange={(e) => updateRating(e)}
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
+                <div>
+                  {" "}
+                  Rating Number:
+                  <select
+                    id="rating"
+                    name="rating"
+                    value={rValue}
+                    onChange={(e) => updateRating(e)}
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <p />
+                <div>
+                  (Add a review!)
+                  <input
+                    className="reviewInput"
+                    id="review"
+                    name="review"
+                    value={review}
+                    disabled={!!exists}
+                    onChange={(e) => dispatch(setReview(e.target.value))}
+                  />
+                </div>
                 <button
                   type="button"
-                  onClick={(e) => dispatch(addRating(rValue, item.id, user.id))}
+                  onClick={(e) => dispatch(addRating(rValue, item.id, user.id, review))}
                   disabled={!!exists}
                 >
                   Submit Rating
@@ -105,6 +126,18 @@ const SelectedProduct = ({
                 <p>(Log in to submit a rating!)</p>
               </div>
             )}
+            <ul>
+              Reviews!
+              {reviews.length > 0 ? (
+                reviews.map((cur) => (
+                  <li key={cur.id}>
+                    {cur.value}/5 -{cur.text}
+                  </li>
+                ))
+              ) : (
+                <p>No reviews yet!</p>
+              )}
+            </ul>
           </div>
           <div className="homeIcon">
             <IconButton onClick={(e) => history.goBack()}>
@@ -134,13 +167,14 @@ const SelectedProduct = ({
   );
 };
 const mapState = ({products, input, orders, count, form, rating, user}) => {
-  const {average, rValue, exists} = rating;
+  const {average, rValue, exists, review, reviews} = rating;
   const {quantity, failed} = input;
   const {activeOrders} = orders;
   const {item} = count;
   const {loggedIn} = form;
-  console.log(activeOrders);
   return {
+    reviews,
+    review,
     exists,
     user,
     loggedIn,

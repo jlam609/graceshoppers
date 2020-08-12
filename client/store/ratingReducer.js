@@ -4,6 +4,8 @@ const ratingReducer = (
   state = {
     rValue: "1",
     average: "No Reviews!",
+    review: "",
+    reviews: [],
     exists: true,
   },
   action
@@ -23,6 +25,16 @@ const ratingReducer = (
       return {
         ...state,
         exists: action.status,
+      };
+    case TYPES.SET_REVIEW:
+      return {
+        ...state,
+        review: action.review,
+      };
+    case TYPES.SET_REVIEWS:
+      return {
+        ...state,
+        reviews: [...action.reviews],
       };
     default:
       return state;
