@@ -22,6 +22,7 @@ productRouter.get("/all/:id", async (req, res) => {
     const product = await Product.findByPk(id);
     res.status(201).send({product});
   } catch (e) {
+    res.sendStatus(500);
     console.error(e);
   }
 });
@@ -47,75 +48,101 @@ productRouter.get("/?", async (req, res) => {
         },
       });
     }
-    res.send(productData);
+    res.status(201).send(productData);
   } catch (e) {
+    res.sendStatus(500);
     throw new Error("Could not send data.");
   }
 });
 
 productRouter.get("/weapons/?", async (req, res, next) => {
-  const {page, size} = req.query;
-  const {limit, offset} = getPagination(page, size);
-  const weapons = await Product.findAndCountAll({
-    limit,
-    offset,
-    where: {
-      categoryId: 1,
-    },
-  });
-  res.send({
-    weapons,
-  });
+  try {
+    const {page, size} = req.query;
+    const {limit, offset} = getPagination(page, size);
+    const weapons = await Product.findAndCountAll({
+      limit,
+      offset,
+      where: {
+        categoryId: 1,
+      },
+    });
+    res.send({
+      weapons,
+    });
+  } catch (e) {
+    console.log("Failed to get weapons");
+    res.sendStatus(500);
+  }
 });
 
 productRouter.get("/spells/?", async (req, res, next) => {
-  const {page, size} = req.query;
-  const {limit, offset} = getPagination(page, size);
-  const spells = await Product.findAndCountAll({
-    limit,
-    offset,
-    where: {
-      categoryId: 3,
-    },
-  });
-  res.send({
-    spells,
-  });
+  try {
+    const {page, size} = req.query;
+    const {limit, offset} = getPagination(page, size);
+    const spells = await Product.findAndCountAll({
+      limit,
+      offset,
+      where: {
+        categoryId: 3,
+      },
+    });
+    res.send({
+      spells,
+    });
+  } catch (e) {
+    console.log("Failed to get spells.");
+    res.sendStatus(500);
+  }
 });
 
 productRouter.get("/items/?", async (req, res, next) => {
-  const {page, size} = req.query;
-  const {limit, offset} = getPagination(page, size);
-  const items = await Product.findAndCountAll({
-    limit,
-    offset,
-    where: {
-      categoryId: 4,
-    },
-  });
-  res.send({
-    items,
-  });
+  try {
+    const {page, size} = req.query;
+    const {limit, offset} = getPagination(page, size);
+    const items = await Product.findAndCountAll({
+      limit,
+      offset,
+      where: {
+        categoryId: 4,
+      },
+    });
+    res.send({
+      items,
+    });
+  } catch (e) {
+    console.log("Failed to get items.");
+    res.sendStatus(500);
+  }
 });
 
 productRouter.get("/armor/?", async (req, res, next) => {
-  const {page, size} = req.query;
-  const {limit, offset} = getPagination(page, size);
-  const armor = await Product.findAndCountAll({
-    limit,
-    offset,
-    where: {
-      categoryId: 2,
-    },
-  });
-  res.send({
-    armor,
-  });
+  try {
+    const {page, size} = req.query;
+    const {limit, offset} = getPagination(page, size);
+    const armor = await Product.findAndCountAll({
+      limit,
+      offset,
+      where: {
+        categoryId: 2,
+      },
+    });
+    res.send({
+      armor,
+    });
+  } catch (e) {
+    console.log("Failed to get armor.");
+    res.sendStatus(500);
+  }
 });
 
 productRouter.post("/", async (req, res) => {
-  await Product.create(req.body);
-  res.sendStatus(201);
+  try {
+    await Product.create(req.body);
+    res.sendStatus(201);
+  } catch (e) {
+    console.log("Couldn't post product.");
+    res.sendStatus(500);
+  }
 });
 
 productRouter.put("/:id", async (req, res) => {
@@ -137,14 +164,6 @@ productRouter.put("/:id", async (req, res) => {
     });
   } catch (err) {
     res.status(500).send({message: "error updating products"});
-  }
-});
-productRouter.delete("/:id", async (req, res, next) => {
-  try {
-    Product.destroy({where: {id: req.params.id}});
-    res.sendStatus(204);
-  } catch (err) {
-    next(err);
   }
 });
 

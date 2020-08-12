@@ -25,6 +25,21 @@ const getCategories = (categories) => ({
   categories,
 });
 
+const getRating = (rating) => ({
+  type: TYPES.GET_RATING,
+  rating,
+});
+
+const setAverage = (average) => ({
+  type: TYPES.SET_AVERAGE,
+  average,
+});
+
+const setExists = (status) => ({
+  type: TYPES.SET_EXISTS,
+  status,
+});
+
 const addCategory = (category) => ({
   type: TYPES.ADD_CATEGORY,
   category,
@@ -46,6 +61,22 @@ const removeFromCart = (product) => ({
   type: TYPES.RM_FROM_CART,
   product,
 });
+
+const getAverage = (id) => {
+  return async (dispatch) => {
+    const {average} = (await axios.get(`/api/ratings/average/${id}`)).data;
+    dispatch(setAverage(average));
+  };
+};
+
+const addRating = (rValue, itemId, userId) => {
+  return async (dispatch) => {
+    await axios.post(`/api/ratings/new`, {rValue, itemId, userId});
+    dispatch(getAverage(itemId));
+    dispatch(setExists(true));
+    return toast(`Thank you for your rating!`, {type: "success"});
+  };
+};
 
 const fetchProducts = (where = "", page = 1, size = 5) => {
   return async (dispatch) => {
@@ -150,7 +181,7 @@ const fetchUser = () => {
   return async (dispatch) => {
     const {user} = (await axios.get(`/api/auth/login`)).data;
     if (user) {
-      await dispatch(getUser(user));
+      dispatch(getUser(user));
       const orders = await dispatch(fetchOrders(user.id));
       const activeOrders = orders.length
         ? orders.find((order) => order.status === "active")
@@ -162,6 +193,7 @@ const fetchUser = () => {
 };
 const updateOrder = (orderId, userId) => {
   return async (dispatch) => {
+    console.log(orderId, userId);
     await axios.put(`/api/orders/${orderId}`, {userId});
     return dispatch(fetchOrders(userId));
   };
@@ -169,16 +201,19 @@ const updateOrder = (orderId, userId) => {
 
 const login = (userObj, products, order) => {
   return async (dispatch) => {
-    const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
-    console.log(user);
-    if (user) {
-      await dispatch(getUser(user));
-      await dispatch(fetchOrders(user.id));
-      if (!products) await dispatch(fetchCart(user.id));
-      if (products) await dispatch(updateOrder(order.id, user.id));
-      return toast(`${message}`, {type: "success"});
+    try {
+      const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
+      if (user) {
+        await dispatch(getUser(user));
+        if (!products) await dispatch(fetchCart(user.id));
+        if (products) await dispatch(updateOrder(order.id, user.id));
+        toast(`${message}`, {type: "success"});
+        return true;
+      }
+    } catch (e) {
+      toast("Problem Logging In", {type: "error"});
+      return false;
     }
-    return toast(`${message}`, {type: "error"});
   };
 };
 const logout = () => ({
@@ -278,16 +313,28 @@ const checkout = (products) => {
     }
   };
 };
+
 const setProduct = (product) => ({
   type: TYPES.SET_PRODUCT,
   product,
 });
-const fetchSelectedProduct = (id) => {
+
+const fetchSelectedProduct = (itemId, userId) => {
   return async (dispatch) => {
-    const {product} = (await axios.get(`/api/products/all/${id}`)).data;
+    dispatch(updateInput("loading", true));
+    const {product} = (await axios.get(`/api/products/all/${itemId}`)).data;
+    const {average, exists} = (
+      await axios.get(`/api/ratings/all/${itemId}/${userId}`)
+    ).data;
+    dispatch(clearInput());
+    dispatch(setExists(exists));
+    if (average) {
+      dispatch(setAverage(average));
+    }
     return dispatch(setProduct(product));
   };
 };
+
 module.exports = {
   getProducts,
   getOrders,
@@ -319,4 +366,8 @@ module.exports = {
   checkout,
   logout,
   fetchSelectedProduct,
+  addRating,
+  getRating,
+  getAverage,
+  setExists,
 };

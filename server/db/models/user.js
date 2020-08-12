@@ -1,4 +1,4 @@
-const {STRING, UUID, UUIDV4, INTEGER} = require("sequelize");
+const {STRING, UUID, UUIDV4, INTEGER, TEXT} = require("sequelize");
 const db = require("../db");
 
 const User = db.define("user", {
@@ -33,17 +33,16 @@ const User = db.define("user", {
   },
   firstName: {
     type: STRING,
+    allowNull: false,
   },
   lastName: {
     type: STRING,
+    allowNull: false,
   },
-  profilePic: {
+  image: {
     type: STRING,
     defaultValue:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-    validate: {
-      isURL: true,
-    },
+      "https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=1618390",
   },
 });
 

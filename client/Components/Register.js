@@ -30,6 +30,8 @@ const useStyles = makeStyles({
     height: "100%",
     display: "flex",
     flexDirection: "row",
+    overflowX: "scroll",
+    overflowY: "scroll",
   },
   grid: {
     height: "100%",
@@ -327,10 +329,10 @@ const mapDispatch = (dispatch) => {
   const setData = (e, name) => {
     dispatch(updateForm(name, e.target.value));
   };
-  const createUser = (e, username, password, history) => {
+  const createUser = (e, username, password, firstName, lastName, image, history) => {
     if (username.length && password.length) {
       axios
-        .post("/api/auth/register", {username, password})
+        .post("/api/auth/register", {username, password, firstName, lastName, image})
         .then((res) => {
           dispatch(clearForm());
           toast(`${username} succcesfully created!`);

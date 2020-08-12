@@ -25,13 +25,11 @@ const ArmorList = ({
       await dispatch(fetchArmor());
     };
     getData();
-  }, []);
-  useEffect(() => {
     dispatch(clearInput());
   }, []);
   if (products.length) {
     return (
-      <div>
+      <div className="listDiv">
         <div className="productList">
           <div className="header">
             <h1>Armor</h1>
@@ -91,6 +89,7 @@ const mapDispatch = (dispatch) => {
     dispatch(fetchArmor(value));
   };
   const setCurProduct = async (e, id) => {
+    dispatch(updateInput("loading", true));
     dispatch(fetchSelectedProduct(id));
   };
   return {

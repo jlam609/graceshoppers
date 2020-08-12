@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const {db, models} = require("./models");
 
-const {Cart, Category, Order, Product, Session, User} = models;
+const {Cart, Category, Order, Product, Session, User, Rating} = models;
 
 const sync = async () => {
   const categoryList = [
@@ -461,6 +461,10 @@ const sync = async () => {
     username: "admin@fullstack.com",
     password: hash,
     salt,
+    firstName: "Default",
+    lastName: "Admin",
+    image:
+      "https://thumbs.dreamstime.com/b/red-admin-sign-pc-laptop-vector-illustration-administrator-icon-screen-controller-man-system-box-88756468.jpg",
     clearance: 5,
   });
 };
@@ -487,5 +491,6 @@ module.exports = {
     Product,
     Session,
     User,
+    Rating,
   },
 };

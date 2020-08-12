@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="home">
-      <img className="shopKeep" src="https://i.ibb.co/Xyjd5yB/Shopkeep.png" alt="" />
       <div className="bookContainer">
         <div>
           <Link to="/weapons">
