@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack --mode=\"production\"",
     "build:watch": "webpack --watch",
-    "start": "HTTPS=true&&node server/index.js",
-    "start:dev": "HTTPS=true&&node-dev --respawn server/index.js",
+    "start": "HTTPS=true node server/index.js",
+    "start:dev": "HTTPS=true node-dev --respawn server/index.js",
     "lint": "eslint --ext .js,.jsx server client",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
   },
