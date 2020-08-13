@@ -1,7 +1,16 @@
 /* eslint-disable react/jsx-curly-newline */
 import React from "react";
 import {connect} from "react-redux";
-import {Card, CardContent} from "@material-ui/core";
+import {
+  Paper,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import {toast} from "react-toastify";
@@ -9,6 +18,19 @@ import "react-toastify/dist/ReactToastify.css";
 import {checkout, clearCart, createOrder} from "../store/actions";
 
 toast.configure();
+
+const useStyles = makeStyles({
+  table: {
+    overflowX: "scroll",
+    overflowY: "scroll",
+    display: "flex",
+    flexDirection: "column",
+    opacity: "80%",
+    width: "70vw",
+    marginRight: "auto",
+    marginLeft: "auto",
+  },
+});
 
 const Checkout = ({
   products,
@@ -18,32 +40,53 @@ const Checkout = ({
   handleToken,
   activeOrders,
 }) => {
+  const classes = useStyles();
   return (
-    <div className="cart">
+    <div className="checkout">
       <h2> Order Summary </h2>
+      <hr />
       <h4> {itemQuantity} Items! </h4>
-      <ul>
-        {products.length ? (
-          products.map((product) => {
-            return (
-              <div key={product.id}>
-                <Card>
-                  <div>
-                    <CardContent className="card">
-                      <li>Name: {product.product.name}</li>
-                      <li>Price: {product.product.price}</li>
-                      <li>Quantity: {product.quantity}</li>
-                      <img src={product.product.image} width={100} height={100} alt="" />
-                    </CardContent>
-                  </div>
-                </Card>
-              </div>
-            );
-          })
-        ) : (
-          <h2>No items in order! Buy Items</h2>
-        )}
-      </ul>
+      <TableContainer component={Paper} className={classes.table}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell>Products</TableCell>
+              <TableCell align="right">Id</TableCell>
+              <TableCell align="right">Quantity</TableCell>
+              <TableCell align="right">Description</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right">Image</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {products && products.length ? (
+              products.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.product.name}
+                  </TableCell>
+                  <TableCell align="right">{row.product.id}</TableCell>
+                  <TableCell align="right">{row.quantity}</TableCell>
+                  <TableCell align="right">{row.product.description}</TableCell>
+                  <TableCell align="right">{row.product.price}</TableCell>
+                  <TableCell align="right">
+                    <img
+                      src={row.product.image}
+                      alt={row.product.name}
+                      height={125}
+                      width={155}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell>No items in order! Buy Items</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <div>
         <h3>Total Amount ({itemQuantity}) Items</h3>
         <hr />
