@@ -30,6 +30,16 @@ const getRating = (rating) => ({
   rating,
 });
 
+const setReview = (review) => ({
+  type: TYPES.SET_REVIEW,
+  review,
+});
+
+const setReviews = (reviews) => ({
+  type: TYPES.SET_REVIEWS,
+  reviews,
+});
+
 const setAverage = (average) => ({
   type: TYPES.SET_AVERAGE,
   average,
@@ -66,15 +76,6 @@ const getAverage = (id) => {
   return async (dispatch) => {
     const {average} = (await axios.get(`/api/ratings/average/${id}`)).data;
     dispatch(setAverage(average));
-  };
-};
-
-const addRating = (rValue, itemId, userId) => {
-  return async (dispatch) => {
-    await axios.post(`/api/ratings/new`, {rValue, itemId, userId});
-    dispatch(getAverage(itemId));
-    dispatch(setExists(true));
-    return toast(`Thank you for your rating!`, {type: "success"});
   };
 };
 
@@ -323,15 +324,26 @@ const fetchSelectedProduct = (itemId, userId) => {
   return async (dispatch) => {
     dispatch(updateInput("loading", true));
     const {product} = (await axios.get(`/api/products/all/${itemId}`)).data;
-    const {average, exists} = (
+    const {average, exists, reviews} = (
       await axios.get(`/api/ratings/all/${itemId}/${userId}`)
     ).data;
     dispatch(clearInput());
     dispatch(setExists(exists));
+    console.log("grabbed reviews", reviews);
+    dispatch(setReviews(reviews));
     if (average) {
       dispatch(setAverage(average));
     }
     return dispatch(setProduct(product));
+  };
+};
+
+const addRating = (rValue, itemId, userId, review) => {
+  return async (dispatch) => {
+    await axios.post(`/api/ratings/new`, {rValue, itemId, userId, review});
+    dispatch(getAverage(itemId));
+    dispatch(setExists(true));
+    return toast(`Thank you for your rating!`, {type: "success"});
   };
 };
 
@@ -370,4 +382,5 @@ module.exports = {
   getRating,
   getAverage,
   setExists,
+  setReview,
 };
