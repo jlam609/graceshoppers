@@ -77,6 +77,7 @@ const WeaponsList = ({
 const mapState = ({products, count, input}) => {
   const {productsCount} = count;
   const {page} = input;
+  console.log(products);
   return {
     products,
     page,

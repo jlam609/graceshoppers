@@ -63,84 +63,60 @@ const Nav = ({loggedIn, toggle, toggleMenu, logoutUser, handleClose, products, u
             <span>Search!</span>
           </div>
         </Link>
-      </div>
-      <div className="list">
-        <div onClick={handleClose} onKeyDown={handleClose} role="button" tabIndex="0">
-          <Link to="/home" className="menuItem">
-            <IconButton>
-              <HomeIcon fontSize="large" />
-            </IconButton>
-            <span>Home</span>
-          </Link>
+        <Link to="/home" className="navBook">
+          <IconButton>
+            <HomeIcon fontSize="large" />
+          </IconButton>
+          <span>Home</span>
+        </Link>
+        <Link to="/cart" className="navBook">
+          <IconButton>
+            <AddShoppingCartIcon fontSize="large" /> ({products.length})
+          </IconButton>
+          <span>Cart</span>
+        </Link>
+        <div className={loggedIn ? "navBook" : "ghost"}>
+          <IconButton onClick={(e) => logoutUser(e)}>
+            <ExitToAppIcon fontSize="large" />
+          </IconButton>
+          <span>Log Out</span>
         </div>
-        <div onClick={handleClose} onKeyDown={handleClose} role="button" tabIndex="0">
-          <Link to="/cart" className="menuItem">
-            <IconButton>
-              <AddShoppingCartIcon fontSize="large" /> ({products.length})
-            </IconButton>
-            <span>Cart</span>
-          </Link>
-        </div>
-        {loggedIn ? (
-          <div className="innerList">
-            <div>
-              <div className="menuItem">
-                <IconButton onClick={(e) => logoutUser(e)}>
-                  <ExitToAppIcon fontSize="large" />
-                </IconButton>
-              </div>
-              <span>Log Out</span>
-            </div>
-            {user.clearance === 5 ? (
-              <div>
-                <div>
-                  <Link to="/admin">
-                    <IconButton>
-                      <SupervisorAccountIcon fontSize="large" />
-                    </IconButton>
-                    <span>Admin</span>
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/registerAdmin">
-                    <IconButton>
-                      <AddCircleIcon fontSize="large" />
-                    </IconButton>
-                    <span>Admin Register</span>
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <Link to="/user">
-                  <IconButton>
-                    <AccountBoxIcon fontSize="large" />
-                  </IconButton>
-                  <span>Profile</span>
-                </Link>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="logList">
-            <div>
-              <Link to="/login" className="menuItem">
-                <IconButton>
-                  <HowToRegIcon fontSize="large" />
-                </IconButton>
-                <span>Login</span>
-              </Link>
-            </div>
-            <div>
-              <Link to="/register" className="menuItem">
-                <IconButton>
-                  <CreateIcon fontSize="large" />
-                </IconButton>
-                <span>New User</span>
-              </Link>
-            </div>
-          </div>
-        )}
+        <Link
+          to="/admin"
+          className={loggedIn && user.clearance === 5 ? "navBook" : "ghost"}
+        >
+          <IconButton>
+            <SupervisorAccountIcon fontSize="large" />
+          </IconButton>
+          <span>Admin</span>
+        </Link>
+        <Link
+          to="/registerAdmin"
+          className={loggedIn && user.clearance === 5 ? "navBook" : "ghost"}
+        >
+          <IconButton>
+            <AddCircleIcon fontSize="large" />
+          </IconButton>
+          <span>Create Admin</span>
+        </Link>
+        <Link to="/user" className={loggedIn ? "navBook" : "ghost"}>
+          <IconButton>
+            <AccountBoxIcon fontSize="large" />
+          </IconButton>
+          <span>Profile</span>
+        </Link>
+        <Link to="/login" className={loggedIn ? "ghost" : "navBook"}>
+          <IconButton>
+            <HowToRegIcon fontSize="large" />
+          </IconButton>
+          <span>Login</span>
+        </Link>
+        <Link to="/register" className={loggedIn ? "ghost" : "navBook"}>
+          <IconButton>
+            <CreateIcon fontSize="large" />
+          </IconButton>
+          <span>New User</span>
+        </Link>
       </div>
     </div>
   );

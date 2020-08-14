@@ -317,7 +317,7 @@
 }
 .navBag {
   height: 80%;
-  width: 35%;
+  width: 100%;
   background-color: darkslategray;
   border-radius: 15px;
   opacity: 90%;
@@ -326,6 +326,8 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 .navBook {
   height: 80%;
@@ -340,15 +342,6 @@
   height: 50px;
   width: 45px;
 }
-.menuItem {
-  display: flex;
-  height: 60px;
-  width: 40px;
-  flex-direction: column;
-  align-content: center;
-  justify-content: space-evenly;
-}
-
 .logList {
   display: flex;
   flex-direction: row;
@@ -357,11 +350,3 @@
   width: 30%;
 }
 
-.footer {
-  background-color: slategray;
-  color: slateblue;
-  opacity: 90%;
-  height: 100px;
-  padding: 10px;
-  margin-top: 20px;
-}

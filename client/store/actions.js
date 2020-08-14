@@ -194,7 +194,6 @@ const fetchUser = () => {
 };
 const updateOrder = (orderId, userId) => {
   return async (dispatch) => {
-    console.log(orderId, userId);
     await axios.put(`/api/orders/${orderId}`, {userId});
     return dispatch(fetchOrders(userId));
   };
@@ -206,7 +205,10 @@ const login = (userObj, products, order) => {
       const {user, message} = (await axios.post(`/api/auth/login`, userObj)).data;
       if (user) {
         await dispatch(getUser(user));
-        if (!products) await dispatch(fetchCart(user.id));
+        if (!products) {
+          await dispatch(fetchOrders(user.id));
+          await dispatch(fetchCart(user.id));
+        }
         if (products) await dispatch(updateOrder(order.id, user.id));
         toast(`${message}`, {type: "success"});
         return true;
@@ -329,7 +331,6 @@ const fetchSelectedProduct = (itemId, userId) => {
     ).data;
     dispatch(clearInput());
     dispatch(setExists(exists));
-    console.log("grabbed reviews", reviews);
     dispatch(setReviews(reviews));
     if (average) {
       dispatch(setAverage(average));
@@ -346,7 +347,11 @@ const addRating = (rValue, itemId, userId, review) => {
     return toast(`Thank you for your rating!`, {type: "success"});
   };
 };
-
+const editUser = (name, value) => ({
+  type: TYPES.EDIT_USER,
+  name,
+  value,
+});
 module.exports = {
   getProducts,
   getOrders,
@@ -383,4 +388,5 @@ module.exports = {
   getAverage,
   setExists,
   setReview,
+  editUser,
 };

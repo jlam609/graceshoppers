@@ -80,6 +80,7 @@ const Admin = ({
 }) => {
   useEffect(() => {
     dispatch(fetchAdminData());
+    dispatch(clearView());
   }, []);
   const history = useHistory();
   return (

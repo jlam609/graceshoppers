@@ -36,7 +36,6 @@ const useStyles = makeStyles({
   quoteContainer: {
     display: "flex",
     flexDirection: "column",
-    height: "100%",
     width: "100%",
     minWidth: "50vw",
     maxWidth: "50vw",
@@ -122,6 +121,8 @@ const Login = ({
   visible,
   dispatch,
   seePassword,
+  activeOrders,
+  user,
 }) => {
   useEffect(() => {
     dispatch(clearForm());
@@ -255,7 +256,7 @@ const Login = ({
   );
 };
 
-const mapState = ({form, cart}) => {
+const mapState = ({form, cart, orders, user}) => {
   const {username, password, loggedIn, visible} = form;
   const {products} = cart;
   return {
@@ -274,11 +275,14 @@ const mapDispatch = (dispatch) => {
   const setPassword = (e) => {
     dispatch(updateForm("password", e.target.value));
   };
-  const logInUser = (e, username, password) => {
+  const logInUser = async (e, username, password) => {
     e.preventDefault();
     if (username.length && password.length) {
-      dispatch(login({username, password}));
-      dispatch(updateForm("loggedIn", true));
+      const status = await dispatch(login({username, password}));
+      if (status) {
+        await dispatch(updateForm("loggedIn", true));
+        toast(`${username} successfully logged in!`);
+      } else toast("username or password is incorrect!");
     } else toast("All Fields Must Be Completed");
   };
   const seePassword = (e, visible) => {
