@@ -348,8 +348,6 @@
   color: slateblue;
   opacity: 90%;
   height: 100px;
-}
-
-.footer h3 {
-  justify-self: end;
+  padding: 10px;
+  margin-top: 20px;
 }

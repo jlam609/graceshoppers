@@ -38,7 +38,7 @@ const SelectedProduct = ({
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        if (user.id) {
+        if (user) {
           await dispatch(fetchSelectedProduct(match.params.id, user.id));
         }
       } catch (e) {

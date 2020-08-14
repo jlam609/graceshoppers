@@ -65,8 +65,7 @@ const Nav = ({loggedIn, toggle, toggleMenu, logoutUser, handleClose, products, u
         </Link>
       </div>
       <div className="list">
-        <div>
-          {/* <div onClick={handleClose}> */}
+        <div onClick={handleClose} onKeyDown={handleClose} role="button" tabIndex="0">
           <Link to="/home" className="menuItem">
             <IconButton>
               <HomeIcon fontSize="large" />
@@ -74,8 +73,7 @@ const Nav = ({loggedIn, toggle, toggleMenu, logoutUser, handleClose, products, u
             <span>Home</span>
           </Link>
         </div>
-        <div>
-          {/* <div onClick={handleClose}> */}
+        <div onClick={handleClose} onKeyDown={handleClose} role="button" tabIndex="0">
           <Link to="/cart" className="menuItem">
             <IconButton>
               <AddShoppingCartIcon fontSize="large" /> ({products.length})
