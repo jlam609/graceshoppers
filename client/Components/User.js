@@ -83,7 +83,7 @@ const User = ({
                 </TableHead>
                 <TableBody>
                   {pendingOrders && pendingOrders.length ? (
-                    pendingOrders.length((row) => (
+                    pendingOrders.map((row) => (
                       <TableRow key={row.id}>
                         <TableCell component="th" scope="row">
                           {row.id}
@@ -183,7 +183,7 @@ const mapState = ({user, orders, form, views}) => {
   const {view} = views;
   const {loggedIn} = form;
   const {pendingOrders, completedOrders} = orders;
-  console.log(user);
+  console.log(user, pendingOrders, completedOrders);
   return {
     user,
     loggedIn,

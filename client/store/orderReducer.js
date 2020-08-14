@@ -12,13 +12,13 @@ const orderReducer = (
     case TYPES.GET_ORDERS:
       return {
         pendingOrders: action.orders
-          ? action.orders.filter((order) => order.status === "pending")
+          ? [...action.orders.filter((order) => order.status === "pending")]
           : [],
         activeOrders: action.orders
           ? action.orders.find((order) => order.status === "active")
           : [],
         completedOrders: action.orders
-          ? action.orders.filter((order) => order.status === "completed")
+          ? [...action.orders.filter((order) => order.status === "completed")]
           : [],
       };
     case TYPES.SET_ORDER:

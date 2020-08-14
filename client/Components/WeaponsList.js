@@ -40,14 +40,20 @@ const WeaponsList = ({
             <ul>
               {products.map((weapon) => {
                 return (
-                  <div key={weapon.id}>
-                    <Link
-                      to={`/selectedProduct/${weapon.id}`}
-                      key={weapon.id}
-                      onClick={(e) => setCurProduct(e, weapon.id)}
-                    >
+                  <div className="card">
+                    <div key={weapon.id} className="itemCard">
+                      Name (Price)
+                      <br />
                       {weapon.name} ({weapon.price})
-                    </Link>
+                      <Link
+                        to={`/selectedProduct/${weapon.id}`}
+                        key={weapon.id}
+                        onClick={(e) => setCurProduct(e, weapon.id)}
+                      >
+                        See Details
+                      </Link>
+                    </div>
+                    <img src={weapon.image} alt="weapon" width={200} height={150} />
                   </div>
                 );
               })}
@@ -59,6 +65,8 @@ const WeaponsList = ({
             siblingCount={1}
             boundaryCount={1}
             onChange={(e, value) => handleChange(e, value)}
+            color="secondary"
+            variant="outlined"
           />
         </div>
         <div className="homeIcon">

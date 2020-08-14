@@ -57,13 +57,13 @@ const SelectedProduct = ({
     };
     if (item.name) {
       return (
-        <div>
+        <div className="detailedItem">
+          <img className="productImg" src={item.image} alt="" />
           <div className="productCard">
             <h2>
               {item.name}({item.price})
             </h2>
             <p>{item.description}</p>
-            <img className="productImg" src={item.image} alt="" />
             <br />
             <select
               id="quantity"
