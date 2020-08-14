@@ -40,7 +40,9 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     height: "100%",
-    width: "50%",
+    width: "100%",
+    minWidth: "50vw",
+    maxWidth: "50vw",
   },
   quote: {
     height: "100%",

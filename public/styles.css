@@ -176,13 +176,27 @@
 }
 
 .cart {
-  background-color: whitesmoke;
+  background-image: url("https://wallpaperaccess.com/full/628500.jpg");
+  background-size: cover;
   text-align: center;
   padding: 20px;
-  margin-top: 20px;
   justify-content: flex-start;
   overflow-y: scroll;
   overflow-x: scroll;
+  height: 100vh;
+  color: whitesmoke;
+}
+.checkout {
+  background-image: url("https://lol-stats.net/uploads/X0geMjIXBEZOVO5U7CvrqJW3shfN1NaI57cmgyxZ.jpeg");
+  background-size: cover;
+  text-align: center;
+  padding: 20px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  height: 100%;
+  color: whitesmoke;
+  justify-content: center;
+  align-items: center;
 }
 .card {
   list-style-type: none;
