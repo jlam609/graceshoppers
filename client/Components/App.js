@@ -29,12 +29,21 @@ import isLoading from "./Loading";
 
 const LoaderSelectedProduct = isLoading(SelectedProduct);
 
+const Footer = () => {
+  return (
+    <div className="footer">
+      <h3>Created by Jason Lam, Caroline Flanagan, and Jake Froehlich</h3>
+      <h4>in Partnership with Fullstack Academy LLC.</h4>
+    </div>
+  );
+};
+
 const App = ({loggedIn, dispatch, loading}) => {
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchCategories());
       // await dispatch(fetchProducts());
-      // await dispatch(fetchUser());
+      await dispatch(fetchUser());
       const sessionOrder = await dispatch(fetchSessionOrder());
       if (!loggedIn) {
         const [res, activeOrders] = await dispatch(fetchUser());
@@ -74,6 +83,7 @@ const App = ({loggedIn, dispatch, loading}) => {
         <Route path="/admin" component={Admin} />
         <Redirect to="/home" />
       </Switch>
+      <Footer />
     </div>
   );
 };

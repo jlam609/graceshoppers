@@ -28,12 +28,13 @@ const SelectedProduct = ({
   activeOrders,
   updateQuantity,
   addToCart,
+  handleClick,
   dispatch,
   item,
   failed,
 }) => {
-  console.log("review", review);
-  console.log("reviews", reviews);
+  console.log("user", user);
+  console.log("item", item);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -47,6 +48,7 @@ const SelectedProduct = ({
     fetchProduct();
     dispatch(clearInput());
   }, [user]);
+  console.log("selected item", item);
   const history = useHistory();
   if (item.name) {
     const mapQuant = (num) => {
@@ -115,7 +117,9 @@ const SelectedProduct = ({
                 </div>
                 <button
                   type="button"
-                  onClick={(e) => dispatch(addRating(rValue, item.id, user.id, review))}
+                  onClick={(e) =>
+                    handleClick(rValue, item.id, user.id, review, match.params.id)
+                  }
                   disabled={!!exists}
                 >
                   Submit Rating
@@ -200,11 +204,20 @@ const mapDispatch = (dispatch) => {
     console.log(order, item, quantity);
     dispatch(updateCart("add", order.id, item.id, quantity));
   };
+  const handleClick = async (rValue, itemId, userId, review, match) => {
+    dispatch(addRating(rValue, itemId, userId, review));
+    try {
+      await dispatch(fetchSelectedProduct(match, userId));
+    } catch (e) {
+      console.log("failed to add rating!", e);
+    }
+  };
   return {
     dispatch,
     updateQuantity,
     addToCart,
     updateRating,
+    handleClick,
   };
 };
 

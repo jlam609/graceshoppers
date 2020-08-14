@@ -5,9 +5,21 @@ import Pagination from "@material-ui/lab/Pagination";
 import {IconButton} from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 
-import {updateInput, fetchItems, clearInput} from "../store/actions";
+import {
+  updateInput,
+  fetchItems,
+  clearInput,
+  fetchSelectedProduct,
+} from "../store/actions";
 
-const ItemsList = ({dispatch, products, handleChange, page, productsCount}) => {
+const ItemsList = ({
+  dispatch,
+  products,
+  handleChange,
+  page,
+  productsCount,
+  setCurProduct,
+}) => {
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchItems());
@@ -17,6 +29,7 @@ const ItemsList = ({dispatch, products, handleChange, page, productsCount}) => {
   useEffect(() => {
     dispatch(clearInput());
   }, []);
+  console.log("products", products);
   if (products.length) {
     return (
       <div className="listDiv">
@@ -29,7 +42,11 @@ const ItemsList = ({dispatch, products, handleChange, page, productsCount}) => {
               {products.map((item) => {
                 return (
                   <div key={item.id}>
-                    <Link to={`/selectedProduct/${item.id}`} key={item.id}>
+                    <Link
+                      to={`/selectedProduct/${item.id}`}
+                      key={item.id}
+                      onClick={(e) => setCurProduct(e, item.id)}
+                    >
                       {item.name} ({item.price})
                     </Link>
                   </div>
@@ -74,9 +91,13 @@ const mapDispatch = (dispatch) => {
     dispatch(updateInput("page", value));
     dispatch(fetchItems(value));
   };
+  const setCurProduct = async (e, id) => {
+    dispatch(fetchSelectedProduct(id));
+  };
   return {
     dispatch,
     handleChange,
+    setCurProduct,
   };
 };
 export default connect(mapState, mapDispatch)(ItemsList);

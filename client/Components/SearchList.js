@@ -34,7 +34,7 @@ const SearchList = ({
   }, []);
 
   return (
-    <div>
+    <div className="listDiv">
       <div className="productList">
         <div className="header">
           <h1>Search!</h1>
