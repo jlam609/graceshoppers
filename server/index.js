@@ -105,4 +105,6 @@ const startServer = () =>
     });
   });
 
-seed(true).then(startServer);
+seed(false).then(startServer);
+
+module.exports = {app};
