@@ -41,6 +41,7 @@ const ArmorList = ({
                   <div className="card">
                     <div key={armor.id} className="itemCard">
                       Name (Price)
+                      <br />
                       {armor.name} ({armor.price})
                       <Link
                         to={`/selectedProduct/${armor.id}`}

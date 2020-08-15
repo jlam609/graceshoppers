@@ -43,6 +43,7 @@ const SpellList = ({
                   <div className="card">
                     <div key={spell.id} className="itemCard">
                       Name (Price)
+                      <br />
                       {spell.name} ({spell.price})
                       <Link
                         to={`/selectedProduct/${spell.id}`}
