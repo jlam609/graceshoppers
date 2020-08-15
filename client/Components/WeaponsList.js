@@ -42,8 +42,6 @@ const WeaponsList = ({
                 return (
                   <div className="card" key={weapon.id}>
                     <div className="itemCard">
-                      Name (Price)
-                      <br />
                       {weapon.name} (${weapon.price})
                       <Link
                         to={`/selectedProduct/${weapon.id}`}
@@ -53,7 +51,13 @@ const WeaponsList = ({
                         See Details
                       </Link>
                     </div>
-                    <img src={weapon.image} alt="weapon" width={200} height={150} />
+                    <img
+                      src={weapon.image}
+                      alt="weapon"
+                      width={200}
+                      height={150}
+                      className="listImg"
+                    />
                   </div>
                 );
               })}

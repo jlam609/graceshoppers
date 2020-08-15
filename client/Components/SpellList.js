@@ -42,8 +42,6 @@ const SpellList = ({
                 return (
                   <div className="card" key={spell.id}>
                     <div className="itemCard">
-                      Name (Price)
-                      <br />
                       {spell.name} (${spell.price})
                       <Link
                         to={`/selectedProduct/${spell.id}`}
@@ -53,7 +51,13 @@ const SpellList = ({
                         See Details
                       </Link>
                     </div>
-                    <img src={spell.image} alt="spell" width={200} height={150} />
+                    <img
+                      src={spell.image}
+                      alt="spell"
+                      width={200}
+                      height={150}
+                      className="listImg"
+                    />
                   </div>
                 );
               })}
