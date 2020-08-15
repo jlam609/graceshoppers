@@ -122,6 +122,7 @@ const Login = ({
   dispatch,
   seePassword,
   activeOrders,
+  products,
   user,
 }) => {
   useEffect(() => {
@@ -236,7 +237,9 @@ const Login = ({
                     size="large"
                     type="submit"
                     variant="contained"
-                    onClick={(e) => logInUser(e, username, password)}
+                    onClick={(e) =>
+                      logInUser(e, username, password, products, activeOrders)
+                    }
                   >
                     Sign in now
                   </Button>
@@ -259,12 +262,14 @@ const Login = ({
 const mapState = ({form, cart, orders, user}) => {
   const {username, password, loggedIn, visible} = form;
   const {products} = cart;
+  const {activeOrders} = orders;
   return {
     username,
     password,
     loggedIn,
     products,
     visible,
+    activeOrders,
   };
 };
 
@@ -275,10 +280,10 @@ const mapDispatch = (dispatch) => {
   const setPassword = (e) => {
     dispatch(updateForm("password", e.target.value));
   };
-  const logInUser = async (e, username, password) => {
+  const logInUser = async (e, username, password, products, activeOrders) => {
     e.preventDefault();
     if (username.length && password.length) {
-      const status = await dispatch(login({username, password}));
+      const status = await dispatch(login({username, password}, products, activeOrders));
       if (status) {
         await dispatch(updateForm("loggedIn", true));
         toast(`${username} successfully logged in!`);
