@@ -444,7 +444,7 @@ const sync = async () => {
       name: "Pokeball",
       description: "Basic Ball. Gotta catch em all!",
       image:
-        "https://lh3.googleusercontent.com/proxy/wOxJgXI2FuD9Pwmf3VAi-_bjnGwNrGVuyXAPzmOjop1bCBYIoWttrgpszxj-yComYrKb2fRvvGN-8FKY9ELhklyOUsEjNEwxDmNlujUp15KDBB1vY8Vo",
+        "https://cdnb.artstation.com/p/assets/images/images/020/068/395/large/finn-isengardt-pokeball-composition.jpg?1566236853",
       price: 5,
       categoryId: 4,
       quantity: 100,
