@@ -105,6 +105,7 @@ const addProduct = (productObj) => {
 const updateProduct = (productObj) => {
   return async (dispatch) => {
     await Axios.put(`/api/admin/product/${productObj.id}`, productObj);
+    toast(`${productObj.name} has been updated successfully!`);
     dispatch(fetchAdminProducts());
   };
 };

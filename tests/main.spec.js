@@ -24,7 +24,6 @@ describe("Server", () => {
       offset: 0,
       where: {},
     });
-    console.log(response);
     expect(response.data).toEqual(products);
     const expressProducts = response.body.products.map((p) => p.id);
     const dbProducts = products.map((p) => p.id);
