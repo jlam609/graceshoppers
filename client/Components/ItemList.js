@@ -42,8 +42,6 @@ const ItemsList = ({
                 return (
                   <div className="card" key={item.id}>
                     <div className="itemCard">
-                      Name (Price)
-                      <br />
                       {item.name} (${item.price})
                       <Link
                         to={`/selectedProduct/${item.id}`}
@@ -53,7 +51,13 @@ const ItemsList = ({
                         See Details
                       </Link>
                     </div>
-                    <img src={item.image} alt="item" width={200} height={150} />
+                    <img
+                      src={item.image}
+                      alt="item"
+                      width={200}
+                      height={150}
+                      className="listImg"
+                    />
                   </div>
                 );
               })}
