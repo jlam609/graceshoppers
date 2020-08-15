@@ -183,7 +183,6 @@ const mapState = ({user, orders, form, views}) => {
   const {view} = views;
   const {loggedIn} = form;
   const {pendingOrders, completedOrders} = orders;
-  console.log(user, pendingOrders, completedOrders);
   return {
     user,
     loggedIn,
