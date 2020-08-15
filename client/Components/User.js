@@ -156,6 +156,13 @@ const User = ({
                 inputProps={{style: {textAlign: "center"}}}
                 onChange={(e) => updateUser(e, "image")}
               />
+              <TextField
+                label="password"
+                value={user.password}
+                type="password"
+                inputProps={{style: {textAlign: "center"}}}
+                onChange={(e) => updateUser(e, "password")}
+              />
               <Button onClick={(e) => edit(e, user)} variant="outlined">
                 Edit
               </Button>
