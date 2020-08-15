@@ -219,6 +219,23 @@ const sync = async () => {
       price: 500,
       quantity: 24,
     },
+    {
+      name: "Ashbringer",
+      description: "The Ultimate paladin weapon. Bringer of light and ash.",
+      image: "https://gamepedia.cursecdn.com/wowpedia/a/a6/Ashbringer_TCG.jpg",
+      categoryId: 1,
+      price: 1000,
+      quantity: 100,
+    },
+    {
+      name: "Atiesh, Greatstaff of the Guardian",
+      description: "Wielded originally by Medihv, grants its user 'power unending'.",
+      image:
+        "https://gamepedia.cursecdn.com/hearthstone_gamepedia/thumb/0/02/Atiesh_full.jpg/400px-Atiesh_full.jpg?version=0138d5ad9f33b3bcfeb6563374ad830a",
+      categoryId: 1,
+      price: 10000,
+      quantity: 15,
+    },
   ];
   const armorList = [
     {
@@ -399,6 +416,38 @@ const sync = async () => {
       image:
         "https://i2-prod.mirror.co.uk/incoming/article9536038.ece/ALTERNATES/s615/1_Grim-Reaper.jpg",
       price: 100,
+      categoryId: 3,
+      quantity: 100,
+    },
+    {
+      name: "Pyroblast",
+      description: "Hurl a pyroclastic ball of flame energy at your target.",
+      image: "https://i.pinimg.com/474x/7d/59/01/7d59015450fb75b5674781e3de343638.jpg",
+      price: 50,
+      categoryId: 3,
+      quantity: 100,
+    },
+    {
+      name: "Frostbolt",
+      description: "Conjure a shard of ice energy and shoot it.",
+      image:
+        "https://gamepedia.cursecdn.com/hearthstone_gamepedia/thumb/8/8e/Frostbolt_%28art%29.jpg/400px-Frostbolt_%28art%29.jpg?version=ece099e314e0c967d3f55134affb3649",
+      categoryId: 3,
+      quantity: 100,
+    },
+    {
+      name: "Arcane Missiles",
+      description: "Fires three volleys of arcane missiles at the opponent.",
+      image:
+        "https://i.pinimg.com/originals/b7/35/b6/b735b67107d1b06804f6bf2693c5b80c.jpg",
+      categoryId: 3,
+      quantity: 100,
+    },
+    {
+      name: "Shapeshift",
+      description: "Change your form to that of an animal of your choosing.",
+      image:
+        "https://gamepedia.cursecdn.com/wowpedia/thumb/b/ba/Givon_TCG.jpg/300px-Givon_TCG.jpg?version=f3004078f3cc2d7d74bb0339d05835f4",
       categoryId: 3,
       quantity: 100,
     },
