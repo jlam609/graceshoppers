@@ -43,6 +43,7 @@ const ItemsList = ({
                   <div className="card">
                     <div key={item.id} className="itemCard">
                       Name (Price)
+                      <br />
                       {item.name} ({item.price})
                       <Link
                         to={`/selectedProduct/${item.id}`}
