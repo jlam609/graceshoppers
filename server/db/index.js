@@ -457,7 +457,7 @@ const sync = async () => {
   await itemList.map((item) => Product.create(item));
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync("password", salt);
-  await User.create({
+  const user = await User.create({
     username: "admin@fullstack.com",
     password: hash,
     salt,
@@ -466,6 +466,10 @@ const sync = async () => {
     image:
       "https://thumbs.dreamstime.com/b/red-admin-sign-pc-laptop-vector-illustration-administrator-icon-screen-controller-man-system-box-88756468.jpg",
     clearance: 5,
+  });
+  await Order.create({
+    userId: user.id,
+    status: "active",
   });
 };
 

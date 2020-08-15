@@ -6,6 +6,11 @@ const userReducer = (state = {}, action) => {
       return {...action.user};
     case TYPES.CLEAR_USER:
       return {};
+    case TYPES.EDIT_USER:
+      return {
+        ...state,
+        [action.name]: action.value,
+      };
     default:
       return state;
   }

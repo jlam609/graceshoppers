@@ -3,7 +3,7 @@ const passport = require("passport");
 const authRouter = require("express").Router();
 const {models} = require("../db");
 
-const {Session, User} = models;
+const {Session, User, Order} = models;
 
 authRouter.post("/register", async (req, res) => {
   try {
@@ -15,13 +15,17 @@ authRouter.post("/register", async (req, res) => {
       image = image
         ? image
         : "https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=1618390";
-      await User.create({
+      const user = await User.create({
         username,
         password: hash,
         salt,
         firstName,
         lastName,
         image,
+      });
+      await Order.create({
+        userId: user.id,
+        status: "active",
       });
       res.status(202).send({
         message: `user ${username} successfully created`,

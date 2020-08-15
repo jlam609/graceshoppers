@@ -26,17 +26,9 @@ import Admin from "./Admin";
 import Checkout from "./Checkout";
 import RegisterAdmin from "./RegisterAdmin";
 import isLoading from "./Loading";
+import User from "./User";
 
 const LoaderSelectedProduct = isLoading(SelectedProduct);
-
-const Footer = () => {
-  return (
-    <div className="footer">
-      <h3>Created by Jason Lam, Caroline Flanagan, and Jake Froehlich</h3>
-      <h4>in Partnership with Fullstack Academy LLC.</h4>
-    </div>
-  );
-};
 
 const App = ({loggedIn, dispatch, loading}) => {
   useEffect(() => {
@@ -49,10 +41,10 @@ const App = ({loggedIn, dispatch, loading}) => {
         const [res, activeOrders] = await dispatch(fetchUser());
         if (res) {
           await dispatch(updateForm("loggedIn", true));
-          if (activeOrders && activeOrders.length) {
+          if (activeOrders) {
             await dispatch(fetchCart(activeOrders.id));
           }
-          if (!sessionOrder.userId && !activeOrders.length) {
+          if (!sessionOrder.userId && !activeOrders) {
             await dispatch(updateOrder(sessionOrder.id, res.id));
           }
         }
@@ -76,6 +68,7 @@ const App = ({loggedIn, dispatch, loading}) => {
         <Route path="/items" component={ItemList} />
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
+        <Route path="/user" component={User} />
         <Route exact path="/registerAdmin" component={RegisterAdmin} />
         <Route exact path="/register" component={Register} />
         <Route path="/search" component={SearchList} />
@@ -83,7 +76,10 @@ const App = ({loggedIn, dispatch, loading}) => {
         <Route path="/admin" component={Admin} />
         <Redirect to="/home" />
       </Switch>
-      <Footer />
+      {/* <footer className="footer">
+        Created by Jason Lam, Caroline Flanagan, and Jake Froehlich <br />
+        in Partnership with Fullstack Academy LLC.
+      </footer> */}
     </div>
   );
 };
@@ -92,7 +88,6 @@ const mapStateToProps = ({form, user, orders, input}) => {
   const {loading} = input;
   const {loggedIn} = form;
   const {activeOrders} = orders;
-  console.log(activeOrders);
   return {
     loading,
     user,

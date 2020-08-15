@@ -87,7 +87,7 @@ const updateUser = (userId) => {
   return async (dispatch) => {
     const {message} = await Axios.put(`/users/${userId}`).data;
     toast(message, {type: "success"});
-    dispatch(fetch);
+    dispatch(fetchAdminUsers());
   };
 };
 

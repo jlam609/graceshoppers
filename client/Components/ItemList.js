@@ -29,7 +29,6 @@ const ItemsList = ({
   useEffect(() => {
     dispatch(clearInput());
   }, []);
-  console.log("products", products);
   if (products.length) {
     return (
       <div className="listDiv">
@@ -41,14 +40,19 @@ const ItemsList = ({
             <ul>
               {products.map((item) => {
                 return (
-                  <div key={item.id}>
-                    <Link
-                      to={`/selectedProduct/${item.id}`}
-                      key={item.id}
-                      onClick={(e) => setCurProduct(e, item.id)}
-                    >
+                  <div className="card">
+                    <div key={item.id} className="itemCard">
+                      Name (Price)
                       {item.name} ({item.price})
-                    </Link>
+                      <Link
+                        to={`/selectedProduct/${item.id}`}
+                        key={item.id}
+                        onClick={(e) => setCurProduct(e, item.id)}
+                      >
+                        See Details
+                      </Link>
+                    </div>
+                    <img src={item.image} alt="item" width={200} height={150} />
                   </div>
                 );
               })}
@@ -60,6 +64,8 @@ const ItemsList = ({
             siblingCount={1}
             boundaryCount={1}
             onChange={(e, value) => handleChange(e, value)}
+            variant="outlined"
+            color="secondary"
           />
         </div>
         <div className="homeIcon">

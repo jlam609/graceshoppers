@@ -33,8 +33,6 @@ const SelectedProduct = ({
   item,
   failed,
 }) => {
-  console.log("user", user);
-  console.log("item", item);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -48,7 +46,6 @@ const SelectedProduct = ({
     fetchProduct();
     dispatch(clearInput());
   }, [user]);
-  console.log("selected item", item);
   const history = useHistory();
   if (item.name) {
     const mapQuant = (num) => {
@@ -60,13 +57,13 @@ const SelectedProduct = ({
     };
     if (item.name) {
       return (
-        <div>
+        <div className="detailedItem">
+          <img className="productImg" src={item.image} alt="" />
           <div className="productCard">
             <h2>
               {item.name}({item.price})
             </h2>
             <p>{item.description}</p>
-            <img className="productImg" src={item.image} alt="" />
             <br />
             <select
               id="quantity"
@@ -201,7 +198,6 @@ const mapDispatch = (dispatch) => {
   };
   const addToCart = (e, order, item, quantity) => {
     e.preventDefault();
-    console.log(order, item, quantity);
     dispatch(updateCart("add", order.id, item.id, quantity));
   };
   const handleClick = async (rValue, itemId, userId, review, match) => {
