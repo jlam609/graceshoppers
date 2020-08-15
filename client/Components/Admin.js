@@ -152,7 +152,7 @@ const Admin = ({
                           {row.id}
                         </TableCell>
                         <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.total}</TableCell>
+                        <TableCell align="right">${row.total}</TableCell>
                         <TableCell align="right">{row.address}</TableCell>
                         <TableCell padding="checkbox">
                           <Checkbox
@@ -208,7 +208,7 @@ const Admin = ({
                           {row.id}
                         </TableCell>
                         <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.total}</TableCell>
+                        <TableCell align="right">${row.total}</TableCell>
                         <TableCell align="right">{row.address}</TableCell>
                       </TableRow>
                     ))
@@ -381,7 +381,7 @@ const Admin = ({
                         <TableCell align="right">{row.id}</TableCell>
                         <TableCell align="right">{row.quantity}</TableCell>
                         <TableCell align="right">{row.description}</TableCell>
-                        <TableCell align="right">{row.price}</TableCell>
+                        <TableCell align="right">${row.price}</TableCell>
                         <TableCell align="right">{row.rating}</TableCell>
                         <TableCell align="right">
                           <img src={row.image} alt={row.name} height={100} width={100} />

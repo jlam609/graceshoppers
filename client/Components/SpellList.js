@@ -40,11 +40,11 @@ const SpellList = ({
             <ul>
               {products.map((spell) => {
                 return (
-                  <div className="card">
-                    <div key={spell.id} className="itemCard">
+                  <div className="card" key={spell.id}>
+                    <div className="itemCard">
                       Name (Price)
                       <br />
-                      {spell.name} ({spell.price})
+                      {spell.name} (${spell.price})
                       <Link
                         to={`/selectedProduct/${spell.id}`}
                         key={spell.id}

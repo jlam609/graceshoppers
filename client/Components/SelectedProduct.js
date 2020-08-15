@@ -60,9 +60,8 @@ const SelectedProduct = ({
         <div className="detailedItem">
           <img className="productImg" src={item.image} alt="" />
           <div className="productCard">
-            <h2>
-              {item.name}({item.price})
-            </h2>
+            <h2>{item.name}</h2>
+            <h3>${item.price}</h3>
             <p>{item.description}</p>
             <br />
             <select

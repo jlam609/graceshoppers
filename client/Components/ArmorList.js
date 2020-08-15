@@ -38,11 +38,11 @@ const ArmorList = ({
             <ul>
               {products.map((armor) => {
                 return (
-                  <div className="card">
-                    <div key={armor.id} className="itemCard">
+                  <div className="card" key={armor.id}>
+                    <div className="itemCard">
                       Name (Price)
                       <br />
-                      {armor.name} ({armor.price})
+                      {armor.name} (${armor.price})
                       <Link
                         to={`/selectedProduct/${armor.id}`}
                         key={armor.id}
