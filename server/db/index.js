@@ -141,12 +141,39 @@ const sync = async () => {
     },
     {
       name: "Gungnir",
-      description: "Spear of Odin God of Death",
+      description: "Spear of Odin: God of Death",
       image:
         "https://blog.vkngjewelry.com/wp-content/uploads/2019/10/Gungnir_-The-Spear-of-Odin.png",
       categoryId: 1,
       price: 1000,
       quantity: 10,
+    },
+    {
+      name: "Diamond Sword",
+      description: "I can swing my sword, sword; diamond, diamond, sword, sword...",
+      image:
+        "https://vignette.wikia.nocookie.net/minecraft-earth/images/f/f0/Diamond_sword.png/revision/latest?cb=20200519192804",
+      categoryId: 1,
+      price: 1000,
+      quantity: 15,
+    },
+    {
+      name: "Frostmourne",
+      description: "The vile, cursed blade wielded by the dread Lich King.",
+      image:
+        "https://images-na.ssl-images-amazon.com/images/I/51siPIjruPL._AC_SL1253_.jpg",
+      categoryId: 1,
+      price: 10000,
+      quantity: 5,
+    },
+    {
+      name: "Slingshot",
+      description: "Don't underestimate the power of the slingshot in the right hands...",
+      image:
+        "https://vignette.wikia.nocookie.net/animalcrossing/images/2/23/NH-Golden_slingshot.png/revision/latest/scale-to-width-down/340?cb=20200326052101",
+      categoryId: 1,
+      price: 100,
+      quantity: 500,
     },
   ];
   const armorList = [
@@ -234,7 +261,7 @@ const sync = async () => {
     },
     {
       name: "Diamond Armour",
-      description: "Rich and will make you a juicy target",
+      description: "Get rich and it will make you a juicy target",
       image: "https://i.redd.it/x3lgm8uhask41.png",
       categoryId: 2,
       price: 1000,
@@ -415,7 +442,7 @@ const sync = async () => {
     },
     {
       name: "Pokeball",
-      description: "Basic Ball. Gotta catch them all!",
+      description: "Basic Ball. Gotta catch em all!",
       image:
         "https://lh3.googleusercontent.com/proxy/wOxJgXI2FuD9Pwmf3VAi-_bjnGwNrGVuyXAPzmOjop1bCBYIoWttrgpszxj-yComYrKb2fRvvGN-8FKY9ELhklyOUsEjNEwxDmNlujUp15KDBB1vY8Vo",
       price: 5,
@@ -424,30 +451,39 @@ const sync = async () => {
     },
     {
       name: "GreatBall",
-      description: "Better Ball. Gotta catch them all!",
+      description: "Better Ball. Gotta catch em all!",
       image:
         "https://d1lss44hh2trtw.cloudfront.net/assets/article/2016/07/11/great_ball_by_baconb0y-d5uf49k_feature.jpg",
-      price: 5,
+      price: 50,
       categoryId: 4,
       quantity: 300,
     },
     {
       name: "UltraBall",
-      description: "Much Better Ball. Gotta catch them all !",
+      description: "Much Better Ball. Gotta catch em all!",
       image:
         "https://images3.sw-cdn.net/product/picture/625x465_654579_657444_1452804948.jpg",
-      price: 5,
+      price: 500,
       categoryId: 4,
       quantity: 500,
     },
     {
       name: "MasterBall",
-      description: "Catch anything. Gotta catch them all !",
+      description: "Catches anything. Gotta catch em all!",
       image:
         "https://www.pngkit.com/png/detail/156-1564777_master-ball-the-best-poke-ball-transparent-background.png",
-      price: 5,
+      price: 5000,
       categoryId: 4,
       quantity: 2000,
+    },
+    {
+      name: "Fishing Pole",
+      description: "Good luck catching anything without it!",
+      image:
+        "https://vignette.wikia.nocookie.net/animalcrossing/images/3/33/NH-Golden_rod.png/revision/latest/scale-to-width-down/340?cb=20200326052051",
+      price: 15,
+      categoryId: 4,
+      quantity: 3000,
     },
   ];
   await categoryList.map((category) => Category.create(category));
