@@ -175,6 +175,50 @@ const sync = async () => {
       price: 100,
       quantity: 500,
     },
+    {
+      name: "Blade of the Ruined King",
+      description: "Named after Kalista's uncle, king of an unnamed realm.",
+      image:
+        "https://info465.us/2017Winter/GetThumbnail.php?TableName=Items&RecordId=10681&ImageSize=300",
+      categoryId: 1,
+      price: 3000,
+      quantity: 20,
+    },
+    {
+      name: "Doombringer",
+      description: "Legendary sword that can be found in Diablo 3 and Reaper of Souls",
+      image: "https://www.diablowiki.net/images/8/8a/Doombringer-icon.JPG",
+      categoryId: 1,
+      price: 2000,
+      quantity: 30,
+    },
+    {
+      name: "Thunderfury, Blessed Blade of the Windseeker",
+      description: "Lendendary sword once wielded by Thunderaan, Prince of Air",
+      image:
+        "https://external-preview.redd.it/bM1sFPt5JNnAWkd-TztPCnD5GT5dRCM8i0jsA1_wNIE.jpg?auto=webp&s=256e456905bae31bd13dddec0f6cc9b91a816e5e",
+      categoryId: 1,
+      price: 5000,
+      quantity: 14,
+    },
+    {
+      name: "Black Cleaver",
+      description:
+        "Once upon a time, the Black Cleaver was so feared and powerful that it changed League of Legends.",
+      image:
+        "https://images2.minutemediacdn.com/image/upload/c_fill,w_912,h_516,f_auto,q_auto,g_auto/shape/cover/sport/5b0618373467acc8cb000010.jpeg",
+      categoryId: 1,
+      price: 1500,
+      quantity: 99,
+    },
+    {
+      name: "Aloy's Bow",
+      description: "The bow is Aloy's primary choice of weapon in Horizon Zero Dawn",
+      image: "https://pbs.twimg.com/media/DDPn_3YXgAIPwic.jpg",
+      categoryId: 1,
+      price: 500,
+      quantity: 24,
+    },
   ];
   const armorList = [
     {
@@ -484,6 +528,53 @@ const sync = async () => {
       price: 15,
       categoryId: 4,
       quantity: 3000,
+    },
+    {
+      name: "Immovable Rod",
+      description:
+        "This flat iron rod has a button on one end. You can use an action to press the button, which causes the rod to become magically fixed in place.",
+      image:
+        "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/261/1000/1000/636284741670235041.jpeg",
+      price: 500,
+      categoryId: 4,
+      quantity: 30,
+    },
+    {
+      name: "Carrot on a Stick",
+      description: "While equipped, this trinket increases mount speed by 3%.",
+      image: "https://miro.medium.com/max/2488/1*oK-taHKmJ3dcLXYxIryIDw.png",
+      price: 10,
+      categoryId: 4,
+      quantity: 100,
+    },
+    {
+      name: "Bag of Holding",
+      description:
+        "This bag has an interior space considerably larger than its outside dimensions, roughly 2 feet in diameter at the mouth and 4 feet deep. The bag can hold up to 500 pounds, not exceeding a volume of 64 cubic feet.",
+      image:
+        "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/120/1000/1000/636284708068284913.jpeg",
+      price: 1000,
+      categoryId: 4,
+      quantity: 25,
+    },
+    {
+      name: "Gnomish Mind Control Helmet",
+      description:
+        "Engage in mental combat with a humanoid target to try and control their mind",
+      image:
+        "https://wow.zamimg.com/uploads/screenshots/normal/81892-gnomish-mind-control-cap-blizzard-employee-hortus-on-the-2-4-arena-tournament-te.jpg",
+      price: 1500,
+      categoryId: 4,
+      quantity: 30,
+    },
+    {
+      name: "Locket of the Iron Solari",
+      description:
+        "Locket of the Iron Solari lets tanks give a burst of tankiness to their team",
+      image: "https://i.imgur.com/b1Um2.jpg",
+      price: 1000,
+      categoryId: 4,
+      quantity: 20,
     },
   ];
   await categoryList.map((category) => Category.create(category));
