@@ -89,7 +89,7 @@ const User = ({
                           {row.id}
                         </TableCell>
                         <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.total}</TableCell>
+                        <TableCell align="right">${row.total}</TableCell>
                         <TableCell align="right">{row.address}</TableCell>
                       </TableRow>
                     ))
@@ -121,7 +121,7 @@ const User = ({
                           {row.id}
                         </TableCell>
                         <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.total}</TableCell>
+                        <TableCell align="right">${row.total}</TableCell>
                         <TableCell align="right">{row.address}</TableCell>
                       </TableRow>
                     ))
@@ -136,7 +136,7 @@ const User = ({
           </div>
 
           <div className={view === "Edit User" ? "adminTable" : "ghost"}>
-            <h2>Add Product</h2>
+            <h2>Edit Profile</h2>
             <form className="adminTableChild">
               <TextField
                 label="First Name"

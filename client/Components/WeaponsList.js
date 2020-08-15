@@ -40,11 +40,11 @@ const WeaponsList = ({
             <ul>
               {products.map((weapon) => {
                 return (
-                  <div className="card">
-                    <div key={weapon.id} className="itemCard">
+                  <div className="card" key={weapon.id}>
+                    <div className="itemCard">
                       Name (Price)
                       <br />
-                      {weapon.name} ({weapon.price})
+                      {weapon.name} (${weapon.price})
                       <Link
                         to={`/selectedProduct/${weapon.id}`}
                         key={weapon.id}

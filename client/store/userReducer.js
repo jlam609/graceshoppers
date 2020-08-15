@@ -3,7 +3,10 @@ import TYPES from "./types";
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case TYPES.GET_USER:
-      return {...action.user};
+      return {
+        ...action.user,
+        password: "",
+      };
     case TYPES.CLEAR_USER:
       return {};
     case TYPES.EDIT_USER:

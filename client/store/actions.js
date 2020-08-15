@@ -243,7 +243,7 @@ const createOrder = (type, id) => {
       await axios.post(`/api/orders`, {
         id,
         type,
-      }).data;
+      });
       return dispatch(fetchOrders(id));
     }
     const {order} = (

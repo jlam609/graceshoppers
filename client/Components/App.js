@@ -88,6 +88,7 @@ const mapStateToProps = ({form, user, orders, input}) => {
   const {loading} = input;
   const {loggedIn} = form;
   const {activeOrders} = orders;
+  console.log(orders);
   return {
     loading,
     user,
