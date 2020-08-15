@@ -65,7 +65,7 @@ const User = ({
                   label={`Completed (${completedOrders ? completedOrders.length : 0})`}
                   value="Completed"
                 />
-                <Tab label="Edit User" value="Edit User" />
+                <Tab label="Edit Profile" value="Edit User" />
               </Tabs>
             </Paper>
           </div>
