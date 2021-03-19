@@ -36,6 +36,18 @@ const WeaponsList = ({
           <div className="header">
             <h1>Weapons</h1>
           </div>
+          <select
+            id="sorting"
+            name="sorting"
+            // value={}
+            // onChange={(e) => sortProducts(e)}
+          >
+            <option value="alpha">A-Z</option>
+            <option value="revalpha">Z-A</option>
+            <option value="cheapest">Lowest to Highest Prices</option>
+            <option value="expoensive">Highest to Lowest Price</option>
+          </select>
+          <button type="button">Sort!</button>
           <div>
             <ul>
               {products.map((weapon) => {

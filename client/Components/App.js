@@ -24,6 +24,7 @@ import SelectedProduct from "./SelectedProduct";
 import SearchList from "./SearchList";
 import Admin from "./Admin";
 import Checkout from "./Checkout";
+import UserProfile from "./UserProfile";
 import RegisterAdmin from "./RegisterAdmin";
 import isLoading from "./Loading";
 import User from "./User";
@@ -74,6 +75,7 @@ const App = ({loggedIn, dispatch, loading}) => {
         <Route path="/search" component={SearchList} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/admin" component={Admin} />
+        <Route path="/user" component={UserProfile} />
         <Redirect to="/home" />
       </Switch>
       {/* <footer className="footer">
