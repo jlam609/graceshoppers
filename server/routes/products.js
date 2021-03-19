@@ -36,6 +36,7 @@ productRouter.get("/?", async (req, res) => {
         limit,
         offset,
         where: {},
+        order: [["name", "ASC"]],
       });
     } else {
       productData = await Product.findAndCountAll({
@@ -46,6 +47,7 @@ productRouter.get("/?", async (req, res) => {
             [Op.iLike]: `%${filter}%`,
           },
         },
+        order: [["name", "ASC"]],
       });
     }
     res.status(201).send(productData);
@@ -65,6 +67,7 @@ productRouter.get("/weapons/?", async (req, res, next) => {
       where: {
         categoryId: 1,
       },
+      order: [["name", "ASC"]],
     });
     res.send({
       weapons,
@@ -85,6 +88,7 @@ productRouter.get("/spells/?", async (req, res, next) => {
       where: {
         categoryId: 3,
       },
+      order: [["name", "ASC"]],
     });
     res.send({
       spells,
@@ -105,6 +109,7 @@ productRouter.get("/items/?", async (req, res, next) => {
       where: {
         categoryId: 4,
       },
+      order: [["name", "ASC"]],
     });
     res.send({
       items,
@@ -125,6 +130,7 @@ productRouter.get("/armor/?", async (req, res, next) => {
       where: {
         categoryId: 2,
       },
+      order: [["name", "ASC"]],
     });
     res.send({
       armor,

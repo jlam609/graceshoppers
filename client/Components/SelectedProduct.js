@@ -7,6 +7,7 @@ import {
   fetchSelectedProduct,
   addRating,
   getRating,
+  setReview,
 } from "../store/actions";
 import {useHistory} from "react-router-dom";
 import {IconButton} from "@material-ui/core";
@@ -14,6 +15,8 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const SelectedProduct = ({
+  reviews,
+  review,
   exists,
   user,
   updateRating,
@@ -25,6 +28,7 @@ const SelectedProduct = ({
   activeOrders,
   updateQuantity,
   addToCart,
+  handleClick,
   dispatch,
   item,
   failed,
@@ -32,7 +36,7 @@ const SelectedProduct = ({
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        if (user.id) {
+        if (user) {
           await dispatch(fetchSelectedProduct(match.params.id, user.id));
         }
       } catch (e) {
@@ -53,13 +57,12 @@ const SelectedProduct = ({
     };
     if (item.name) {
       return (
-        <div>
+        <div className="detailedItem">
+          <img className="productImg" src={item.image} alt="" />
           <div className="productCard">
-            <h2>
-              {item.name}({item.price})
-            </h2>
+            <h2>{item.name}</h2>
+            <h3>${item.price}</h3>
             <p>{item.description}</p>
-            <img className="productImg" src={item.image} alt="" />
             <br />
             <select
               id="quantity"
@@ -80,21 +83,39 @@ const SelectedProduct = ({
             <p>Average rating: {average}</p>
             {loggedIn ? (
               <div>
-                <select
-                  id="rating"
-                  name="rating"
-                  value={rValue}
-                  onChange={(e) => updateRating(e)}
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
+                <div>
+                  {" "}
+                  Rating Number:
+                  <select
+                    id="rating"
+                    name="rating"
+                    value={rValue}
+                    onChange={(e) => updateRating(e)}
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <p />
+                <div>
+                  (Add a review!)
+                  <input
+                    className="reviewInput"
+                    id="review"
+                    name="review"
+                    value={review}
+                    disabled={!!exists}
+                    onChange={(e) => dispatch(setReview(e.target.value))}
+                  />
+                </div>
                 <button
                   type="button"
-                  onClick={(e) => dispatch(addRating(rValue, item.id, user.id))}
+                  onClick={(e) =>
+                    handleClick(rValue, item.id, user.id, review, match.params.id)
+                  }
                   disabled={!!exists}
                 >
                   Submit Rating
@@ -105,6 +126,18 @@ const SelectedProduct = ({
                 <p>(Log in to submit a rating!)</p>
               </div>
             )}
+            <ul>
+              Reviews!
+              {reviews.length > 0 ? (
+                reviews.map((cur) => (
+                  <li key={cur.id}>
+                    {cur.value}/5 -{cur.text}
+                  </li>
+                ))
+              ) : (
+                <p>No reviews yet!</p>
+              )}
+            </ul>
           </div>
           <div className="homeIcon">
             <IconButton onClick={(e) => history.goBack()}>
@@ -134,13 +167,14 @@ const SelectedProduct = ({
   );
 };
 const mapState = ({products, input, orders, count, form, rating, user}) => {
-  const {average, rValue, exists} = rating;
+  const {average, rValue, exists, review, reviews} = rating;
   const {quantity, failed} = input;
   const {activeOrders} = orders;
   const {item} = count;
   const {loggedIn} = form;
-  console.log(activeOrders);
   return {
+    reviews,
+    review,
     exists,
     user,
     loggedIn,
@@ -163,14 +197,22 @@ const mapDispatch = (dispatch) => {
   };
   const addToCart = (e, order, item, quantity) => {
     e.preventDefault();
-    console.log(order, item, quantity);
     dispatch(updateCart("add", order.id, item.id, quantity));
+  };
+  const handleClick = async (rValue, itemId, userId, review, match) => {
+    dispatch(addRating(rValue, itemId, userId, review));
+    try {
+      await dispatch(fetchSelectedProduct(match, userId));
+    } catch (e) {
+      console.log("failed to add rating!", e);
+    }
   };
   return {
     dispatch,
     updateQuantity,
     addToCart,
     updateRating,
+    handleClick,
   };
 };
 

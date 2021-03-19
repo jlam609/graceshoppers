@@ -87,7 +87,7 @@ const updateUser = (userId) => {
   return async (dispatch) => {
     const {message} = await Axios.put(`/users/${userId}`).data;
     toast(message, {type: "success"});
-    dispatch(fetch);
+    dispatch(fetchAdminUsers());
   };
 };
 
@@ -105,6 +105,7 @@ const addProduct = (productObj) => {
 const updateProduct = (productObj) => {
   return async (dispatch) => {
     await Axios.put(`/api/admin/product/${productObj.id}`, productObj);
+    toast(`${productObj.name} has been updated successfully!`);
     dispatch(fetchAdminProducts());
   };
 };

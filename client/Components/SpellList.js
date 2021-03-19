@@ -40,14 +40,24 @@ const SpellList = ({
             <ul>
               {products.map((spell) => {
                 return (
-                  <div key={spell.id}>
-                    <Link
-                      to={`/selectedProduct/${spell.id}`}
-                      key={spell.id}
-                      onClick={(e) => setCurProduct(e, spell.id)}
-                    >
-                      {spell.name} ({spell.price})
-                    </Link>
+                  <div className="card" key={spell.id}>
+                    <div className="itemCard">
+                      {spell.name} (${spell.price})
+                      <Link
+                        to={`/selectedProduct/${spell.id}`}
+                        key={spell.id}
+                        onClick={(e) => setCurProduct(e, spell.id)}
+                      >
+                        See Details
+                      </Link>
+                    </div>
+                    <img
+                      src={spell.image}
+                      alt="spell"
+                      width={200}
+                      height={150}
+                      className="listImg"
+                    />
                   </div>
                 );
               })}
@@ -59,6 +69,8 @@ const SpellList = ({
             siblingCount={1}
             boundaryCount={1}
             onChange={(e, value) => handleChange(e, value)}
+            variant="outlined"
+            color="secondary"
           />
         </div>
         <div className="homeIcon">

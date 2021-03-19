@@ -22,11 +22,20 @@ ratingRouter.get("/all/:itemId/:userId", async (req, res) => {
           }
           return prev;
         }, 0);
-
         avg = (total / count).toFixed(3);
       }
+
+      const reviews = rows.map((row) => {
+        return {
+          text: row.dataValues.review,
+          value: row.dataValues.value,
+          id: row.dataValues.id,
+        };
+      });
+
       res.status(200).send({
         average: avg || "No ratings yet!",
+        reviews,
         rows,
         exists,
       });
@@ -65,12 +74,17 @@ ratingRouter.get("/average/:id", async (req, res) => {
 });
 
 ratingRouter.post("/new", async (req, res) => {
-  const {rValue, itemId, userId} = req.body;
+  const {rValue, itemId, userId, review} = req.body;
+  let rview = review;
+  if (rview === "") {
+    rview = null;
+  }
   try {
     await Rating.create({
       productId: itemId,
       userId: userId,
       value: rValue,
+      review: rview,
     });
     res.sendStatus(201);
   } catch (e) {

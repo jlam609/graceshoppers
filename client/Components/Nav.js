@@ -1,7 +1,6 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import {IconButton, MenuList, MenuItem, Button} from "@material-ui/core";
-import StarsIcon from "@material-ui/icons/Stars";
+import {IconButton, Menu, MenuList, MenuItem, Button} from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import SearchIcon from "@material-ui/icons/Search";
@@ -13,6 +12,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import {connect} from "react-redux";
 import Axios from "axios";
+import Icon from "@material-ui/core/Icon";
 
 import {
   clearForm,
@@ -32,104 +32,92 @@ const Nav = ({loggedIn, toggle, toggleMenu, logoutUser, handleClose, products, u
         border="0"
         className="logo"
       />
-      <IconButton
-        edge="start"
-        aria-label="menu"
-        color="inherit"
-        onClick={(e) => toggleMenu(e, toggle)}
-      >
-        <StarsIcon />
-      </IconButton>
-      {toggle ? (
-        <MenuList className="list">
-          <MenuItem onClick={handleClose}>
-            <Link to="/home">
-              <IconButton>
-                <HomeIcon fontSize="large" />
-              </IconButton>
-            </Link>
-          </MenuItem>
-          {/* <MenuItem onClick={handleClose}>
-            <Link to="/weapons">Weapons</Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Link to="/armor">Armor</Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Link to="/magic">Magic</Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Link to="/items">Items</Link>
-          </MenuItem> */}
-          <MenuItem onClick={handleClose}>
-            <Link to="/cart">
-              <IconButton>
-                <AddShoppingCartIcon /> ({products.length})
-              </IconButton>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to="/search">
-              <IconButton>
-                <SearchIcon fontSize="large" />
-              </IconButton>
-            </Link>
-          </MenuItem>
-          {loggedIn ? (
-            <div className="list">
-              {" "}
-              <MenuItem className="menuItem">
-                <IconButton onClick={(e) => logoutUser(e)}>
-                  <ExitToAppIcon fontSize="large" />
-                </IconButton>
-              </MenuItem>
-              {user.clearance === 5 ? (
-                <MenuList className="list">
-                  <MenuItem>
-                    <Link to="/admin" className="menuItem">
-                      <IconButton>
-                        <SupervisorAccountIcon fontSize="large" />
-                      </IconButton>
-                    </Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link to="/registerAdmin" className="menuItem">
-                      <IconButton>
-                        <AddCircleIcon fontSize="large" />
-                      </IconButton>
-                    </Link>
-                  </MenuItem>
-                </MenuList>
-              ) : (
-                <MenuItem>
-                  <Link to="/user" className="menuItem">
-                    <IconButton>
-                      <AccountBoxIcon fontSize="large" />
-                    </IconButton>
-                  </Link>
-                </MenuItem>
-              )}
-            </div>
-          ) : (
-            <div className="list">
-              <MenuItem>
-                <Link to="/login" className="menuItem">
-                  <IconButton>
-                    <HowToRegIcon fontSize="large" />
-                  </IconButton>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/register" className="menuItem">
-                  <IconButton>
-                    <CreateIcon fontSize="large" />
-                  </IconButton>
-                </Link>
-              </MenuItem>
-            </div>
-          )}
-        </MenuList>
-      ) : null}
+      <div className="navBag">
+        <Link to="/weapons">
+          <div className="navBook">
+            <img className="icon" src="https://i.ibb.co/LJtG9Tp/Asset-5.png" />
+            <span>Weapons</span>
+          </div>
+        </Link>
+        <Link to="/armors">
+          <div className="navBook">
+            <img className="icon" src="https://i.ibb.co/rxpTWhX/Asset-7.png" />
+            <span>Armor</span>
+          </div>
+        </Link>
+        <Link to="/magic">
+          <div className="navBook">
+            <img className="icon" src="https://i.ibb.co/DWLXBFD/Asset-8.png" />
+            <span>Spells</span>
+          </div>
+        </Link>
+        <Link to="/items">
+          <div className="navBook">
+            <img className="icon" src="https://i.ibb.co/rZM9747/Asset-9.png" />
+            <span>Items</span>
+          </div>
+        </Link>
+        <Link to="/search">
+          <div className="navBook">
+            <img className="icon" src="https://i.ibb.co/10b0XX8/Asset-10.png" />
+            <span>Search!</span>
+          </div>
+        </Link>
+        <Link to="/home" className="navBook">
+          <IconButton>
+            <HomeIcon fontSize="large" />
+          </IconButton>
+          <span>Home</span>
+        </Link>
+        <Link to="/cart" className="navBook">
+          <IconButton>
+            <AddShoppingCartIcon fontSize="large" /> ({products.length})
+          </IconButton>
+          <span>Cart</span>
+        </Link>
+        <div className={loggedIn ? "navBook" : "ghost"}>
+          <IconButton onClick={(e) => logoutUser(e)}>
+            <ExitToAppIcon fontSize="large" />
+          </IconButton>
+          <span>Log Out</span>
+        </div>
+        <Link
+          to="/admin"
+          className={loggedIn && user.clearance === 5 ? "navBook" : "ghost"}
+        >
+          <IconButton>
+            <SupervisorAccountIcon fontSize="large" />
+          </IconButton>
+          <span>Admin</span>
+        </Link>
+        <Link
+          to="/registerAdmin"
+          className={loggedIn && user.clearance === 5 ? "navBook" : "ghost"}
+        >
+          <IconButton>
+            <AddCircleIcon fontSize="large" />
+          </IconButton>
+          <span>Create Admin</span>
+        </Link>
+        <Link to="/user" className={loggedIn ? "navBook" : "ghost"}>
+          <IconButton>
+            <AccountBoxIcon fontSize="large" />
+          </IconButton>
+          <span>Profile</span>
+        </Link>
+        <Link to="/login" className={loggedIn ? "ghost" : "navBook"}>
+          <IconButton>
+            <HowToRegIcon fontSize="large" />
+          </IconButton>
+          <span>Login</span>
+        </Link>
+        <Link to="/register" className={loggedIn ? "ghost" : "navBook"}>
+          <IconButton>
+            <CreateIcon fontSize="large" />
+          </IconButton>
+          <span>New User</span>
+        </Link>
+      </div>
     </div>
   );
 };

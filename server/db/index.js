@@ -141,12 +141,100 @@ const sync = async () => {
     },
     {
       name: "Gungnir",
-      description: "Spear of Odin God of Death",
+      description: "Spear of Odin: God of Death",
       image:
         "https://blog.vkngjewelry.com/wp-content/uploads/2019/10/Gungnir_-The-Spear-of-Odin.png",
       categoryId: 1,
       price: 1000,
       quantity: 10,
+    },
+    {
+      name: "Diamond Sword",
+      description: "I can swing my sword, sword; diamond, diamond, sword, sword...",
+      image:
+        "https://vignette.wikia.nocookie.net/minecraft-earth/images/f/f0/Diamond_sword.png/revision/latest?cb=20200519192804",
+      categoryId: 1,
+      price: 1000,
+      quantity: 15,
+    },
+    {
+      name: "Frostmourne",
+      description: "The vile, cursed blade wielded by the dread Lich King.",
+      image:
+        "https://images-na.ssl-images-amazon.com/images/I/51siPIjruPL._AC_SL1253_.jpg",
+      categoryId: 1,
+      price: 10000,
+      quantity: 5,
+    },
+    {
+      name: "Slingshot",
+      description: "Don't underestimate the power of the slingshot in the right hands...",
+      image:
+        "https://vignette.wikia.nocookie.net/animalcrossing/images/2/23/NH-Golden_slingshot.png/revision/latest/scale-to-width-down/340?cb=20200326052101",
+      categoryId: 1,
+      price: 100,
+      quantity: 500,
+    },
+    {
+      name: "Blade of the Ruined King",
+      description: "Named after Kalista's uncle, king of an unnamed realm.",
+      image:
+        "https://info465.us/2017Winter/GetThumbnail.php?TableName=Items&RecordId=10681&ImageSize=300",
+      categoryId: 1,
+      price: 3000,
+      quantity: 20,
+    },
+    {
+      name: "Doombringer",
+      description: "Legendary sword that can be found in Diablo 3 and Reaper of Souls",
+      image: "https://www.diablowiki.net/images/8/8a/Doombringer-icon.JPG",
+      categoryId: 1,
+      price: 2000,
+      quantity: 30,
+    },
+    {
+      name: "Thunderfury, Blessed Blade of the Windseeker",
+      description: "Lendendary sword once wielded by Thunderaan, Prince of Air",
+      image:
+        "https://external-preview.redd.it/bM1sFPt5JNnAWkd-TztPCnD5GT5dRCM8i0jsA1_wNIE.jpg?auto=webp&s=256e456905bae31bd13dddec0f6cc9b91a816e5e",
+      categoryId: 1,
+      price: 5000,
+      quantity: 14,
+    },
+    {
+      name: "Black Cleaver",
+      description:
+        "Once upon a time, the Black Cleaver was so feared and powerful that it changed League of Legends.",
+      image:
+        "https://images2.minutemediacdn.com/image/upload/c_fill,w_912,h_516,f_auto,q_auto,g_auto/shape/cover/sport/5b0618373467acc8cb000010.jpeg",
+      categoryId: 1,
+      price: 1500,
+      quantity: 99,
+    },
+    {
+      name: "Aloy's Bow",
+      description: "The bow is Aloy's primary choice of weapon in Horizon Zero Dawn",
+      image: "https://pbs.twimg.com/media/DDPn_3YXgAIPwic.jpg",
+      categoryId: 1,
+      price: 500,
+      quantity: 24,
+    },
+    {
+      name: "Ashbringer",
+      description: "The Ultimate paladin weapon. Bringer of light and ash.",
+      image: "https://gamepedia.cursecdn.com/wowpedia/a/a6/Ashbringer_TCG.jpg",
+      categoryId: 1,
+      price: 1000,
+      quantity: 100,
+    },
+    {
+      name: "Atiesh, Greatstaff of the Guardian",
+      description: "Wielded originally by Medihv, grants its user 'power unending'.",
+      image:
+        "https://gamepedia.cursecdn.com/hearthstone_gamepedia/thumb/0/02/Atiesh_full.jpg/400px-Atiesh_full.jpg?version=0138d5ad9f33b3bcfeb6563374ad830a",
+      categoryId: 1,
+      price: 10000,
+      quantity: 15,
     },
   ];
   const armorList = [
@@ -234,7 +322,7 @@ const sync = async () => {
     },
     {
       name: "Diamond Armour",
-      description: "Rich and will make you a juicy target",
+      description: "Get rich and it will make you a juicy target",
       image: "https://i.redd.it/x3lgm8uhask41.png",
       categoryId: 2,
       price: 1000,
@@ -331,6 +419,38 @@ const sync = async () => {
       categoryId: 3,
       quantity: 100,
     },
+    {
+      name: "Pyroblast",
+      description: "Hurl a pyroclastic ball of flame energy at your target.",
+      image: "https://i.pinimg.com/474x/7d/59/01/7d59015450fb75b5674781e3de343638.jpg",
+      price: 50,
+      categoryId: 3,
+      quantity: 100,
+    },
+    {
+      name: "Frostbolt",
+      description: "Conjure a shard of ice energy and shoot it.",
+      image:
+        "https://gamepedia.cursecdn.com/hearthstone_gamepedia/thumb/8/8e/Frostbolt_%28art%29.jpg/400px-Frostbolt_%28art%29.jpg?version=ece099e314e0c967d3f55134affb3649",
+      categoryId: 3,
+      quantity: 100,
+    },
+    {
+      name: "Arcane Missiles",
+      description: "Fires three volleys of arcane missiles at the opponent.",
+      image:
+        "https://i.pinimg.com/originals/b7/35/b6/b735b67107d1b06804f6bf2693c5b80c.jpg",
+      categoryId: 3,
+      quantity: 100,
+    },
+    {
+      name: "Shapeshift",
+      description: "Change your form to that of an animal of your choosing.",
+      image:
+        "https://gamepedia.cursecdn.com/wowpedia/thumb/b/ba/Givon_TCG.jpg/300px-Givon_TCG.jpg?version=f3004078f3cc2d7d74bb0339d05835f4",
+      categoryId: 3,
+      quantity: 100,
+    },
   ];
   const itemList = [
     {
@@ -415,39 +535,95 @@ const sync = async () => {
     },
     {
       name: "Pokeball",
-      description: "Basic Ball. Gotta catch them all!",
+      description: "Basic Ball. Gotta catch em all!",
       image:
-        "https://lh3.googleusercontent.com/proxy/wOxJgXI2FuD9Pwmf3VAi-_bjnGwNrGVuyXAPzmOjop1bCBYIoWttrgpszxj-yComYrKb2fRvvGN-8FKY9ELhklyOUsEjNEwxDmNlujUp15KDBB1vY8Vo",
+        "https://cdnb.artstation.com/p/assets/images/images/020/068/395/large/finn-isengardt-pokeball-composition.jpg?1566236853",
       price: 5,
       categoryId: 4,
       quantity: 100,
     },
     {
       name: "GreatBall",
-      description: "Better Ball. Gotta catch them all!",
+      description: "Better Ball. Gotta catch em all!",
       image:
         "https://d1lss44hh2trtw.cloudfront.net/assets/article/2016/07/11/great_ball_by_baconb0y-d5uf49k_feature.jpg",
-      price: 5,
+      price: 50,
       categoryId: 4,
       quantity: 300,
     },
     {
       name: "UltraBall",
-      description: "Much Better Ball. Gotta catch them all !",
+      description: "Much Better Ball. Gotta catch em all!",
       image:
         "https://images3.sw-cdn.net/product/picture/625x465_654579_657444_1452804948.jpg",
-      price: 5,
+      price: 500,
       categoryId: 4,
       quantity: 500,
     },
     {
       name: "MasterBall",
-      description: "Catch anything. Gotta catch them all !",
+      description: "Catches anything. Gotta catch em all!",
       image:
         "https://www.pngkit.com/png/detail/156-1564777_master-ball-the-best-poke-ball-transparent-background.png",
-      price: 5,
+      price: 5000,
       categoryId: 4,
       quantity: 2000,
+    },
+    {
+      name: "Fishing Pole",
+      description: "Good luck catching anything without it!",
+      image:
+        "https://vignette.wikia.nocookie.net/animalcrossing/images/3/33/NH-Golden_rod.png/revision/latest/scale-to-width-down/340?cb=20200326052051",
+      price: 15,
+      categoryId: 4,
+      quantity: 3000,
+    },
+    {
+      name: "Immovable Rod",
+      description:
+        "This flat iron rod has a button on one end. You can use an action to press the button, which causes the rod to become magically fixed in place.",
+      image:
+        "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/261/1000/1000/636284741670235041.jpeg",
+      price: 500,
+      categoryId: 4,
+      quantity: 30,
+    },
+    {
+      name: "Carrot on a Stick",
+      description: "While equipped, this trinket increases mount speed by 3%.",
+      image: "https://miro.medium.com/max/2488/1*oK-taHKmJ3dcLXYxIryIDw.png",
+      price: 10,
+      categoryId: 4,
+      quantity: 100,
+    },
+    {
+      name: "Bag of Holding",
+      description:
+        "This bag has an interior space considerably larger than its outside dimensions, roughly 2 feet in diameter at the mouth and 4 feet deep. The bag can hold up to 500 pounds, not exceeding a volume of 64 cubic feet.",
+      image:
+        "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/120/1000/1000/636284708068284913.jpeg",
+      price: 1000,
+      categoryId: 4,
+      quantity: 25,
+    },
+    {
+      name: "Gnomish Mind Control Helmet",
+      description:
+        "Engage in mental combat with a humanoid target to try and control their mind",
+      image:
+        "https://wow.zamimg.com/uploads/screenshots/normal/81892-gnomish-mind-control-cap-blizzard-employee-hortus-on-the-2-4-arena-tournament-te.jpg",
+      price: 1500,
+      categoryId: 4,
+      quantity: 30,
+    },
+    {
+      name: "Locket of the Iron Solari",
+      description:
+        "Locket of the Iron Solari lets tanks give a burst of tankiness to their team",
+      image: "https://i.imgur.com/b1Um2.jpg",
+      price: 1000,
+      categoryId: 4,
+      quantity: 20,
     },
   ];
   await categoryList.map((category) => Category.create(category));
@@ -457,7 +633,7 @@ const sync = async () => {
   await itemList.map((item) => Product.create(item));
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync("password", salt);
-  await User.create({
+  const user = await User.create({
     username: "admin@fullstack.com",
     password: hash,
     salt,
@@ -466,6 +642,10 @@ const sync = async () => {
     image:
       "https://thumbs.dreamstime.com/b/red-admin-sign-pc-laptop-vector-illustration-administrator-icon-screen-controller-man-system-box-88756468.jpg",
     clearance: 5,
+  });
+  await Order.create({
+    userId: user.id,
+    status: "active",
   });
 };
 

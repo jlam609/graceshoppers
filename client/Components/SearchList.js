@@ -58,7 +58,7 @@ const SearchList = ({
                       key={product.id}
                       onClick={(e) => setCurProduct(e, product.id)}
                     >
-                      {product.name} ({product.price})
+                      {product.name} (${product.price})
                     </Link>
                   </div>
                 );

@@ -9,7 +9,8 @@
     "start": "HTTPS=true node server/index.js",
     "start:dev": "HTTPS=true node-dev --respawn server/index.js",
     "lint": "eslint --ext .js,.jsx server client",
-    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\"",
+    "test": "jest"
   },
   "prettier": {
     "printWidth": 90,
@@ -46,9 +47,12 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.0",
+    "file-loader": "^6.0.0",
     "husky": "^4.2.5",
+    "jest": "^26.4.0",
     "prettier": "^2.0.5",
     "style-loader": "^1.2.1",
+    "supertest": "^4.0.2",
     "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12"
   },

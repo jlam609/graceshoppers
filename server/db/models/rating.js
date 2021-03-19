@@ -1,4 +1,4 @@
-const {UUID, UUIDV4, ENUM} = require("sequelize");
+const {UUID, UUIDV4, ENUM, STRING} = require("sequelize");
 const db = require("../db");
 
 const Rating = db.define("rating", {
@@ -6,6 +6,10 @@ const Rating = db.define("rating", {
     primaryKey: true,
     type: UUID,
     defaultValue: UUIDV4,
+  },
+  review: {
+    type: STRING,
+    allowNull: true,
   },
   value: {
     type: ENUM(["1", "2", "3", "4", "5"]),
